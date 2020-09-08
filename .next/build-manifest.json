@@ -19,14 +19,6 @@
     ],
     "/_polyfills": [
       "static/runtime/polyfills.js"
-    ],
-    "/dashboard": [
-      "static/runtime/webpack.js",
-      "static/runtime/main.js"
-    ],
-    "/profile": [
-      "static/runtime/webpack.js",
-      "static/runtime/main.js"
     ]
   }
 }
