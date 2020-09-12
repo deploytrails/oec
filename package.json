@@ -1,6 +1,5 @@
 {
   "name": "eCampus",
-  "homepage":"https://deploytrails.gitlab.io/OECFRONTEND/",
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
