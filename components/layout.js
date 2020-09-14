@@ -10,7 +10,7 @@ import Footer from "./footer";
 import { COLORS } from "../constants";
 
 const Layout = (props) => {
-  const title = props.description || "Page Description";
+  const title = props.description || "Page Description ";
 
   return (
     <App>
