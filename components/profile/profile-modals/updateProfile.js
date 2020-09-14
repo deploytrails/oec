@@ -1,254 +1,596 @@
 import React, { useState, useEffect } from "react";
 import css from "@emotion/css";
+import { Formik } from "formik";
+import * as Yup from "yup";
+import Cookies from "js-cookie";
+import { useSnackbar } from "react-simple-snackbar";
+import { COLORS } from "../../../constants";
 import * as STYLES from "../../../components/General/modalStyles";
+import FormInput from "../../General/formInput";
+import { updateProfileDetails } from "../../../services/profileService";
 
-const Modal = ({ openModal }) => {
+const Modal = ({ openModal, userData, loadProfileData }) => {
+  const ProfileId = Cookies.get("employeeID");
+  const [openSnackbar, closeSnackbar] = useSnackbar();
+
+  const bookCreateSchema = Yup.object().shape({
+    prefix: Yup.string().required(),
+    firstName: Yup.string().required(),
+    lastName: Yup.string().required(),
+    surName: Yup.string().required(),
+    gender: Yup.string().required(),
+    dateOfBirth: Yup.string().required(),
+    fatherName: Yup.string().required(),
+    employeeType: Yup.string().required(),
+    associationType: Yup.string().required(),
+    designation: Yup.string().required(),
+    dateOfJoining: Yup.string().required(),
+    dateOfLeaving: Yup.string().required(),
+    aadharNo: Yup.string().required(),
+    panCardNo: Yup.string().required(),
+    jntuhID: Yup.string().required(),
+    aicteId: Yup.string().required(),
+    achievements: Yup.string().required(),
+    researchActivities: Yup.string().required(),
+  });
+  let state = "forBooksInsert";
+
+  const prefixTypes = ["Choose your option", "Mr", "Mrs", "Ms", "Miss"];
+  const genderTypes = ["Choose your option", "Male", "Female"];
+  const assoTypes = [
+    "Choose your option",
+    "Regular",
+    "Contractual",
+    "Visiting",
+  ];
   return (
     <STYLES.PopupMask>
       <STYLES.PopupWrapper>
         <STYLES.PopupTitle>Update Profile</STYLES.PopupTitle>
-        <form>
-          <div className="clearfix mb-3">
-            <div className="w-4/12 float-left">
-              <label htmlFor="name">
-                <select
-                  className="border border-2 border-solid p-2 rounded w-full focus:outline-none"
-                  css={css`
-                    height: 42px;
-                  `}
+
+        <Formik
+          initialValues={{
+            mobileNumber: userData?.mobileNumber,
+            alternateMobile: userData?.alternateMobile,
+            email: userData?.email,
+            alternateEmail: userData?.alternateEmail,
+            address: userData?.address,
+            lastName: userData?.lastName,
+            fatherName: userData?.fatherName,
+            achievements: userData?.achievements,
+            surName: userData?.surName,
+            gender: userData?.gender,
+            prefix: userData?.prefix,
+            quinaryprogram: userData?.quinaryprogram,
+            password: userData?.password,
+            researchActivities: userData?.researchActivities,
+            department: userData?.department,
+            employeePrimaryId: userData?.employeePrimaryId,
+            quaternaryprogram: userData?.quaternaryprogram,
+            associationType: userData?.associationType,
+            dateOfBirth: userData?.dateOfBirth,
+            aadharNo: userData?.aadharNo,
+            tertiaryprogram: userData?.tertiaryprogram,
+            firstName: userData?.firstName,
+            secondaryprogram: userData?.secondaryprogram,
+            dateOfJoining: userData?.dateOfJoining,
+            dateOfLeaving: userData?.dateOfLeaving,
+            employeeType: userData?.employeeType,
+            aicteId: userData?.aicteId,
+            senaryprogram: userData?.senaryprogram,
+            designation: userData?.designation,
+            jntuhID: userData?.jntuhID,
+            panCardNo: userData?.panCardNo,
+            username: userData?.username,
+            status: userData?.status,
+            septenaryprogram: userData?.septenaryprogram,
+            dept: userData?.dept,
+            dept1: userData?.dept1,
+            dept2: userData?.dept2,
+            dept3: userData?.dept3,
+            dept4: userData?.dept4,
+            dept5: userData?.dept5,
+          }}
+          validationSchema={bookCreateSchema}
+          onSubmit={(values) => {
+            updateProfileDetails(values, state).then((data) => {
+              if (data === true) {
+                openSnackbar("Profile updated successfully");
+                loadProfileData();
+                openModal();
+              }
+            });
+          }}
+        >
+          {({
+            values,
+            errors,
+            touched,
+            handleChange,
+            handleBlur,
+            handleSubmit,
+          }) => (
+            <form onSubmit={handleSubmit}>
+              <div className="clearfix mb-3">
+                <div className="w-4/12 float-left">
+                  <label
+                    htmlFor="Prefix"
+                    css={css`
+                      font-size: 14px;
+                      display: block;
+                      color: ${COLORS.BLACK};
+                      .errorBorder {
+                        border-color: ${COLORS.RED};
+                      }
+                    `}
+                  >
+                    Prefix
+                    <select
+                      onChange={handleChange}
+                      onBlur={handleBlur}
+                      name="prefix"
+                      css={css`
+                        display: block;
+                        width: 100%;
+                        height: 42px;
+                        padding: 0px 10px;
+                        margin-bottom: 0px;
+                        box-sizing: border-box;
+                        font-family: "Open Sans", sans-serif;
+                        border: 1px solid ${COLORS.GRAY_DARK};
+                        -webkit-border-radius: 4px;
+                        -moz-border-radius: 4px;
+                        -ms-border-radius: 4px;
+                        border-radius: 4px;
+                        font-size: 14px;
+                        &:focus {
+                          outline: none;
+                        }
+                      `}
+                    >
+                      {prefixTypes &&
+                        prefixTypes.map((opt) => (
+                          <option
+                            key={opt}
+                            value={values.prefix === opt ? values.prefix : opt}
+                            selected={
+                              values.prefix === opt ? values.prefix : opt
+                            }
+                          >
+                            {opt}
+                          </option>
+                        ))}
+                    </select>
+                  </label>
+                </div>
+                <div className="w-4/12 float-left px-1">
+                  <FormInput
+                    label="Name"
+                    type="text"
+                    name="firstName"
+                    onChange={handleChange}
+                    onBlur={handleBlur}
+                    value={values.firstName}
+                    placeholder="Name of The Publishers"
+                    css={
+                      errors.firstName &&
+                      touched.firstName &&
+                      errors.firstName &&
+                      css`
+                        border: 1px solid red;
+                      `
+                    }
+                  />
+                </div>
+
+                <div className="w-4/12 float-left">
+                  <FormInput
+                    label="LastName"
+                    type="text"
+                    name="lastName"
+                    onChange={handleChange}
+                    onBlur={handleBlur}
+                    value={values.lastName}
+                    placeholder="Name of The Publishers"
+                    css={
+                      errors.lastName &&
+                      touched.lastName &&
+                      errors.lastName &&
+                      css`
+                        border: 1px solid red;
+                      `
+                    }
+                  />
+                </div>
+              </div>
+
+              <div className="clearfix  mb-3">
+                <div className="w-4/12 float-left">
+                  <FormInput
+                    label="SurName"
+                    type="text"
+                    name="surName"
+                    onChange={handleChange}
+                    onBlur={handleBlur}
+                    value={values.surName}
+                    placeholder="SurName"
+                    css={
+                      errors.surName &&
+                      touched.surName &&
+                      errors.surName &&
+                      css`
+                        border: 1px solid red;
+                      `
+                    }
+                  />
+                </div>
+                <div className="w-4/12 float-left px-1">
+                  <label
+                    htmlFor="Gender"
+                    css={css`
+                      font-size: 14px;
+                      display: block;
+                      color: ${COLORS.BLACK};
+                      .errorBorder {
+                        border-color: ${COLORS.RED};
+                      }
+                    `}
+                  >
+                    Prefix
+                    <select
+                      onChange={handleChange}
+                      onBlur={handleBlur}
+                      name="gender"
+                      css={css`
+                        display: block;
+                        width: 100%;
+                        height: 42px;
+                        padding: 0px 10px;
+                        margin-bottom: 0px;
+                        box-sizing: border-box;
+                        font-family: "Open Sans", sans-serif;
+                        border: 1px solid ${COLORS.GRAY_DARK};
+                        -webkit-border-radius: 4px;
+                        -moz-border-radius: 4px;
+                        -ms-border-radius: 4px;
+                        border-radius: 4px;
+                        font-size: 14px;
+                        &:focus {
+                          outline: none;
+                        }
+                      `}
+                    >
+                      {genderTypes &&
+                        genderTypes.map((opt) => (
+                          <option
+                            key={opt}
+                            value={values.gender === opt ? values.gender : opt}
+                            selected={
+                              values.gender === opt ? values.gender : opt
+                            }
+                          >
+                            {opt}
+                          </option>
+                        ))}
+                    </select>
+                  </label>
+                </div>
+
+                <div className="w-4/12 float-left">
+                  <FormInput
+                    label="Date Of Birth"
+                    type="date"
+                    name="dateOfBirth"
+                    id="dateOfBirth"
+                    onChange={handleChange}
+                    onBlur={handleBlur}
+                    value={values.dateOfBirth}
+                    placeholder="Date Of Birth"
+                    css={
+                      errors.dateOfBirth &&
+                      touched.dateOfBirth &&
+                      errors.dateOfBirth &&
+                      css`
+                        border: 1px solid red;
+                      `
+                    }
+                  />
+                </div>
+              </div>
+
+              <div className="clearfix  mb-3">
+                <div className="w-4/12 float-left">
+                  <FormInput
+                    label="FatherName"
+                    type="text"
+                    name="fatherName"
+                    onChange={handleChange}
+                    onBlur={handleBlur}
+                    value={values.fatherName}
+                    placeholder="FatherName"
+                    css={
+                      errors.fatherName &&
+                      touched.fatherName &&
+                      errors.fatherName &&
+                      css`
+                        border: 1px solid red;
+                      `
+                    }
+                  />
+                </div>
+                <div className="w-4/12 float-left px-1">
+                  <FormInput
+                    label="Employee Type"
+                    type="text"
+                    name="employeeType"
+                    onChange={handleChange}
+                    onBlur={handleBlur}
+                    value={values.employeeType}
+                    placeholder="Employee Type"
+                    css={
+                      errors.employeeType &&
+                      touched.employeeType &&
+                      errors.employeeType &&
+                      css`
+                        border: 1px solid red;
+                      `
+                    }
+                  />
+                </div>
+
+                <div className="w-4/12 float-left">
+                  <label
+                    htmlFor="associationType"
+                    css={css`
+                      font-size: 14px;
+                      display: block;
+                      color: ${COLORS.BLACK};
+                      .errorBorder {
+                        border-color: ${COLORS.RED};
+                      }
+                    `}
+                  >
+                    Association Type
+                    <select
+                      onChange={handleChange}
+                      onBlur={handleBlur}
+                      name="associationType"
+                      css={css`
+                        display: block;
+                        width: 100%;
+                        height: 42px;
+                        padding: 0px 10px;
+                        margin-bottom: 0px;
+                        box-sizing: border-box;
+                        font-family: "Open Sans", sans-serif;
+                        border: 1px solid ${COLORS.GRAY_DARK};
+                        -webkit-border-radius: 4px;
+                        -moz-border-radius: 4px;
+                        -ms-border-radius: 4px;
+                        border-radius: 4px;
+                        font-size: 14px;
+                        &:focus {
+                          outline: none;
+                        }
+                      `}
+                    >
+                      {assoTypes &&
+                        assoTypes.map((opt) => (
+                          <option
+                            key={opt}
+                            value={
+                              values.associationType === opt
+                                ? values.associationType
+                                : opt
+                            }
+                            selected={
+                              values.associationType === opt
+                                ? values.associationType
+                                : opt
+                            }
+                          >
+                            {opt}
+                          </option>
+                        ))}
+                    </select>
+                  </label>
+                </div>
+              </div>
+
+              <div className="clearfix  mb-3">
+                <div className="w-4/12 float-left">
+                  <FormInput
+                    label="Designation"
+                    type="text"
+                    name="designation"
+                    onChange={handleChange}
+                    onBlur={handleBlur}
+                    value={values.designation}
+                    placeholder="Designation"
+                    css={
+                      errors.designation &&
+                      touched.designation &&
+                      errors.designation &&
+                      css`
+                        border: 1px solid red;
+                      `
+                    }
+                  />
+                </div>
+                <div className="w-4/12 float-left px-1">
+                  <FormInput
+                    label="Date Of Joining"
+                    type="date"
+                    name="dateOfJoining"
+                    id="dateOfJoining"
+                    onChange={handleChange}
+                    onBlur={handleBlur}
+                    value={values.dateOfJoining}
+                    placeholder="Date Of Joining"
+                    css={
+                      errors.dateOfJoining &&
+                      touched.dateOfJoining &&
+                      errors.dateOfJoining &&
+                      css`
+                        border: 1px solid red;
+                      `
+                    }
+                  />
+                </div>
+
+                <div className="w-4/12 float-left">
+                  <FormInput
+                    label="Date Of Leaving"
+                    type="date"
+                    name="dateOfLeaving"
+                    id="dateOfLeaving"
+                    onChange={handleChange}
+                    onBlur={handleBlur}
+                    value={values.dateOfLeaving}
+                    placeholder="Date Of Leaving"
+                  />
+                </div>
+              </div>
+              <div className="clearfix  mb-3">
+                <div className="w-4/12 float-left">
+                  <FormInput
+                    label="Aadhar Card No"
+                    type="text"
+                    name="aadharNo"
+                    onChange={handleChange}
+                    onBlur={handleBlur}
+                    value={values.aadharNo}
+                    placeholder="Aadhar Card No"
+                    css={
+                      errors.aadharNo &&
+                      touched.aadharNo &&
+                      errors.aadharNo &&
+                      css`
+                        border: 1px solid red;
+                      `
+                    }
+                  />
+                </div>
+                <div className="w-4/12 float-left px-1">
+                  <FormInput
+                    label="PAN Card No"
+                    type="text"
+                    name="panCardNo"
+                    onChange={handleChange}
+                    onBlur={handleBlur}
+                    value={values.panCardNo}
+                    placeholder="PAN Card No"
+                    css={
+                      errors.panCardNo &&
+                      touched.panCardNo &&
+                      errors.panCardNo &&
+                      css`
+                        border: 1px solid red;
+                      `
+                    }
+                  />
+                </div>
+
+                <div className="w-4/12 float-left">
+                  <FormInput
+                    label="JNTUA No"
+                    type="text"
+                    name="jntuhID"
+                    onChange={handleChange}
+                    onBlur={handleBlur}
+                    value={values.jntuhID}
+                    placeholder="JNTUA No"
+                    css={
+                      errors.jntuhID &&
+                      touched.jntuhID &&
+                      errors.jntuhID &&
+                      css`
+                        border: 1px solid red;
+                      `
+                    }
+                  />
+                </div>
+              </div>
+
+              <div className="clearfix  mb-3">
+                <div className="w-4/12 float-left">
+                  <FormInput
+                    label="AICTE No"
+                    type="text"
+                    name="aicteId"
+                    onChange={handleChange}
+                    onBlur={handleBlur}
+                    value={values.aicteId}
+                    placeholder="AICTE No"
+                    css={
+                      errors.aicteId &&
+                      touched.aicteId &&
+                      errors.aicteId &&
+                      css`
+                        border: 1px solid red;
+                      `
+                    }
+                  />
+                </div>
+                <div className="w-4/12 float-left px-1">
+                  <FormInput
+                    label="Achievements"
+                    type="text"
+                    name="achievements"
+                    onChange={handleChange}
+                    onBlur={handleBlur}
+                    value={values.achievements}
+                    placeholder="Achievements"
+                    css={
+                      errors.achievements &&
+                      touched.achievements &&
+                      errors.achievements &&
+                      css`
+                        border: 1px solid red;
+                      `
+                    }
+                  />
+                </div>
+
+                <div className="w-4/12 float-left">
+                  <FormInput
+                    label="Research Activities"
+                    type="text"
+                    name="researchActivities"
+                    onChange={handleChange}
+                    onBlur={handleBlur}
+                    value={values.researchActivities}
+                    placeholder="Research Activities"
+                    css={
+                      errors.researchActivities &&
+                      touched.researchActivities &&
+                      errors.researchActivities &&
+                      css`
+                        border: 1px solid red;
+                      `
+                    }
+                  />
+                </div>
+              </div>
+
+              <div className="float-right">
+                <button
+                  type="submit"
+                  className="bg-green-400 px-3 py-2 rounded text-white"
                 >
-                  <option className="" disabled="" selected="">
-                    Choose your option
-                  </option>
-                  <option value="Mr.">Mr.</option>
-                  <option value="Mrs.">Mrs.</option>
-                  <option value="Ms.">Ms.</option>
-                  <option value="Miss.">Miss.</option>
-                </select>
-              </label>
-            </div>
-            <div className="w-4/12 float-left px-1">
-              <label htmlFor="name">
-                <input
-                  type="text"
-                  name="name"
-                  placeholder="Name"
-                  className="border border-2 border-solid p-2 rounded w-full focus:outline-none "
-                />
-              </label>
-            </div>
-
-            <div className="w-4/12 float-left">
-              <label htmlFor="firstname">
-                <input
-                  type="text"
-                  name="firstname"
-                  placeholder="Firstname"
-                  className="border border-2 border-solid p-2 rounded w-full focus:outline-none "
-                />
-              </label>
-            </div>
-          </div>
-
-          <div className="clearfix  mb-3">
-            <div className="w-4/12 float-left">
-              <label htmlFor="Surname">
-                <input
-                  type="text"
-                  name="Surname"
-                  placeholder="Surname"
-                  className="border border-2 border-solid p-2 rounded w-full focus:outline-none "
-                />
-              </label>
-            </div>
-            <div className="w-4/12 float-left px-1">
-              <label htmlFor="Gender">
-                <select
-                  className="border border-2 border-solid p-2 rounded w-full focus:outline-none"
-                  css={css`
-                    height: 42px;
-                  `}
+                  Update
+                </button>
+                <button
+                  type="button"
+                  onClick={openModal}
+                  className="bg-black px-3 py-2 ml-2 rounded text-white"
                 >
-                  <option className="" disabled="" selected="">
-                    select gender
-                  </option>
-                  <option value="Male">Male</option>
-                  <option value="Female">Female</option>
-                  <option value="Others">Others</option>
-                </select>
-              </label>
-            </div>
-
-            <div className="w-4/12 float-left">
-              <label htmlFor="Date of Birth">
-                <input
-                  type="date"
-                  name="Date of Birth"
-                  placeholder="Date of Birth"
-                  className="border border-2 border-solid p-2 rounded w-full focus:outline-none "
-                />
-              </label>
-            </div>
-          </div>
-
-          <div className="clearfix  mb-3">
-            <div className="w-4/12 float-left">
-              <label htmlFor="Father's Name">
-                <input
-                  type="text"
-                  name="Father's Name"
-                  placeholder="Father's Name"
-                  className="border border-2 border-solid p-2 rounded w-full focus:outline-none "
-                />
-              </label>
-            </div>
-            <div className="w-4/12 float-left px-1">
-              <label htmlFor="Employee Type">
-                <input
-                  type="text"
-                  name="Employee Type"
-                  placeholder="Employee Type"
-                  className="border border-2 border-solid p-2 rounded w-full focus:outline-none "
-                />
-              </label>
-            </div>
-
-            <div className="w-4/12 float-left">
-              <label htmlFor="Association Type">
-                <select
-                  className="border border-2 border-solid p-2 rounded w-full focus:outline-none"
-                  css={css`
-                    height: 42px;
-                  `}
-                >
-                  <option className="" disabled="" selected="">
-                    select your option
-                  </option>
-                  <option value="Regular">Regular</option>
-                  <option value="Contractual">Contractual</option>
-                  <option value="Visiting">Visiting</option>
-                </select>
-              </label>
-            </div>
-          </div>
-
-          <div className="clearfix  mb-3">
-            <div className="w-4/12 float-left">
-              <label htmlFor="Designation">
-                <input
-                  type="text"
-                  name="Designation"
-                  placeholder="Designation"
-                  className="border border-2 border-solid p-2 rounded w-full focus:outline-none "
-                />
-              </label>
-            </div>
-            <div className="w-4/12 float-left px-1">
-              <label htmlFor="naDate of Joiningme">
-                <input
-                  type="date"
-                  name="Date of Joining"
-                  placeholder="Date of Joining"
-                  className="border border-2 border-solid p-2 rounded w-full focus:outline-none "
-                />
-              </label>
-            </div>
-
-            <div className="w-4/12 float-left">
-              <label htmlFor="Date of Leaving">
-                <input
-                  type="date"
-                  name="Date of Leaving"
-                  placeholder="Firstname"
-                  className="border border-2 border-solid p-2 rounded w-full focus:outline-none "
-                />
-              </label>
-            </div>
-          </div>
-          <div className="clearfix  mb-3">
-            <div className="w-4/12 float-left">
-              <label htmlFor="Aadhar Card No.">
-                <input
-                  type="text"
-                  name="Aadhar Card No."
-                  placeholder="Aadhar Card No."
-                  className="border border-2 border-solid p-2 rounded w-full focus:outline-none "
-                />
-              </label>
-            </div>
-            <div className="w-4/12 float-left px-1">
-              <label htmlFor="PAN Card No.">
-                <input
-                  type="text"
-                  name="PAN Card No."
-                  placeholder="PAN Card No."
-                  className="border border-2 border-solid p-2 rounded w-full focus:outline-none "
-                />
-              </label>
-            </div>
-
-            <div className="w-4/12 float-left">
-              <label htmlFor="JNTUA No.">
-                <input
-                  type="text"
-                  name="JNTUA No."
-                  placeholder="JNTUA No."
-                  className="border border-2 border-solid p-2 rounded w-full focus:outline-none "
-                />
-              </label>
-            </div>
-          </div>
-
-          <div className="clearfix  mb-3">
-            <div className="w-4/12 float-left">
-              <label htmlFor="AICTE No.">
-                <input
-                  type="text"
-                  name="AICTE No."
-                  placeholder="AICTE No."
-                  className="border border-2 border-solid p-2 rounded w-full focus:outline-none "
-                />
-              </label>
-            </div>
-            <div className="w-4/12 float-left px-1">
-              <label htmlFor="Achievements">
-                <input
-                  type="text"
-                  name="Achievements"
-                  placeholder="Achievements"
-                  className="border border-2 border-solid p-2 rounded w-full focus:outline-none "
-                />
-              </label>
-            </div>
-
-            <div className="w-4/12 float-left">
-              <label htmlFor="Research Activities">
-                <input
-                  type="text"
-                  name="Research Activities"
-                  placeholder="Research Activities"
-                  className="border border-2 border-solid p-2 rounded w-full focus:outline-none "
-                />
-              </label>
-            </div>
-          </div>
-
-          <div className="float-right">
-            <button
-              type="submit"
-              className="bg-green-400 px-3 py-2 rounded text-white"
-            >
-              Update
-            </button>
-            <button
-              type="button"
-              onClick={openModal}
-              className="bg-black px-3 py-2 ml-2 rounded text-white"
-            >
-              Close
-            </button>
-          </div>
-        </form>
+                  Close
+                </button>
+              </div>
+            </form>
+          )}
+        </Formik>
       </STYLES.PopupWrapper>
     </STYLES.PopupMask>
   );

@@ -1,7 +1,10 @@
 import React, { useState } from "react";
+import Cookies from "js-cookie";
 import * as TABLE from "../../dashboards/styles/table.styles";
 import PulseLoader from "react-spinners/PulseLoader";
 import ResearchGuidlinesModal from "../../profile/profile-modals/researchGuidlinesModal";
+import { deleteGuidlinesDetails } from "../../../services/profileService";
+import ConfirmationModal from "../../General/confirmation-modal";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faSearch,
@@ -10,11 +13,31 @@ import {
   faPlus,
   faFileImport,
 } from "@fortawesome/free-solid-svg-icons";
+import { useSnackbar } from "react-simple-snackbar";
 
-const ResearchGuidlines = ({ isResearchGuidData }) => {
+const ResearchGuidlines = ({ isResearchGuidData, loadResearchGuidInfo }) => {
   const [show, setShow] = useState(false);
-  const openModal = () => {
+  const [openSnackbar, closeSnackbar] = useSnackbar();
+  const ProfileId = Cookies.get("employeeID");
+  const [guidList, setGuidList] = useState({});
+  const [isAlert, setIsAlert] = useState(false);
+  const openModal = (data) => {
     setShow(!show);
+    setGuidList(data);
+    if (!data || data === {} || data === null || data === undefined) {
+      setGuidList({});
+    }
+    console.log("guidList", data);
+  };
+
+  const openAlertModal = () => {
+    setIsAlert(!isAlert);
+  };
+  const deleteGuidlinesRecord = async (id) => {
+    const guidData = await deleteGuidlinesDetails(id);
+    loadResearchGuidInfo();
+    openSnackbar("Successfully deleted Research Guidlines record");
+    setIsAlert(!isAlert);
   };
   return (
     <React.Fragment>
@@ -67,17 +90,38 @@ const ResearchGuidlines = ({ isResearchGuidData }) => {
                 <TABLE.TableTdd>{rgInfo.status}</TABLE.TableTdd>
                 <TABLE.TableTdd>
                   <span className="cursor-pointer mr-4 text-blue-400">
-                    <FontAwesomeIcon icon={faEdit} />
+                    <FontAwesomeIcon
+                      icon={faEdit}
+                      onClick={() => openModal(rgInfo)}
+                    />
                   </span>
                   <span className="cursor-pointer text-red-400">
-                    <FontAwesomeIcon icon={faTrashAlt} />
+                    <FontAwesomeIcon
+                      icon={faTrashAlt}
+                      onClick={openAlertModal}
+                    />
                   </span>
+                  {isAlert && (
+                    <ConfirmationModal
+                      deleteMessage="Research Guidlines Details"
+                      deleteRecord={() =>
+                        deleteGuidlinesRecord(rgInfo.researchGuidanceID)
+                      }
+                      openAlertModal={openAlertModal}
+                    />
+                  )}
                 </TABLE.TableTdd>
               </TABLE.TableTRR>
             ))}
         </TABLE.TableWrapper>
 
-        {show && <ResearchGuidlinesModal openModal={openModal} />}
+        {show && (
+          <ResearchGuidlinesModal
+            openModal={openModal}
+            guidList={guidList}
+            loadResearchGuidInfo={loadResearchGuidInfo}
+          />
+        )}
       </div>
     </React.Fragment>
   );

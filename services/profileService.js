@@ -372,3 +372,232 @@ export const deleteWorkshopDetails = async (workID, employeeID, state) => {
     console.log(error);
   }
 };
+
+//update Guidlience
+export const updateResearchGuidlinesDetails = async (
+  employeId,
+  dataObj = {
+    ResearchGuidanceID: ResearchGuidanceID,
+    scholarName: scholarName,
+    yearOfAdmission: yearOfAdmission,
+    typeofAcademic: typeofAcademic,
+    topic: topic,
+    universityName: universityName,
+    status: status,
+  },
+  state
+) => {
+  const enc = encodeURIComponent(JSON.stringify(dataObj));
+  try {
+    const response = await fetch(
+      `${APIBaseUrl}faculty/insertResearchGuidance?employeeID=${employeId}&insertData=${enc}&state=${state}`,
+      {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+        },
+      }
+    );
+    const data = await response.json();
+    return data;
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+//delete Workshop details
+export const deleteGuidlinesDetails = async (resrhGuidanceID, state) => {
+  try {
+    const response = await fetch(
+      `${APIBaseUrl}faculty/deleteResearchGuidance?resrhGuidanceID=${resrhGuidanceID}&state=${state}`,
+      {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+        },
+      }
+    );
+    const data = await response.json();
+    return data;
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+//update Guidlience
+export const updateBookPublicationsDetails = async (
+  employeId,
+  dataObj = {
+    bookID: bookID,
+    bookTitlePublication: bookTitlePublication,
+    bookPublisherName: bookPublisherName,
+    bookPublicationType: bookPublicationType,
+    isbn: isbn,
+    bookyear: bookyear,
+    status: status,
+  },
+  state
+) => {
+  const enc = encodeURIComponent(JSON.stringify(dataObj));
+  try {
+    const response = await fetch(
+      `${APIBaseUrl}faculty/insertBookPublications?employeeID=${employeId}&insertData=${enc}&state=${state}`,
+      {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+        },
+      }
+    );
+    const data = await response.json();
+    return data;
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+//delete Workshop details
+export const deleteBookDetails = async (bookID, state) => {
+  try {
+    const response = await fetch(
+      `${APIBaseUrl}faculty/deleteBookPublications?bookID=${bookID}&state=${state}`,
+      {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+        },
+      }
+    );
+    const data = await response.json();
+    return data;
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+//update Guidlience
+export const updateContactDetails = async (
+  dataObj = {
+    mobileNumber: mobileNumber,
+    alternateMobile: alternateMobile,
+    email: email,
+    alternateEmail: alternateEmail,
+    address: address,
+    lastName: lastName,
+    fatherName: fatherName,
+    achievements: achievements,
+    surName: surName,
+    gender: gender,
+    prefix: prefix,
+    quinaryprogram: quinaryprogram,
+    password: password,
+    researchActivities: researchActivities,
+    department: department,
+    employeePrimaryId: employeePrimaryId,
+    quaternaryprogram: quaternaryprogram,
+    associationType: associationType,
+    dateOfBirth: dateOfBirth,
+    aadharNo: aadharNo,
+    tertiaryprogram: tertiaryprogram,
+    firstName: firstName,
+    secondaryprogram: secondaryprogram,
+    dateOfJoining: dateOfJoining,
+    employeeType: employeeType,
+    aicteId: aicteId,
+    senaryprogram: senaryprogram,
+    designation: designation,
+    jntuhID: jntuhID,
+    panCardNo: panCardNo,
+    username: username,
+    status: status,
+    septenaryprogram: septenaryprogram,
+    dept: dept,
+    dept1: dept1,
+    dept2: dept2,
+    dept3: dept3,
+    dept4: dept4,
+    dept5: dept5,
+  },
+  state
+) => {
+  const enc = encodeURIComponent(JSON.stringify(dataObj));
+  try {
+    const response = await fetch(
+      `${APIBaseUrl}faculty/updateRec?updateData=${enc}&state=${state}`,
+      {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+        },
+      }
+    );
+    const data = await response.json();
+    return data;
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+//update Profile
+export const updateProfileDetails = async (
+  dataObj = {
+    prefix: prefix,
+    firstName: firstName,
+    lastName: lastName,
+    surName: surName,
+    gender: gender,
+    dateOfBirth: dateOfBirth,
+    fatherName: fatherName,
+    employeeType: employeeType,
+    associationType: associationType,
+    dateOfJoining: dateOfJoining,
+    dateOfLeaving: dateOfLeaving,
+    aadharNo: aadharNo,
+    panCardNo: panCardNo,
+    jntuhID: jntuhID,
+    aicteId: aicteId,
+    achievements: achievements,
+    researchActivities: researchActivities,
+    mobileNumber: mobileNumber,
+    quinaryprogram: quinaryprogram,
+    password: password,
+    department: department,
+    email: email,
+    employeePrimaryId: employeePrimaryId,
+    alternateEmail: alternateEmail,
+    quaternaryprogram: quaternaryprogram,
+    address: address,
+    tertiaryprogram: tertiaryprogram,
+    secondaryprogram: secondaryprogram,
+    alternateMobile: alternateMobile,
+    senaryprogram: senaryprogram,
+    designation: designation,
+    username: username,
+    status: status,
+    septenaryprogram: septenaryprogram,
+    dept: dept,
+    dept1: dept1,
+    dept2: dept2,
+    dept3: dept3,
+    dept4: dept4,
+    dept5: dept5,
+  },
+  state
+) => {
+  const enc = encodeURIComponent(JSON.stringify(dataObj));
+  try {
+    const response = await fetch(
+      `${APIBaseUrl}faculty/updateRec?updateData=${enc}&state=${state}`,
+      {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+        },
+      }
+    );
+    const data = await response.json();
+    return data;
+  } catch (error) {
+    console.log(error);
+  }
+};

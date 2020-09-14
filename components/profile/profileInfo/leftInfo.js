@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import css from "@emotion/css";
 import moment from "moment";
+import Cookies from "js-cookie";
 import { COLORS } from "../../../constants";
 import Modal from "../profile-modals/updateProfile";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -23,13 +24,20 @@ import {
   faEdit,
 } from "@fortawesome/free-solid-svg-icons";
 
-const LeftInfo = ({ isProfileData }) => {
+const LeftInfo = ({ isProfileData, loadProfileData }) => {
   const [show, setShow] = useState(false);
   const pData = isProfileData && isProfileData.profile;
   console.log(pData);
-
-  const openModal = () => {
+  const ProfileId = Cookies.get("employeeID");
+  const [userData, setUserData] = useState({});
+  const [isAlert, setIsAlert] = useState(false);
+  const openModal = (data) => {
     setShow(!show);
+    setUserData(data);
+    if (!data || data === {} || data === null || data === undefined) {
+      setUserData({});
+    }
+    console.log("dataaa", data);
   };
 
   return (
@@ -57,93 +65,100 @@ const LeftInfo = ({ isProfileData }) => {
           {pData &&
             pData.length > 0 &&
             pData.map((item) => (
-              <p key={item} className="clearfix">
-                <span>
-                  <FontAwesomeIcon icon={faUser} /> Name
-                </span>
-                <span>{item.firstName}</span>
-                <span>
-                  <FontAwesomeIcon icon={faUserCircle} /> First Name
-                </span>
-                <span>-</span>
-                <span>
-                  <FontAwesomeIcon icon={faPen} /> Last Name
-                </span>
-                <span>{item.lastName}</span>
-                <span>
-                  <FontAwesomeIcon icon={faMarsDouble} /> Gender
-                </span>
-                <span>{item.gender}</span>
-                <span>
-                  <FontAwesomeIcon icon={faBirthdayCake} />
-                  Date of Birth
-                </span>
-                <span>{moment(item.dateOfBirth).format("DD/MM/YYYY")}</span>
-                <span>
-                  <FontAwesomeIcon icon={faUserLock} /> Father Name
-                </span>
-                <span>{item.fatherName}</span>
-                <span>
-                  <FontAwesomeIcon icon={faTv} /> Employee Type
-                </span>
-                <span>{item.employeeType}</span>
-                <span>
-                  <FontAwesomeIcon icon={faBuilding} /> Association Type
-                </span>
-                <span>{item.associationType}</span>
-                <span>
-                  <FontAwesomeIcon icon={faSuitcase} /> Designation
-                </span>
-                <span>{item.designation}</span>
-                <span>
-                  <FontAwesomeIcon icon={faCalendar} />
-                  Date of Joining
-                </span>
-                <span>{moment(item.dateOfJoining).format("DD/MM/YYYY")}</span>
-                <span>
-                  <FontAwesomeIcon icon={faCalendarCheck} /> Date of Leaving
-                </span>
-                <span>-</span>
-                <span>
-                  <FontAwesomeIcon icon={faPassport} />
-                  Aadhar Card No.
-                </span>
-                <span>{item.aadharNo}</span>
-                <span>
-                  <FontAwesomeIcon icon={faPassport} />
-                  PAN Card No.
-                </span>
-                <span>{item.panCardNo}</span>
-                <span>
-                  <FontAwesomeIcon icon={faHashtag} />
-                  JNTUA No.
-                </span>
-                <span>{item.jntuhID}</span>
-                <span>
-                  <FontAwesomeIcon icon={faHashtag} /> AICTE No.
-                </span>
-                <span>{item.aicteId}</span>
-                <span>
-                  <FontAwesomeIcon icon={faAward} />
-                  Achievements
-                </span>
-                <span>{item.achievements}</span>
-                <span>
-                  <FontAwesomeIcon icon={faSearch} /> Research Activities
-                </span>
-                <span>{item.researchActivities}</span>
-              </p>
+              <React.Fragment>
+                <p key={item} className="clearfix">
+                  <span>
+                    <FontAwesomeIcon icon={faUser} /> Name
+                  </span>
+                  <span>{item.firstName}</span>
+                  <span>
+                    <FontAwesomeIcon icon={faUserCircle} /> First Name
+                  </span>
+                  <span>-</span>
+                  <span>
+                    <FontAwesomeIcon icon={faPen} /> Last Name
+                  </span>
+                  <span>{item.lastName}</span>
+                  <span>
+                    <FontAwesomeIcon icon={faMarsDouble} /> Gender
+                  </span>
+                  <span>{item.gender}</span>
+                  <span>
+                    <FontAwesomeIcon icon={faBirthdayCake} />
+                    Date of Birth
+                  </span>
+                  <span>{moment(item.dateOfBirth).format("DD/MM/YYYY")}</span>
+                  <span>
+                    <FontAwesomeIcon icon={faUserLock} /> Father Name
+                  </span>
+                  <span>{item.fatherName}</span>
+                  <span>
+                    <FontAwesomeIcon icon={faTv} /> Employee Type
+                  </span>
+                  <span>{item.employeeType}</span>
+                  <span>
+                    <FontAwesomeIcon icon={faBuilding} /> Association Type
+                  </span>
+                  <span>{item.associationType}</span>
+                  <span>
+                    <FontAwesomeIcon icon={faSuitcase} /> Designation
+                  </span>
+                  <span>{item.designation}</span>
+                  <span>
+                    <FontAwesomeIcon icon={faCalendar} />
+                    Date of Joining
+                  </span>
+                  <span>{moment(item.dateOfJoining).format("DD/MM/YYYY")}</span>
+                  <span>
+                    <FontAwesomeIcon icon={faCalendarCheck} /> Date of Leaving
+                  </span>
+                  <span>-</span>
+                  <span>
+                    <FontAwesomeIcon icon={faPassport} />
+                    Aadhar Card No.
+                  </span>
+                  <span>{item.aadharNo}</span>
+                  <span>
+                    <FontAwesomeIcon icon={faPassport} />
+                    PAN Card No.
+                  </span>
+                  <span>{item.panCardNo}</span>
+                  <span>
+                    <FontAwesomeIcon icon={faHashtag} />
+                    JNTUA No.
+                  </span>
+                  <span>{item.jntuhID}</span>
+                  <span>
+                    <FontAwesomeIcon icon={faHashtag} /> AICTE No.
+                  </span>
+                  <span>{item.aicteId}</span>
+                  <span>
+                    <FontAwesomeIcon icon={faAward} />
+                    Achievements
+                  </span>
+                  <span>{item.achievements}</span>
+                  <span>
+                    <FontAwesomeIcon icon={faSearch} /> Research Activities
+                  </span>
+                  <span>{item.researchActivities}</span>
+                </p>
+                <button
+                  onClick={() => openModal(item)}
+                  type="button"
+                  className="bg-red-400 py-2 px-4 text-sm text-white font-bold rounded shadow mt-4 hover:bg-red-600 transition-all"
+                >
+                  <FontAwesomeIcon icon={faPen} /> Change Profile Information
+                </button>
+              </React.Fragment>
             ))}
-
-          <button
-            onClick={openModal}
-            type="button"
-            className="bg-red-400 py-2 px-4 text-sm text-white font-bold rounded shadow mt-4 hover:bg-red-600 transition-all"
-          >
-            <FontAwesomeIcon icon={faPen} /> Change Profile Information
-          </button>
         </div>
-        {show && <Modal openModal={openModal} />}
+        {show && (
+          <Modal
+            openModal={openModal}
+            userData={userData}
+            loadProfileData={loadProfileData}
+          />
+        )}
       </div>
     </React.Fragment>
   );

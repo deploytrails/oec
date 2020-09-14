@@ -2,12 +2,15 @@ import React from "react";
 import LeftInfo from "./profileInfo/leftInfo";
 import RightInfo from "./profileInfo/rightInfo";
 
-const ProfileInfo = ({ isProfileData }) => {
+const ProfileInfo = ({ isProfileData, loadProfileData }) => {
   return (
     <React.Fragment>
       <div className="clearfix px-6 pb-6">
         <div className="w-6/12 float-left">
-          <LeftInfo isProfileData={isProfileData} />
+          <LeftInfo
+            isProfileData={isProfileData}
+            loadProfileData={loadProfileData}
+          />
         </div>
 
         <div className="w-6/12 float-right">

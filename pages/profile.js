@@ -127,6 +127,9 @@ const Profile = () => {
             loadConfInfo={loadConfInfo}
             loadGrantsInfo={loadGrantsInfo}
             loadWorkshopInfo={loadWorkshopInfo}
+            loadResearchGuidInfo={loadResearchGuidInfo}
+            loadBookPubInfo={loadBookPubInfo}
+            loadProfileData={loadProfileData}
           />
         </div>
       </Layout>

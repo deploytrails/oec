@@ -28,6 +28,9 @@ const TabsWrap = ({
   loadConfInfo,
   loadGrantsInfo,
   loadWorkshopInfo,
+  loadResearchGuidInfo,
+  loadBookPubInfo,
+  loadProfileData,
 }) => {
   const [active, setActive] = useState(0);
   const [isMoreTabs, setIsMoreTabs] = useState(false);
@@ -135,10 +138,16 @@ const TabsWrap = ({
         </Tabs>
 
         <Content active={active === 0}>
-          <ProfileInfo isProfileData={isProfileData} />
+          <ProfileInfo
+            isProfileData={isProfileData}
+            loadProfileData={loadProfileData}
+          />
         </Content>
         <Content active={active === 1}>
-          <ContactInfo isProfileData={isProfileData} />
+          <ContactInfo
+            isProfileData={isProfileData}
+            loadProfileData={loadProfileData}
+          />
         </Content>
         <Content active={active === 2}>
           <QualificationInfo isQualificData={isQualificData} />
@@ -147,13 +156,22 @@ const TabsWrap = ({
           <WorkExp isExpeInfo={isExpeInfo} />
         </Content>
         <Content active={active === 4}>
-          <BookPublications isBookPubInfo={isBookPubInfo} />
+          <BookPublications
+            isBookPubInfo={isBookPubInfo}
+            loadBookPubInfo={loadBookPubInfo}
+          />
         </Content>
         <Content active={active === 5}>
-          <JournalPublications isBookPubInfo={isBookPubInfo} />
+          <JournalPublications
+            isBookPubInfo={isBookPubInfo}
+            loadBookPubInfo={loadBookPubInfo}
+          />
         </Content>
         <Content active={active === 6}>
-          <ResearchGuidlines isResearchGuidData={isResearchGuidData} />
+          <ResearchGuidlines
+            isResearchGuidData={isResearchGuidData}
+            loadResearchGuidInfo={loadResearchGuidInfo}
+          />
         </Content>
         <Content active={active === 7}>
           <WorkshopDetails
