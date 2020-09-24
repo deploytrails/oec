@@ -1,9 +1,8 @@
 import fetch from "cross-fetch";
-const APIBaseUrl = "http://15.206.245.247:8081/";
 export const getProfileData = async (employeId) => {
   try {
     const response = await fetch(
-      `${APIBaseUrl}faculty/ProfileServlet?employeeID=${employeId}`,
+      `${process.env.APIBaseUrl}faculty/ProfileServlet?employeeID=${employeId}`,
       {
         method: "POST",
         headers: {
@@ -21,7 +20,7 @@ export const getProfileData = async (employeId) => {
 export const getQualificationDetails = async (employeId) => {
   try {
     const response = await fetch(
-      `${APIBaseUrl}faculty/getDynamicQualification?employeeID=${employeId}`,
+      `${process.env.APIBaseUrl}faculty/getDynamicQualification?employeeID=${employeId}`,
       {
         method: "GET",
         headers: {
@@ -39,7 +38,7 @@ export const getQualificationDetails = async (employeId) => {
 export const getWorkExpDetails = async (employeId) => {
   try {
     const response = await fetch(
-      `${APIBaseUrl}faculty/getWorkExperience?employeeID=${employeId}`,
+      `${process.env.APIBaseUrl}faculty/getWorkExperience?employeeID=${employeId}`,
       {
         method: "GET",
         headers: {
@@ -57,7 +56,7 @@ export const getWorkExpDetails = async (employeId) => {
 export const getBookPubDetails = async (employeId) => {
   try {
     const response = await fetch(
-      `${APIBaseUrl}faculty/getBookPublications?employeeID=${employeId}`,
+      `${process.env.APIBaseUrl}faculty/getBookPublications?employeeID=${employeId}`,
       {
         method: "GET",
         headers: {
@@ -75,7 +74,7 @@ export const getBookPubDetails = async (employeId) => {
 export const getResearchGuidlines = async (employeId) => {
   try {
     const response = await fetch(
-      `${APIBaseUrl}faculty/getResearchGuidance?employeeID=${employeId}`,
+      `${process.env.APIBaseUrl}faculty/getResearchGuidance?employeeID=${employeId}`,
       {
         method: "GET",
         headers: {
@@ -93,7 +92,7 @@ export const getResearchGuidlines = async (employeId) => {
 export const getWorkshopDetails = async (employeId) => {
   try {
     const response = await fetch(
-      `${APIBaseUrl}faculty/getWorkShops?employeeID=${employeId}`,
+      `${process.env.APIBaseUrl}faculty/getWorkShops?employeeID=${employeId}`,
       {
         method: "GET",
         headers: {
@@ -111,7 +110,7 @@ export const getWorkshopDetails = async (employeId) => {
 export const getgrantsDetails = async (employeId) => {
   try {
     const response = await fetch(
-      `${APIBaseUrl}faculty/getGrantReceived?employeeID=${employeId}`,
+      `${process.env.APIBaseUrl}faculty/getGrantReceived?employeeID=${employeId}`,
       {
         method: "GET",
         headers: {
@@ -129,7 +128,7 @@ export const getgrantsDetails = async (employeId) => {
 export const getConferenceDetails = async (employeId) => {
   try {
     const response = await fetch(
-      `${APIBaseUrl}faculty/getConferenceDetails?employeeID=${employeId}`,
+      `${process.env.APIBaseUrl}faculty/getConferenceDetails?employeeID=${employeId}`,
       {
         method: "GET",
         headers: {
@@ -147,7 +146,7 @@ export const getConferenceDetails = async (employeId) => {
 export const getPhdDetails = async (employeId) => {
   try {
     const response = await fetch(
-      `${APIBaseUrl}faculty/getPhdDetails?employeeID=${employeId}`,
+      `${process.env.APIBaseUrl}faculty/getPhdDetails?employeeID=${employeId}`,
       {
         method: "GET",
         headers: {
@@ -180,7 +179,7 @@ export const updatePhdDetails = async (
   const enc = encodeURIComponent(JSON.stringify(dataObj));
   try {
     const response = await fetch(
-      `${APIBaseUrl}faculty/insertPhdDetails?employeeID=${employeId}&insertData=${enc}`,
+      `${process.env.APIBaseUrl}faculty/insertPhdDetails?employeeID=${employeId}&insertData=${enc}`,
       {
         method: "GET",
         headers: {
@@ -198,7 +197,7 @@ export const updatePhdDetails = async (
 export const deletePhdDetails = async (phdDetailsId) => {
   try {
     const response = await fetch(
-      `${APIBaseUrl}faculty/deletePhdDetails?phdDetailsID=${phdDetailsId}`,
+      `${process.env.APIBaseUrl}faculty/deletePhdDetails?phdDetailsID=${phdDetailsId}`,
       {
         method: "GET",
         headers: {
@@ -235,7 +234,7 @@ export const updateConfDetails = async (
   const enc = encodeURIComponent(JSON.stringify(dataObj));
   try {
     const response = await fetch(
-      `${APIBaseUrl}faculty/insertConferenceDetails?employeeID=${employeId}&insertData=${enc}&deptId=${deptId}&state=${state}`,
+      `${process.env.APIBaseUrl}faculty/insertConferenceDetails?employeeID=${employeId}&insertData=${enc}&deptId=${deptId}&state=${state}`,
       {
         method: "GET",
         headers: {
@@ -253,7 +252,7 @@ export const updateConfDetails = async (
 export const deleteConferenceDetails = async (conferenceID) => {
   try {
     const response = await fetch(
-      `${APIBaseUrl}faculty/deleteConference?conferenceID=${conferenceID}`,
+      `${process.env.APIBaseUrl}faculty/deleteConference?conferenceID=${conferenceID}`,
       {
         method: "GET",
         headers: {
@@ -287,7 +286,7 @@ export const updateGrantDetails = async (
   const enc = encodeURIComponent(JSON.stringify(dataObj));
   try {
     const response = await fetch(
-      `${APIBaseUrl}faculty/addGrantReceived?employeeID=${employeId}&insertData=${enc}&state=${state}`,
+      `${process.env.APIBaseUrl}faculty/addGrantReceived?employeeID=${employeId}&insertData=${enc}&state=${state}`,
       {
         method: "GET",
         headers: {
@@ -306,7 +305,7 @@ export const updateGrantDetails = async (
 export const deleteGrantDetails = async (grantrcvdID) => {
   try {
     const response = await fetch(
-      `${APIBaseUrl}faculty/deleteGrantReceived?grantrcvdID=${grantrcvdID}`,
+      `${process.env.APIBaseUrl}faculty/deleteGrantReceived?grantrcvdID=${grantrcvdID}`,
       {
         method: "GET",
         headers: {
@@ -339,7 +338,7 @@ export const updateWorkshopDetails = async (
   const enc = encodeURIComponent(JSON.stringify(dataObj));
   try {
     const response = await fetch(
-      `${APIBaseUrl}faculty/insertWorkShops?employeeID=${employeId}&insertData=${enc}&state=${state}`,
+      `${process.env.APIBaseUrl}faculty/insertWorkShops?employeeID=${employeId}&insertData=${enc}&state=${state}`,
       {
         method: "GET",
         headers: {
@@ -358,7 +357,7 @@ export const updateWorkshopDetails = async (
 export const deleteWorkshopDetails = async (workID, employeeID, state) => {
   try {
     const response = await fetch(
-      `${APIBaseUrl}faculty/deleteWorkShops?workID=${workID}&employeeID=${employeeID}&state=${state}`,
+      `${process.env.APIBaseUrl}faculty/deleteWorkShops?workID=${workID}&employeeID=${employeeID}&state=${state}`,
       {
         method: "GET",
         headers: {
@@ -390,7 +389,7 @@ export const updateResearchGuidlinesDetails = async (
   const enc = encodeURIComponent(JSON.stringify(dataObj));
   try {
     const response = await fetch(
-      `${APIBaseUrl}faculty/insertResearchGuidance?employeeID=${employeId}&insertData=${enc}&state=${state}`,
+      `${process.env.APIBaseUrl}faculty/insertResearchGuidance?employeeID=${employeId}&insertData=${enc}&state=${state}`,
       {
         method: "GET",
         headers: {
@@ -409,7 +408,7 @@ export const updateResearchGuidlinesDetails = async (
 export const deleteGuidlinesDetails = async (resrhGuidanceID, state) => {
   try {
     const response = await fetch(
-      `${APIBaseUrl}faculty/deleteResearchGuidance?resrhGuidanceID=${resrhGuidanceID}&state=${state}`,
+      `${process.env.APIBaseUrl}faculty/deleteResearchGuidance?resrhGuidanceID=${resrhGuidanceID}&state=${state}`,
       {
         method: "GET",
         headers: {
@@ -441,7 +440,7 @@ export const updateBookPublicationsDetails = async (
   const enc = encodeURIComponent(JSON.stringify(dataObj));
   try {
     const response = await fetch(
-      `${APIBaseUrl}faculty/insertBookPublications?employeeID=${employeId}&insertData=${enc}&state=${state}`,
+      `${process.env.APIBaseUrl}faculty/insertBookPublications?employeeID=${employeId}&insertData=${enc}&state=${state}`,
       {
         method: "GET",
         headers: {
@@ -460,7 +459,7 @@ export const updateBookPublicationsDetails = async (
 export const deleteBookDetails = async (bookID, state) => {
   try {
     const response = await fetch(
-      `${APIBaseUrl}faculty/deleteBookPublications?bookID=${bookID}&state=${state}`,
+      `${process.env.APIBaseUrl}faculty/deleteBookPublications?bookID=${bookID}&state=${state}`,
       {
         method: "GET",
         headers: {
@@ -523,7 +522,7 @@ export const updateContactDetails = async (
   const enc = encodeURIComponent(JSON.stringify(dataObj));
   try {
     const response = await fetch(
-      `${APIBaseUrl}faculty/updateRec?updateData=${enc}&state=${state}`,
+      `${process.env.APIBaseUrl}faculty/updateRec?updateData=${enc}&state=${state}`,
       {
         method: "GET",
         headers: {
@@ -587,7 +586,7 @@ export const updateProfileDetails = async (
   const enc = encodeURIComponent(JSON.stringify(dataObj));
   try {
     const response = await fetch(
-      `${APIBaseUrl}faculty/updateRec?updateData=${enc}&state=${state}`,
+      `${process.env.APIBaseUrl}faculty/updateRec?updateData=${enc}&state=${state}`,
       {
         method: "GET",
         headers: {
