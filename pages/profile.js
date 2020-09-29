@@ -11,7 +11,7 @@ import {
   getWorkshopDetails,
   getgrantsDetails,
   getConferenceDetails,
-  getPhdDetails,
+  getPhdDetails
 } from "../services/profileService";
 
 const Profile = () => {
@@ -89,6 +89,10 @@ const Profile = () => {
   }, []);
 
   useEffect(() => {
+    loadExpInfo();
+  }, []);
+
+  useEffect(() => {
     loadResearchGuidInfo();
   }, []);
 
@@ -129,6 +133,8 @@ const Profile = () => {
             loadWorkshopInfo={loadWorkshopInfo}
             loadResearchGuidInfo={loadResearchGuidInfo}
             loadBookPubInfo={loadBookPubInfo}
+            loadQualificationInfo={loadQualificationInfo}
+            loadExpInfo={loadExpInfo}
             loadProfileData={loadProfileData}
           />
         </div>
