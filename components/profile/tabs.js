@@ -30,11 +30,13 @@ const TabsWrap = ({
   loadWorkshopInfo,
   loadResearchGuidInfo,
   loadBookPubInfo,
-  loadProfileData,
+  loadQualificationInfo,
+  loadExpInfo,
+  loadProfileData
 }) => {
   const [active, setActive] = useState(0);
   const [isMoreTabs, setIsMoreTabs] = useState(false);
-  const handleClick = (e) => {
+  const handleClick = e => {
     const index = parseInt(e.target.id, 0);
     if (index !== active) {
       setActive(index);
@@ -150,10 +152,14 @@ const TabsWrap = ({
           />
         </Content>
         <Content active={active === 2}>
-          <QualificationInfo isQualificData={isQualificData} />
+          <QualificationInfo
+            isQualificData={isQualificData}
+            loadQualificationInfo={loadQualificationInfo}
+            isProfileData={isProfileData}
+          />
         </Content>
         <Content active={active === 3}>
-          <WorkExp isExpeInfo={isExpeInfo} />
+          <WorkExp isExpeInfo={isExpeInfo} loadExpInfo={loadExpInfo} />
         </Content>
         <Content active={active === 4}>
           <BookPublications

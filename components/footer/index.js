@@ -5,7 +5,7 @@ const Footer = () => {
   return (
     <React.Fragment>
       <div
-        className="block py-8 px-4"
+        className="block py-2 px-4"
         css={css`
           background-color: ${COLORS.BGBGRAY};
           border-top: 1px solid ${COLORS.GRAY_LIGHTMEDIUM};

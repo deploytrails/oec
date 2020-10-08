@@ -4,17 +4,36 @@ import * as TABLE from "../../dashboards/styles/table.styles";
 import PulseLoader from "react-spinners/PulseLoader";
 import WorkExpModal from "../../profile/profile-modals/workexpModals";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import ConfirmationModal from "../../General/confirmation-modal";
+import { deleteWorkExpDetails } from "../../../services/profileService";
+import { useSnackbar } from "react-simple-snackbar";
 import {
   faSearch,
   faEdit,
   faTrashAlt,
-  faPlus,
+  faPlus
 } from "@fortawesome/free-solid-svg-icons";
 
-const WorkExp = ({ isExpeInfo }) => {
+const WorkExp = ({ isExpeInfo, loadExpInfo }) => {
   const [show, setShow] = useState(false);
-  const openModal = () => {
+  const [expList, setExpList] = useState({});
+  const [isAlert, setIsAlert] = useState(false);
+  const [openSnackbar, closeSnackbar] = useSnackbar();
+  const openModal = data => {
     setShow(!show);
+    setExpList(data);
+    if (!data || data === {} || data === null || data === undefined) {
+      setExpList({});
+    }
+  };
+  const openAlertModal = () => {
+    setIsAlert(!isAlert);
+  };
+  const deleteExperienceRecord = async id => {
+    const expData = await deleteWorkExpDetails(id);
+    loadExpInfo();
+    openSnackbar("Successfully deleted Work Experience record");
+    setIsAlert(!isAlert);
   };
   return (
     <React.Fragment>
@@ -40,8 +59,8 @@ const WorkExp = ({ isExpeInfo }) => {
 
           {isExpeInfo &&
             isExpeInfo.length &&
-            isExpeInfo.map((expInfo) => (
-              <TABLE.TableTRR key={expInfo.collegename}>
+            isExpeInfo.map(expInfo => (
+              <TABLE.TableTRR key={expInfo.workExperienceId}>
                 <TABLE.TableTdd>{expInfo.collegename}</TABLE.TableTdd>
                 <TABLE.TableTdd>{expInfo.designation}</TABLE.TableTdd>
                 <TABLE.TableTdd>{expInfo.responsibilites}</TABLE.TableTdd>
@@ -53,16 +72,37 @@ const WorkExp = ({ isExpeInfo }) => {
                 </TABLE.TableTdd>
                 <TABLE.TableTdd>
                   <span className="cursor-pointer mr-4 text-blue-400">
-                    <FontAwesomeIcon icon={faEdit} />
+                    <FontAwesomeIcon
+                      icon={faEdit}
+                      onClick={() => openModal(expInfo)}
+                    />
                   </span>
                   <span className="cursor-pointer text-red-400">
-                    <FontAwesomeIcon icon={faTrashAlt} />
+                    <FontAwesomeIcon
+                      icon={faTrashAlt}
+                      onClick={openAlertModal}
+                    />
                   </span>
+                  {isAlert && (
+                    <ConfirmationModal
+                      deleteMessage="Work Experience Details"
+                      deleteRecord={() =>
+                        deleteExperienceRecord(expInfo.workExperienceId)
+                      }
+                      openAlertModal={openAlertModal}
+                    />
+                  )}
                 </TABLE.TableTdd>
               </TABLE.TableTRR>
             ))}
         </TABLE.TableWrapper>
-        {show && <WorkExpModal openModal={openModal} />}
+        {show && (
+          <WorkExpModal
+            openModal={openModal}
+            expList={expList}
+            loadExpInfo={loadExpInfo}
+          />
+        )}
       </div>
     </React.Fragment>
   );

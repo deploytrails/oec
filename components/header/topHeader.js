@@ -11,6 +11,7 @@ import {
   faCross,
   faTimes,
   faSignOutAlt,
+  faChevronLeft
 } from "@fortawesome/free-solid-svg-icons";
 
 const TopHeader = () => {
@@ -42,6 +43,9 @@ const TopHeader = () => {
     navId.style.transition = "all 0.3s ease-in-out";
     wrapId.style.transition = "all 0.3s ease-in-out";
   };
+
+  React.useEffect(() => cloasenav(), []);
+
   //goto Profile page
   const gotoProfile = () => {
     router.push("/profile");
@@ -61,8 +65,15 @@ const TopHeader = () => {
     <React.Fragment>
       <div className="py-4 px-6 clearfix shadow bg-white">
         <div className="float-left cursor-pointer">
-          {isNavClosed && <FontAwesomeIcon icon={faTimes} onClick={openNav} />}
-          {isNavOpen && <FontAwesomeIcon icon={faBars} onClick={cloasenav} />}
+          {isNavClosed && (
+            <strong onClick={openNav}>
+              OEC&nbsp;
+              <FontAwesomeIcon icon={faBars} />
+            </strong>
+          )}
+          {isNavOpen && (
+            <FontAwesomeIcon icon={faChevronLeft} onClick={cloasenav} />
+          )}
         </div>
         <div className="float-right text-gray-600">
           <span className="mr-20">
