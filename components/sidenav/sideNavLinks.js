@@ -33,7 +33,7 @@ import {
   faRegistered,
   faObjectGroup,
   faLayerGroup,
-  faAddressCard,
+  faAddressCard
 } from "@fortawesome/free-solid-svg-icons";
 
 const SideNavLinks = () => {
@@ -293,8 +293,22 @@ const SideNavLinks = () => {
                 }
               `}
             >
-              <li>
-                <FontAwesomeIcon icon={faGraduationCap} /> Assigned Students
+              <li
+                css={
+                  router.pathname === "/mentoring/assignedStudents"
+                    ? css`
+                        color: ${COLORS.GREEN};
+                      `
+                    : css`
+                        color: ${COLORS.TEXTGRAY};
+                      `
+                }
+              >
+                <Link href="/mentoring/assignedStudents">
+                  <a>
+                    <FontAwesomeIcon icon={faGraduationCap} /> Assigned Students
+                  </a>
+                </Link>
               </li>
               <li>
                 <FontAwesomeIcon icon={faCompressArrowsAlt} /> Discrepancy
