@@ -4,6 +4,7 @@ export const getProfileData = async (employeId) => {
     const response = await fetch(
       `${process.env.APIBaseUrl}faculty/ProfileServlet?employeeID=${employeId}`,
       {
+        mode: "no-cors",
         method: "POST",
         headers: {
           "Content-Type": "application/json",

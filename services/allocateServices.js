@@ -23,15 +23,32 @@ export const getAttendanceList = async (facultyId, selectedDate, operation) => {
   }
 };
 
-export const getAttendanceListById = async (employeeID, operation) => {
+export const getAttendanceListById = async (
+  classDateId,
+  courseId,
+  coursecode,
+  facultyId,
+  operation,
+  sectionId,
+  semesterId
+) => {
   try {
     const response = await fetch(
-      `${process.env.APIBaseUrl}faculty/AttendanceServlet?employeeID=${employeeID}&operation=${operation}`,
+      `${process.env.APIBaseUrl}faculty/AttendanceServletForStudents`,
       {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
         },
+        body: JSON.stringify({
+          classDateId,
+          courseId,
+          coursecode,
+          facultyId,
+          operation,
+          sectionId,
+          semesterId,
+        }),
       }
     );
     const data = await response.json();
