@@ -208,8 +208,22 @@ const SideNavLinks = () => {
                   </a>
                 </Link>
               </li>
-              <li>
+              <li 
+               css={
+                  router.pathname === "/allocated-cources/marksEntry"
+                    ? css`
+                        color: ${COLORS.GREEN};
+                      `
+                    : css`
+                        color: ${COLORS.TEXTGRAY};
+                      `
+                }
+              >
+                <Link href="/allocated-cources/marksEntry">
+                  <a>
                 <FontAwesomeIcon icon={faNewspaper} /> Mark Entry
+                </a>
+                </Link>
               </li>
               <li>
                 <FontAwesomeIcon icon={faEdit} /> Assignment Creation
