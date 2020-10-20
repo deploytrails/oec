@@ -5,6 +5,8 @@ import * as STYLES from "../../../components/General/modalStyles";
 import css from "@emotion/css";
 import CourseFacultyData from "./courseFacultyDetails";
 import DiscrepancyData from "./discrepancy";
+import StudentDetails from "./studentDetails";
+import CommunicationDetails from "./communicationDetails";
 
 const MoreDetailsModal = ({ toggleModal, activeButton, studentModelData }) => {
   const moreDetailsList = [
@@ -35,10 +37,10 @@ const MoreDetailsModal = ({ toggleModal, activeButton, studentModelData }) => {
           <DiscrepancyData studentModelData={studentModelData} />
         )}
         {activeButton === 2 && (
-          <CourseFacultyData studentModelId={studentModelData} />
+          <StudentDetails studentModelData={studentModelData} />
         )}
         {activeButton === 3 && (
-          <CourseFacultyData studentModelId={studentModelData} />
+          <CommunicationDetails studentModelData={studentModelData} />
         )}
       </STYLES.PopupWrapper>
     </STYLES.PopupMask>
