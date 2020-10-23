@@ -3,7 +3,7 @@ import { css } from "@emotion/core";
 import { withRouter } from "next/router";
 import Head from "next/head";
 
-import App from "./App";
+import App from "./app";
 import SideNav from "./sidenav";
 import Header from "./header";
 import Footer from "./footer";
