@@ -264,3 +264,45 @@ export const getSemSectionStudents = async sectionID => {
     console.log(error);
   }
 };
+
+export const getDiscrepancyModelDetails = async (enrollID, FacultyID) => {
+  try {
+    const response = await fetch(
+      `${process.env.APIBaseUrl}faculty/DiscrepancyServlet/ForDiscrepancyDetails?enrollID=${enrollID}&FacultyID=${FacultyID}`,
+      {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json"
+        }
+      }
+    );
+
+    return await response.json();
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+export const raiseIssueReq = async (
+  enrollID,
+  FacultyID,
+  courseCode,
+  issuedetail,
+  date
+) => {
+  try {
+    const response = await fetch(
+      `${process.env.APIBaseUrl}faculty/DiscrepancyServlet/ForIssueReq?studentID=${enrollID}&FacultyID=${FacultyID}&courseCode=${courseCode}&issuedetail=${issuedetail}&date=${date}`,
+      {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json"
+        }
+      }
+    );
+    console.log(response);
+    return await response.json();
+  } catch (error) {
+    console.log(error);
+  }
+};

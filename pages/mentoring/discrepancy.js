@@ -16,7 +16,8 @@ const DiscrepancyIssue = () => {
   const [semSecList, setSemSecList] = useState([]);
   const ProfileId = Cookies.get("employeeID");
   const [studentList, setStudentList] = useState();
-  const [isEnrollStudentId, setIsEnrollStudentId] = useState();
+  const [isEnrollStudentData, setIsEnrollStudentData] = useState();
+
   const [show, setShow] = useState(false);
   const [isSemSectionId, setIsSemSectionId] = useState();
 
@@ -25,24 +26,24 @@ const DiscrepancyIssue = () => {
     setSemSecList(data?.DiscrepancyData.ClassRoster);
   };
 
-  const getStudents = async () => {
-    const std = await getSemSectionStudents(isSemSectionId);
+  const getStudents = async id => {
+    const std = await getSemSectionStudents(id);
     setStudentList(std?.studentobj.EnrollStudentDetails);
   };
 
   const handleChange = e => {
     setIsSemSectionId(e.target.value);
-    getStudents();
+    getStudents(e.target.value);
   };
   const openModal = () => {
     setShow(true);
   };
   const closeModal = () => {
     setShow(false);
-    setIsEnrollStudentId();
+    setIsEnrollStudentData();
   };
-  const openDiscrepancyModel = id => {
-    setIsEnrollStudentId(id);
+  const openDiscrepancyModel = studentData => {
+    setIsEnrollStudentData(studentData);
     openModal();
   };
 
@@ -127,10 +128,14 @@ const DiscrepancyIssue = () => {
 
                 <TABLE.TableTdd>
                   <button
-                    onClick={() =>
-                      openDiscrepancyModel(student[0].enrollstudentId)
+                    disabled={student[0].issuestatus === "Y"}
+                    onClick={() => openDiscrepancyModel(student[0])}
+                    className={
+                      "py-2 px-4 rounded mr-2 text-center text-white mb-4 focus:outline-none " +
+                      (student[0].issuestatus === "Y"
+                        ? "bg-gray-400"
+                        : "bg-blue-400 hover:bg-blue-500")
                     }
-                    className="py-2 px-4 rounded  bg-blue-400 mr-2 text-center text-white mb-4 hover:bg-blue-500 focus:outline-none"
                   >
                     Discrepancy &nbsp;
                     <FontAwesomeIcon icon={faStreetView} />
@@ -142,8 +147,9 @@ const DiscrepancyIssue = () => {
         {show && (
           <DiscrepancyModal
             closeModal={closeModal}
-            studentEnrollId={isEnrollStudentId}
+            isEnrollStudentData={isEnrollStudentData}
             getStudents={getStudents}
+            isSemSectionId={isSemSectionId}
           />
         )}
       </Layout>

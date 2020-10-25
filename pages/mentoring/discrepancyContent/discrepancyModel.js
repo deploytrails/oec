@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import {
-  getSelectedComDetail,
-  updateComDetail
+  getDiscrepancyModelDetails,
+  raiseIssueReq
 } from "../../../services/mentoringServices";
 import css from "@emotion/css";
 import { Formik } from "formik";
@@ -13,8 +13,35 @@ import moment from "moment";
 import * as STYLES from "../../../components/General/modalStyles";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faTimes } from "@fortawesome/free-solid-svg-icons";
+import { useSnackbar } from "react-simple-snackbar";
 
-const DiscrepancyModal = ({ studentEnrollId, closeModal, getStudents }) => {
+const DiscrepancyModal = ({
+  closeModal,
+  isEnrollStudentData,
+  getStudents,
+  isSemSectionId
+}) => {
+  const desCreateSchema = Yup.object().shape({
+    issuedetail: Yup.string().required()
+  });
+  const [openSnackbar, closeSnackbar] = useSnackbar();
+  const [courseDetailsList, setCourseDetailsList] = useState([]);
+  const employeeName = Cookies.get("userName");
+  const ProfileId = Cookies.get("employeeID");
+  const currentDate = moment().format("MM-DD-YYYY");
+
+  const getModelSupportData = async () => {
+    const data = await getDiscrepancyModelDetails(
+      isEnrollStudentData.enrollstudentId,
+      ProfileId
+    );
+    setCourseDetailsList(data?.courseDetails);
+  };
+
+  useEffect(() => {
+    getModelSupportData();
+  }, []);
+
   return (
     <STYLES.PopupMask>
       <STYLES.PopupWrapper>
@@ -28,38 +55,23 @@ const DiscrepancyModal = ({ studentEnrollId, closeModal, getStudents }) => {
         </STYLES.PopupTitle>
         <Formik
           initialValues={{
-            mentorCommuPrimaryID: isComData?.mentorCommuPrimaryID,
-            FacultyName: isComData?.FacultyName,
-            studentName: isComData?.studentName,
-            commuNo: 3,
-            commuDate: isComData?.commuDate,
-            commuMode: isComData?.commuMode,
-            commuType: isComData?.commuType,
-            commuActionItem: isComData?.commuActionItem,
-            commuActionStatus: isComData?.commuActionStatus,
-            commuDetails: isComData?.commuDetails,
-            commuRemarks: isComData?.commuRemarks,
-            recordStatus: isComData?.recordStatus
+            courseCode: "",
+            issuedetail: ""
           }}
-          validationSchema={comCreateSchema}
+          validationSchema={desCreateSchema}
           onSubmit={values => {
             console.log(values);
-            updateComDetail(
-              JSON.stringify(values),
-              studentModelData.enrollstudentId,
-              "NotRecordSaved",
+            raiseIssueReq(
+              isEnrollStudentData.enrollstudentId,
               ProfileId,
-              3,
-              "2020-08-03"
+              values.courseCode,
+              values.issuedetail,
+              currentDate
             ).then(data => {
-              if (data === true) {
-                openSnackbar(
-                  expList?.workExperienceId
-                    ? "Communication has been completed successfully!"
-                    : "New communication has been started!"
-                );
-                loadExpInfo();
-                openModal();
+              if (data.IssueStatus === "inserted") {
+                openSnackbar("Issue Requested!");
+                getStudents(isSemSectionId);
+                closeModal();
               }
             });
           }}
@@ -92,228 +104,70 @@ const DiscrepancyModal = ({ studentEnrollId, closeModal, getStudents }) => {
                 `}
               >
                 <p>
+                  <span>Student Name</span>
+                  <span>{isEnrollStudentData.firstName}</span>
                   <span>Faculty Name</span>
                   <span>{employeeName}</span>
-                  <span>Student Name</span>
-                  <span>{studentModelData.firstName}</span>
-                  <span>Communication No.</span>
+                  <span>Course*</span>
                   <span>
-                    <FormInput
-                      type="number"
-                      name="commuNo"
+                    <select
                       onChange={handleChange}
                       onBlur={handleBlur}
-                      value={values.commuNo}
-                      css={
-                        errors.commuNo &&
-                        touched.commuNo &&
-                        errors.commuNo &&
-                        css`
-                          border: 1px solid red;
-                        `
-                      }
-                    />
+                      name="courseCode"
+                      css={css`
+                        display: block;
+                        width: 100%;
+                        height: 42px;
+                        padding: 0px 10px;
+                        margin-bottom: 0px;
+                        box-sizing: border-box;
+                        font-family: "Open Sans", sans-serif;
+                        border: 1px solid ${COLORS.GRAY_DARK};
+                        -webkit-border-radius: 4px;
+                        -moz-border-radius: 4px;
+                        -ms-border-radius: 4px;
+                        border-radius: 4px;
+                        font-size: 14px;
+                        &:focus {
+                          outline: none;
+                        }
+                      `}
+                    >
+                      {courseDetailsList &&
+                        courseDetailsList.map(opt => (
+                          <option key={opt} value={opt.coursePrimaryId}>
+                            {opt.courseCode}
+                          </option>
+                        ))}
+                    </select>
                   </span>
                   <span>Date</span>
+                  <span>{currentDate}</span>
+                  <span>Detail's of Discrepancy/Issue*</span>
                   <span>
                     <FormInput
-                      type="date"
-                      name="commuDate"
+                      type="text"
+                      name="issuedetail"
                       onChange={handleChange}
                       onBlur={handleBlur}
-                      value={moment(values.commuDate).format("YYYY-MM-DD")}
+                      value={values.issuedetail}
                       css={
-                        errors.commuDate &&
-                        touched.commuDate &&
-                        errors.commuDate &&
+                        errors.issuedetail &&
+                        touched.issuedetail &&
+                        errors.issuedetail &&
                         css`
                           border: 1px solid red;
                         `
                       }
-                    />
-                  </span>
-                  <span>Communication Mode</span>
-                  <span>
-                    <select
-                      onChange={handleChange}
-                      onBlur={handleBlur}
-                      name="commuMode"
-                      css={css`
-                        display: block;
-                        width: 100%;
-                        height: 42px;
-                        padding: 0px 10px;
-                        margin-bottom: 0px;
-                        box-sizing: border-box;
-                        font-family: "Open Sans", sans-serif;
-                        border: 1px solid ${COLORS.GRAY_DARK};
-                        -webkit-border-radius: 4px;
-                        -moz-border-radius: 4px;
-                        -ms-border-radius: 4px;
-                        border-radius: 4px;
-                        font-size: 14px;
-                        &:focus {
-                          outline: none;
-                        }
-                      `}
-                    >
-                      {comModeList &&
-                        comModeList.map(opt => (
-                          <option
-                            key={opt}
-                            value={
-                              values.commuMode === opt ? values.commuMode : opt
-                            }
-                            selected={
-                              values.commuMode === opt ? values.commuMode : opt
-                            }
-                          >
-                            {opt}
-                          </option>
-                        ))}
-                    </select>
-                  </span>
-                  <span>Communication Type</span>
-                  <span>
-                    <select
-                      onChange={handleChange}
-                      onBlur={handleBlur}
-                      name="commuType"
-                      css={css`
-                        display: block;
-                        width: 100%;
-                        height: 42px;
-                        padding: 0px 10px;
-                        margin-bottom: 0px;
-                        box-sizing: border-box;
-                        font-family: "Open Sans", sans-serif;
-                        border: 1px solid ${COLORS.GRAY_DARK};
-                        -webkit-border-radius: 4px;
-                        -moz-border-radius: 4px;
-                        -ms-border-radius: 4px;
-                        border-radius: 4px;
-                        font-size: 14px;
-                        &:focus {
-                          outline: none;
-                        }
-                      `}
-                    >
-                      {comTypeList &&
-                        comTypeList.map(opt => (
-                          <option
-                            key={opt}
-                            value={
-                              values.commuType === opt ? values.commuType : opt
-                            }
-                            selected={
-                              values.commuType === opt ? values.commuType : opt
-                            }
-                          >
-                            {opt}
-                          </option>
-                        ))}
-                    </select>
-                  </span>
-                  <span>Action Item</span>
-                  <span>
-                    <FormInput
-                      type="text"
-                      name="commuActionItem"
-                      onChange={handleChange}
-                      onBlur={handleBlur}
-                      value={values.commuActionItem}
-                      css={
-                        errors.commuActionItem &&
-                        touched.commuActionItem &&
-                        errors.commuActionItem &&
-                        css`
-                          border: 1px solid red;
-                        `
-                      }
-                    />
-                  </span>
-                  <span>Action Item Status</span>
-                  <span>
-                    <select
-                      onChange={handleChange}
-                      onBlur={handleBlur}
-                      name="commuActionStatus"
-                      css={css`
-                        display: block;
-                        width: 100%;
-                        height: 42px;
-                        padding: 0px 10px;
-                        margin-bottom: 0px;
-                        box-sizing: border-box;
-                        font-family: "Open Sans", sans-serif;
-                        border: 1px solid ${COLORS.GRAY_DARK};
-                        -webkit-border-radius: 4px;
-                        -moz-border-radius: 4px;
-                        -ms-border-radius: 4px;
-                        border-radius: 4px;
-                        font-size: 14px;
-                        &:focus {
-                          outline: none;
-                        }
-                      `}
-                    >
-                      {comActionList &&
-                        comActionList.map(opt => (
-                          <option
-                            key={opt}
-                            value={
-                              values.commuActionStatus === opt
-                                ? values.commuActionStatus
-                                : opt
-                            }
-                            selected={
-                              values.commuActionStatus === opt
-                                ? values.commuActionStatus
-                                : opt
-                            }
-                          >
-                            {opt}
-                          </option>
-                        ))}
-                    </select>
-                  </span>
-                  <span>Communication Details</span>
-                  <span>
-                    <FormInput
-                      type="text"
-                      name="commuDetails"
-                      onChange={handleChange}
-                      onBlur={handleBlur}
-                      value={values.commuDetails}
-                      css={
-                        errors.commuDetails &&
-                        touched.commuDetails &&
-                        errors.commuDetails &&
-                        css`
-                          border: 1px solid red;
-                        `
-                      }
-                    />
-                  </span>
-                  <span>Remarks</span>
-                  <span>
-                    <FormInput
-                      type="text"
-                      name="commuRemarks"
-                      onChange={handleChange}
-                      onBlur={handleBlur}
-                      value={values.commuRemarks}
                     />
                   </span>
                   <span></span>
                   <span>
                     <button
                       type="submit"
-                      className="bg-green-400 px-3 py-2 rounded text-white float-right"
+                      className="bg-red-400 px-3 py-2 rounded text-white float-right"
                     >
-                      {isComData?.mentorCommuPrimaryID
-                        ? "Update Communication Details"
-                        : " Save Communication Details"}
+                      Issue Request
                     </button>
                   </span>
                 </p>
