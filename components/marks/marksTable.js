@@ -1,17 +1,39 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { css } from "@emotion/core";
 import moment from "moment";
 import Cookies from "js-cookie";
 import Layout from "../../components/layout";
+import ViewMarksEntry from "../../pages/allocated-cources/marks-entry-view";
+import {
+    getMarksByFacultyId,
+    getMarksToViewByCourseId
+} from "../../services/marksEntryServices";
 
 
 
 const MarksTable = ({ marksData, examType }) => {
 
+    const [isMarksView, setMarksView] = useState(false);
+    const [studentMarks, setStudentMarks] = useState({});
+
     const uniqueTypes = [];
     marksData.filter(marks => marks.examType === examType).map(filteredMarks => (
         uniqueTypes.push(filteredMarks)
     ));
+
+    const toggleMarksView = () => {
+        setMarksView(true);
+    };
+
+    const closeMarksView = () => {
+        setMarksView(false);
+    };
+
+    const openMarksViewData = (data) => {
+        setStudentMarks(data);
+        toggleMarksView();
+        console.log("MarksToView: ", studentMarks);
+    };
 
     return (
 
@@ -78,7 +100,7 @@ const MarksTable = ({ marksData, examType }) => {
                                                 x?.courseCode,
                                                 x?.examTypeID
                                             ).then((data) => {
-                                                //openClassAttendanceData(data);
+                                                openMarksViewData(data);
                                                 console.log("dataaa", data);
                                             })
                                         }
@@ -98,7 +120,12 @@ const MarksTable = ({ marksData, examType }) => {
                     ))}
                 </table>
                 : <p className="w-full block bg-white shadow-lg mb-4 border text-center" > {examType} Exams are not scheduled yet.</p>}
-
+            {isMarksView && (
+                <ViewMarksEntry
+                    closeMarksView={closeMarksView}
+                    studentMarks={studentMarks?.StudDetails}
+                />
+            )}
         </React.Fragment>
     )
 }
