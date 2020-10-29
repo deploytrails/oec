@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import Layout from "../components/layout";
-import { getCoursedData } from "../services/courceCoordinatorAllocationService";
+import { getCoursedData, getSyllabusData } from "../services/courceCoordinatorAllocationService";
 import Cookies from "js-cookie";
 import * as TABLE from "../components/dashboards/styles/table.styles";
 import css from "@emotion/css";
@@ -20,13 +20,15 @@ const CourseCoordinatorAllocation = () => {
     isCocrdinatorId == id ? setIsCocrdinatorId("") : setIsCocrdinatorId(id);
   };
 
+
   useEffect(() => {
     loadCourseData();
   }, []);
+
   return (
     <React.Fragment>
-      <Layout>
-        <div className="h-screen">
+      <Layout className="h-screen">
+        <div>
           <TABLE.TableWrapper>
             <TABLE.TableTR>
               <TABLE.TableTh>Course Code</TABLE.TableTh>
@@ -36,19 +38,19 @@ const CourseCoordinatorAllocation = () => {
             </TABLE.TableTR>
             {isCourseData &&
               isCourseData.length &&
-              isCourseData.map(course => (
-                <TABLE.TableTbody key={isCourseData[0].coordinatorId}>
+              isCourseData.map((course, i) => (
+                <TABLE.TableTbody key={isCourseData[i].coordinatorId}>
                   <TABLE.TableTRR
                     onClick={() =>
-                      getExpandedRowData(isCourseData[0].coordinatorId)
+                      getExpandedRowData(isCourseData[i].coordinatorId)
                     }
                   >
-                    <TABLE.TableTdd>{course[0].coursecode}</TABLE.TableTdd>
-                    <TABLE.TableTdd>{course[0].coursename}</TABLE.TableTdd>
-                    <TABLE.TableTdd>{course[0].semesteryear}</TABLE.TableTdd>
-                    <TABLE.TableTdd>{course[0].semesterno}</TABLE.TableTdd>
+                    <TABLE.TableTdd>{course[i].coursecode}</TABLE.TableTdd>
+                    <TABLE.TableTdd>{course[i].coursename}</TABLE.TableTdd>
+                    <TABLE.TableTdd>{course[i].semesteryear}</TABLE.TableTdd>
+                    <TABLE.TableTdd>{course[i].semesterno}</TABLE.TableTdd>
                   </TABLE.TableTRR>
-                  {isCocrdinatorId == isCourseData[0].coordinatorId && (
+                  {isCocrdinatorId === isCourseData[i].coordinatorId && (
                     <TABLE.TableTRR>
                       <td
                         colSpan={4}
@@ -56,8 +58,10 @@ const CourseCoordinatorAllocation = () => {
                           padding-left: 15px !important;
                         `}
                       >
+                        {console.log("Test My logic")}
                         <CourseTabsWrap
                           getExpandedRowData={getExpandedRowData}
+                          courseData={course[i]}
                         />
                       </td>
                     </TABLE.TableTRR>

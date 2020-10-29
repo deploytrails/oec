@@ -1,9 +1,13 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Tabs, Tab, Content } from "../../components/profile/tabs.styles";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faTimes } from "@fortawesome/free-solid-svg-icons";
+import Syllabus from "../../components/course-coordinator/syllabus";
 
-const CourseTabsWrap = ({ getExpandedRowData }) => {
+const CourseTabsWrap = ({
+  getExpandedRowData,
+  courseData
+}) => {
   const [active, setActive] = useState(0);
   const handleClick = e => {
     const index = parseInt(e.target.id, 0);
@@ -11,6 +15,8 @@ const CourseTabsWrap = ({ getExpandedRowData }) => {
       setActive(index);
     }
   };
+
+
 
   return (
     <React.Fragment>
@@ -43,7 +49,11 @@ const CourseTabsWrap = ({ getExpandedRowData }) => {
         </span>
       </Tabs>
 
-      <Content active={active === 0}>Syllabus data</Content>
+      <Content active={active === 0}>
+        <Syllabus
+          courseData={courseData}
+        ></Syllabus>
+      </Content>
       <Content active={active === 1}>CO-PO Mapping data</Content>
       <Content active={active === 2}>Question Paper Entry data</Content>
       <Content active={active === 3}>Reports data</Content>
