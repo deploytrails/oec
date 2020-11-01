@@ -208,8 +208,8 @@ const SideNavLinks = () => {
                   </a>
                 </Link>
               </li>
-              <li 
-               css={
+              <li
+                css={
                   router.pathname === "/allocated-cources/marksEntry"
                     ? css`
                         color: ${COLORS.GREEN};
@@ -221,8 +221,8 @@ const SideNavLinks = () => {
               >
                 <Link href="/allocated-cources/marksEntry">
                   <a>
-                <FontAwesomeIcon icon={faNewspaper} /> Mark Entry
-                </a>
+                    <FontAwesomeIcon icon={faNewspaper} /> Mark Entry
+                  </a>
                 </Link>
               </li>
               <li>
@@ -347,7 +347,7 @@ const SideNavLinks = () => {
 
         <li
           css={
-            router.pathname === "/exam-schedule"
+            router.pathname === "/examSchedule"
               ? css`
                   color: ${COLORS.GREEN};
                 `
@@ -384,8 +384,22 @@ const SideNavLinks = () => {
                 }
               `}
             >
-              <li>
-                <FontAwesomeIcon icon={faExchangeAlt} /> Exam Invigilation
+              <li
+                css={
+                  router.pathname === "/examSchedule/examInvigilation"
+                    ? css`
+                        color: ${COLORS.GREEN};
+                      `
+                    : css`
+                        color: ${COLORS.TEXTGRAY};
+                      `
+                }
+              >
+                <Link href="/examSchedule/examInvigilation">
+                  <a>
+                    <FontAwesomeIcon icon={faExchangeAlt} /> Exam Invigilation
+                  </a>
+                </Link>
               </li>
             </ul>
           )}

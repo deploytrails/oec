@@ -102,48 +102,50 @@ const DiscrepancyIssue = () => {
         </div>
         <br></br>
         {/* /Table Starts Here/ */}
-        <TABLE.TableWrapper>
-          <TABLE.TableTR>
-            <TABLE.TableTh>Roll No</TABLE.TableTh>
-            <TABLE.TableTh>Name </TABLE.TableTh>
-            <TABLE.TableTh>Mentor </TABLE.TableTh>
-            <TABLE.TableTh>Contact No.</TABLE.TableTh>
-            <TABLE.TableTh>Email</TABLE.TableTh>
-            <TABLE.TableTh>Issue</TABLE.TableTh>
-            <TABLE.TableTh>Discrepancy</TABLE.TableTh>
-          </TABLE.TableTR>
+        {studentList && studentList.length && (
+          <TABLE.TableWrapper>
+            <TABLE.TableTR>
+              <TABLE.TableTh>Roll No</TABLE.TableTh>
+              <TABLE.TableTh>Name </TABLE.TableTh>
+              <TABLE.TableTh>Mentor </TABLE.TableTh>
+              <TABLE.TableTh>Contact No.</TABLE.TableTh>
+              <TABLE.TableTh>Email</TABLE.TableTh>
+              <TABLE.TableTh>Issue</TABLE.TableTh>
+              <TABLE.TableTh>Discrepancy</TABLE.TableTh>
+            </TABLE.TableTR>
 
-          {studentList &&
-            studentList.length &&
-            studentList.map(student => (
-              <TABLE.TableTRR key={student[0].enrollstudentId}>
-                <TABLE.TableTdd>{student[0].roll}</TABLE.TableTdd>
-                <TABLE.TableTdd>{student[0].firstName}</TABLE.TableTdd>
-                <TABLE.TableTdd>{student[0].mentor}</TABLE.TableTdd>
-                <TABLE.TableTdd>{student[0].mobileNo}</TABLE.TableTdd>
-                <TABLE.TableTdd>{student[0].email}</TABLE.TableTdd>
-                <TABLE.TableTdd>
-                  {student[0].issuestatus ? student[0].issuestatus : "N"}
-                </TABLE.TableTdd>
+            {studentList &&
+              studentList.length &&
+              studentList.map(student => (
+                <TABLE.TableTRR key={student[0].enrollstudentId}>
+                  <TABLE.TableTdd>{student[0].roll}</TABLE.TableTdd>
+                  <TABLE.TableTdd>{student[0].firstName}</TABLE.TableTdd>
+                  <TABLE.TableTdd>{student[0].mentor}</TABLE.TableTdd>
+                  <TABLE.TableTdd>{student[0].mobileNo}</TABLE.TableTdd>
+                  <TABLE.TableTdd>{student[0].email}</TABLE.TableTdd>
+                  <TABLE.TableTdd>
+                    {student[0].issuestatus ? student[0].issuestatus : "N"}
+                  </TABLE.TableTdd>
 
-                <TABLE.TableTdd>
-                  <button
-                    disabled={student[0].issuestatus === "Y"}
-                    onClick={() => openDiscrepancyModel(student[0])}
-                    className={
-                      "py-2 px-4 rounded mr-2 text-center text-white mb-4 focus:outline-none " +
-                      (student[0].issuestatus === "Y"
-                        ? "bg-gray-400"
-                        : "bg-blue-400 hover:bg-blue-500")
-                    }
-                  >
-                    Discrepancy &nbsp;
-                    <FontAwesomeIcon icon={faStreetView} />
-                  </button>
-                </TABLE.TableTdd>
-              </TABLE.TableTRR>
-            ))}
-        </TABLE.TableWrapper>
+                  <TABLE.TableTdd>
+                    <button
+                      disabled={student[0].issuestatus === "Y"}
+                      onClick={() => openDiscrepancyModel(student[0])}
+                      className={
+                        "py-2 px-4 rounded mr-2 text-center text-white mb-4 focus:outline-none " +
+                        (student[0].issuestatus === "Y"
+                          ? "bg-gray-400"
+                          : "bg-blue-400 hover:bg-blue-500")
+                      }
+                    >
+                      Discrepancy &nbsp;
+                      <FontAwesomeIcon icon={faStreetView} />
+                    </button>
+                  </TABLE.TableTdd>
+                </TABLE.TableTRR>
+              ))}
+          </TABLE.TableWrapper>
+        )}
         {show && (
           <DiscrepancyModal
             closeModal={closeModal}
