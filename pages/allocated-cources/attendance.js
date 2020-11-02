@@ -66,6 +66,10 @@ const Attendance = () => {
     console.log("xos", classAttend);
   };
 
+ 
+  
+ 
+
   const tableHeaders = [
     "Cource Code",
     "	Course Name",
@@ -191,6 +195,7 @@ const Attendance = () => {
                                         x?.semsection?.sectionPrimaryId,
                                         x?.semester?.semesterID
                                       ).then((data) => {
+                                       
                                         openClassAttendanceData(data);
                                         console.log("dataaa", data);
                                       })

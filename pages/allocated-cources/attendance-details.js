@@ -1,30 +1,77 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { css } from "@emotion/core";
 
 const AttendanceDetails = ({ closeAttendDetails, classAttend }) => {
   const [frmValue, setFrmValue] = useState([]);
+  const [checkValues, setCheckValues] = useState([]);
+  const [filterIDs, setFilterIds] = useState([]);
   const presentIds = [];
   const absentIds = [];
+
 
   classAttend.map((item) => {
     presentIds.push(item.roll);
   });
-  const checkAttend = (e) => {
-    const allStudents = document.querySelectorAll(".atend");
-    const totalIDS = document.getElementById("attendIds").tar;
-    const targetCheck = e.target.checked;
-    for (let i = 0; i < allStudents.length; i += 1) {
-      if (targetCheck) {
-        allStudents[i].checked = true;
-        setFrmValue(presentIds.join("\n"));
-      } else {
-        allStudents[i].checked = false;
-        setFrmValue([]);
-      }
+
+  const selectCheck = (selectedVal) => {
+    const indexFound = filterIDs.indexOf(selectedVal);
+    const checkSelect = checkValues;
+    checkSelect.push(selectedVal);
+    setCheckValues(checkSelect);
+    if (indexFound > -1) {
+      filterIDs.splice(indexFound, 1);
+      setFilterIds(filterIDs)
     }
+    
+    console.log('absentIds', filterIDs)
   };
 
-  console.log("presentIds", presentIds);
+  const unSelectCheck = (selectedVal) => {
+    const indexFound = checkValues.indexOf(selectedVal);
+    if (indexFound > -1) {
+      checkValues.splice(indexFound, 1);
+      setCheckValues(checkValues);
+    }
+    const idsSelect = presentIds.filter(item => item.indexOf(selectedVal) !== indexFound);
+    filterIDs.push(...idsSelect);
+    setFilterIds(filterIDs)
+    console.log('absentIds', filterIDs)
+  };
+
+  
+  const checkAttend = (e) => {
+    const targetCheck = e.target.checked;
+    const targetVal = e.target.value;
+
+    if (targetCheck) {
+      selectCheck(targetVal);
+      
+    } else {
+      unSelectCheck(targetVal);
+    }
+
+ 
+    setFrmValue(filterIDs.join("\n"));
+  };
+  
+
+  useEffect(() => {
+    const totalIDS = document.getElementById("attendIds");
+    const x = document.querySelectorAll(".atend");
+    totalIDS.checked = true;
+    let checkState = totalIDS.checked;
+    if(checkState === true){
+      for(let i = 0; i < x.length; i+=1){
+        x[i].checked = true;
+      }
+    } else{
+      for(let i = 0; i < x.length; i+=1){
+        x[i].checked = false;
+      }
+     
+    }
+    
+  });
 
   return (
     <React.Fragment>
@@ -69,7 +116,9 @@ const AttendanceDetails = ({ closeAttendDetails, classAttend }) => {
                 <th>Roll No</th>
                 <th>Name</th>
                 <th>
-                  <input type="checkbox" onChange={(e) => checkAttend(e)} />
+                  <lable htmlFor="attendIds">
+                    <input type="checkbox" name="attendIds" className="attendIds" id="attendIds" />
+                  </lable>
                   Attendance
                 </th>
                 <th>Remarks</th>
@@ -81,7 +130,20 @@ const AttendanceDetails = ({ closeAttendDetails, classAttend }) => {
                     <td>{item.roll}</td>
                     <td>{item.firstName}</td>
                     <td>
-                      <input type="checkbox" className="atend" id="atend" />
+                    <lable htmlFor={item.enrollstudentId} >
+                      <input
+                          type="checkbox"
+                          className="atend"
+                          name={item.enrollstudentId}
+                          id={item.enrollstudentId}
+                          value={item.roll}
+                          onChange={(e) => checkAttend(e)}
+                          checked={filterIDs.indexOf(item) !== -1}
+                          //checked={checkValues.indexOf(item) === -1}
+                          
+                        />
+                  </lable>
+                      
                     </td>
                     <td>
                       <input
@@ -110,10 +172,10 @@ const AttendanceDetails = ({ closeAttendDetails, classAttend }) => {
             <div className="w-6/12 float-right">
               <div className="pl-4 pt-5">
                 <p className="text-sm text-green-600">
-                  No of Present : {presentIds.length}
+                  No of Present : {presentIds.length - filterIDs.length}
                 </p>
                 <p className="text-sm text-red-600">
-                  No of Absent : {absentIds.length}
+                  No of Absent : {filterIDs.length}
                 </p>
                 <button
                   type="button"
