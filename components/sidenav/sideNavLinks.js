@@ -208,8 +208,22 @@ const SideNavLinks = () => {
                   </a>
                 </Link>
               </li>
-              <li>
-                <FontAwesomeIcon icon={faNewspaper} /> Mark Entry
+              <li
+                css={
+                  router.pathname === "/allocated-cources/marksEntry"
+                    ? css`
+                        color: ${COLORS.GREEN};
+                      `
+                    : css`
+                        color: ${COLORS.TEXTGRAY};
+                      `
+                }
+              >
+                <Link href="/allocated-cources/marksEntry">
+                  <a>
+                    <FontAwesomeIcon icon={faNewspaper} /> Mark Entry
+                  </a>
+                </Link>
               </li>
               <li>
                 <FontAwesomeIcon icon={faEdit} /> Assignment Creation
@@ -220,7 +234,7 @@ const SideNavLinks = () => {
 
         <li
           css={
-            router.pathname === "/cource-coordinator-allocation"
+            router.pathname === "/courseCoordinatorAllocation"
               ? css`
                   color: ${COLORS.GREEN};
                 `
@@ -229,7 +243,7 @@ const SideNavLinks = () => {
                 `
           }
         >
-          <Link href="/cource-coordinator-allocation">
+          <Link href="/courseCoordinatorAllocation">
             <a>
               <FontAwesomeIcon icon={faIdBadge} /> Cource Coordinator Allocation
             </a>
@@ -310,8 +324,22 @@ const SideNavLinks = () => {
                   </a>
                 </Link>
               </li>
-              <li>
-                <FontAwesomeIcon icon={faCompressArrowsAlt} /> Discrepancy
+              <li
+                css={
+                  router.pathname === "/mentoring/discrepancy"
+                    ? css`
+                        color: ${COLORS.GREEN};
+                      `
+                    : css`
+                        color: ${COLORS.TEXTGRAY};
+                      `
+                }
+              >
+                <Link href="/mentoring/discrepancy">
+                  <a>
+                    <FontAwesomeIcon icon={faCompressArrowsAlt} /> Discrepancy
+                  </a>
+                </Link>
               </li>
             </ul>
           )}
@@ -319,7 +347,7 @@ const SideNavLinks = () => {
 
         <li
           css={
-            router.pathname === "/exam-schedule"
+            router.pathname === "/examSchedule"
               ? css`
                   color: ${COLORS.GREEN};
                 `
@@ -356,8 +384,22 @@ const SideNavLinks = () => {
                 }
               `}
             >
-              <li>
-                <FontAwesomeIcon icon={faExchangeAlt} /> Exam Invigilation
+              <li
+                css={
+                  router.pathname === "/examSchedule/examInvigilation"
+                    ? css`
+                        color: ${COLORS.GREEN};
+                      `
+                    : css`
+                        color: ${COLORS.TEXTGRAY};
+                      `
+                }
+              >
+                <Link href="/examSchedule/examInvigilation">
+                  <a>
+                    <FontAwesomeIcon icon={faExchangeAlt} /> Exam Invigilation
+                  </a>
+                </Link>
               </li>
             </ul>
           )}
