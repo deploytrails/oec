@@ -34,7 +34,7 @@ const MarksEntry = () => {
 
                 {examTypes.map(examType => (
                     <React.Fragment>
-                        <h1 className="w-full block text-white bg-black shadow-lg mb-4 border" >{examType}</h1>
+                        <h1 className="w-full block text-white bg-black shadow-lg mb-4 border p-2" >{examType}</h1>
                         <MarksTable marksData={marksData} examType={examType}></MarksTable>
                     </React.Fragment>
                 ))}

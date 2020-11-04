@@ -6,7 +6,7 @@
 
 module.exports = {
   env: {
-    APIBaseUrl: "http://13.233.103.20:8081/",
+    APIBaseUrl: "http://15.206.189.30:8081/",
   },
   webpack(config, options) {
     config.module.rules.push({

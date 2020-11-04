@@ -27,11 +27,11 @@ const ViewMarksEntry = ({ closeMarksView, studentMarks }) => {
                 border: 1px solid #ddd;
                 & > tr > th {
                   border-bottom: 1px solid #ddd;
-                  width: 200px;
+                  width: 213px;
                   padding: 6px 0px;
                 }
                 & > tr > td {
-                  width: 195px;
+                  width: 213px;
                   padding: 6px 0px;
                   text-align: center;
                   font-size: 14px;
