@@ -25,11 +25,12 @@ const ClassSchedule = () => {
     getClassSchedule();
   }, []);
 
-  const periodList = period => {
+  const periodList = (period,classday) => {
     let timetabledata = classScheduleData?.facTimeTableDetails?.timetabledata;
 
     for (let timedat of timetabledata) {
-      if (timedat.length == 1 && timedat[0][22].includes(period)) {
+      if (timedat.length == 1 && timedat[0][22].includes(period) && timedat[0][5].includes(classday)) 
+      {
         return (
           timedat[0][2] +
           "-" +
@@ -143,7 +144,7 @@ const ClassSchedule = () => {
                   {classScheduleData?.facTimeTableDetails?.totalperiods.map(
                     (period, index) => (
                       <TABLE.TableTdd key={index}>
-                        {periodList(period[3])}
+                        {periodList(period[3],classday)}
                       </TABLE.TableTdd>
                     )
                   )}
