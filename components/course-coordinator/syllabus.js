@@ -13,7 +13,7 @@ const Syllabus = ({ courseData }) => {
     };
 
     useEffect(() => {
-        loadSyllabusData(courseData.coursecode, courseData.coordinatorId);
+       loadSyllabusData(courseData.coursecode, courseData.coordinatorId);
     }, []);
 
     return (
@@ -32,9 +32,9 @@ const Syllabus = ({ courseData }) => {
                 {syllabusData &&
                     syllabusData.length &&
                     syllabusData.map((syllbus) => (
-                        <TABLE.TableTRR key={syllbus?.unittopicId}>
-                            <TABLE.TableTdd>{syllbus?.coursecode}</TABLE.TableTdd>
-                            <TABLE.TableTdd>{syllbus?.coursecode}</TABLE.TableTdd>
+                        <TABLE.TableTRR key={syllbus?.unitTopicId}>
+                            <TABLE.TableTdd>{syllbus?.courseCode}</TABLE.TableTdd>
+                            <TABLE.TableTdd>{courseData.coursename}</TABLE.TableTdd>
                             <TABLE.TableTdd>{syllbus.topic}</TABLE.TableTdd>
                             <TABLE.TableTdd>{syllbus.unit}</TABLE.TableTdd>
                         </TABLE.TableTRR>

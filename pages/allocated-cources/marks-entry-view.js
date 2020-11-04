@@ -1,8 +1,8 @@
 import React from "react";
 import { css } from "@emotion/core";
 
-const ViewMarksEntry = ({ closeMarksView, studentMarks }) => {
-
+const ViewMarksEntry = ({ closeMarksView, studentMarks,courseCode,courseName }) => {
+   
     return (
         <React.Fragment>
             <div className="w-screen fixed top-0 bottom-0 left-0 right-0 bg-black bg-opacity-75">
@@ -18,8 +18,8 @@ const ViewMarksEntry = ({ closeMarksView, studentMarks }) => {
                         CLOSE
             </button>
                     <h2 className="font-sans text-lg font-bold">
-                        <p>Student Marks Page</p>
-                        <p>{studentMarks[0]?.courseID.courseName} {"(" + studentMarks[0]?.courseID.courseCode + ")"} </p>
+                        <p>Student Marks</p>
+                        <p>{courseName} {"(" + courseCode + ")"} </p>
                     </h2>
                     <table
                         className="block w-full pr-0 mt-4"
@@ -50,10 +50,10 @@ const ViewMarksEntry = ({ closeMarksView, studentMarks }) => {
                             {studentMarks &&
                                 studentMarks.map((item, i) => (
 
-                                    <tr key={item?.studentID.enrollstudentId}>
+                                    <tr key={item?.enrollstudentId}>
                                         <td>{i + 1}</td>
-                                        <td>{item?.studentID.roll}</td>
-                                        <td>{item?.studentID.firstName}</td>
+                                        <td>{item?.roll}</td>
+                                        <td>{item?.firstName}</td>
                                     </tr>
                                 ))}
                         </React.Fragment>
