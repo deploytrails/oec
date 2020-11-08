@@ -71,7 +71,7 @@ const ClassSchedule = () => {
                   css={css`
                     & > p {
                       display: block;
-                      margin-right: 10px;
+                      //margin-right: 10px;
                     }
                     & > p > span {
                       float: right;
@@ -123,7 +123,7 @@ const ClassSchedule = () => {
           </Formik>
         </div>
         <div className="clearfix px-2 pb-2"></div>
-        <div className="clearfix px-6 pb-6">
+        <div className="clearfix pb-6">
           <TABLE.TableWrapper>
             <TABLE.TableTR>
               <TABLE.TableTh>Day</TABLE.TableTh>

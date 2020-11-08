@@ -21,10 +21,8 @@ const StudentTabsWrap = ({ studentProfileId }) => {
 
   return (
     <React.Fragment>
-      <br></br>
-      <br></br>
-
-      <Tabs>
+    <div className="pt-10 mt-6 mb-6 bg-white shadow">
+    <Tabs>
         <Tab onClick={handleClick} active={active === 0} id={0}>
           Profile
         </Tab>
@@ -47,6 +45,8 @@ const StudentTabsWrap = ({ studentProfileId }) => {
       <Content active={active === 2}>
         <SemMarksTabData />
       </Content>
+    </div>
+      
     </React.Fragment>
   );
 };

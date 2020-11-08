@@ -6,6 +6,7 @@ import css from "@emotion/css";
 import { COLORS } from "../constants";
 import * as TABLE from "../components/dashboards/styles/table.styles";
 import { getNotificationData } from "../services/notificationService";
+import ToggleBox from "../components/General/toggleBox";
 
 const Notifications = () => {
   const [notificationData, setNotificationData] = useState([]);
@@ -25,7 +26,9 @@ const Notifications = () => {
   return (
     <React.Fragment>
       <Layout>
-        <div className="clearfix px-2 pb-2"></div>
+        <div className="clearfix px-2 pb-2">
+          <ToggleBox />
+        </div>
         <div className="clearfix px-6 pb-6" id="senderArray">
           <TABLE.TableWrapper>
             <TABLE.TableTR>

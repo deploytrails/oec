@@ -20,6 +20,8 @@ const MoreDetailsModal = ({ toggleModal, activeButton, studentModelData }) => {
       <STYLES.PopupWrapper
         css={css`
           width: 75%;
+          height:80vh;
+          overflow-y:scroll;
         `}
       >
         <STYLES.PopupTitle>
@@ -27,7 +29,7 @@ const MoreDetailsModal = ({ toggleModal, activeButton, studentModelData }) => {
           <FontAwesomeIcon
             icon={faTimes}
             onClick={() => toggleModal()}
-            style={{ float: "right" }}
+            className="float-right"
           />
         </STYLES.PopupTitle>
         {activeButton === 0 && (

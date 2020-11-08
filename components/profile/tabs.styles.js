@@ -33,5 +33,7 @@ export const Tab = styled.button`
   }
 `;
 export const Content = styled.div`
+padding:10px;
   ${(props) => (props.active ? "" : "display:none")}
+  
 `;
