@@ -32,7 +32,6 @@ const MarksTable = ({ marksData, examType }) => {
     const openMarksViewData = (data) => {
         setStudentMarks(data);
         toggleMarksView();
-        console.log("MarksToView: ", studentMarks);
     };
 
     return (
@@ -123,7 +122,9 @@ const MarksTable = ({ marksData, examType }) => {
             {isMarksView && (
                 <ViewMarksEntry
                     closeMarksView={closeMarksView}
-                    studentMarks={studentMarks?.StudDetails}
+                    studentMarks={studentMarks?.MarksArray}
+                    courseCode={uniqueTypes[0]?.courseCode}
+                    courseName={uniqueTypes[0]?.courseName}
                 />
             )}
         </React.Fragment>
