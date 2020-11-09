@@ -23,7 +23,7 @@
     "isomorphic-unfetch": "^3.0.0",
     "js-cookie": "^2.2.1",
     "moment": "^2.27.0",
-    "next": "^9.4.4",
+    "next": "^10.0.1",
     "rc-datepicker": "^5.0.16",
     "react": "^16.13.1",
     "react-date-picker": "^8.0.2",
