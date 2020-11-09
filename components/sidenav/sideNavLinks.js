@@ -188,8 +188,22 @@ const SideNavLinks = () => {
                 }
               `}
             >
-              <li>
-                <FontAwesomeIcon icon={faBook} /> Allocated Cources
+              <li
+                css={
+                  router.pathname === "/allocated-cources/allocatedCourses"
+                    ? css`
+                        color: ${COLORS.GREEN};
+                      `
+                    : css`
+                        color: ${COLORS.TEXTGRAY};
+                      `
+                }
+              >
+                <Link href="/allocated-cources/allocatedCourses">
+                  <a>
+                    <FontAwesomeIcon icon={faBook} /> Allocated Courses
+                  </a>
+                </Link>
               </li>
               <li
                 css={
