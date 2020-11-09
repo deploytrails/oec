@@ -7,13 +7,13 @@ export const getAttendanceList = async (facultyId, selectedDate, operation) => {
       {
         method: "POST",
         headers: {
-          "Content-Type": "application/json",
+          "Content-Type": "application/json"
         },
         body: JSON.stringify({
           facultyId,
           selectedDate,
-          operation,
-        }),
+          operation
+        })
       }
     );
     const data = await response.json();
@@ -38,7 +38,7 @@ export const getAttendanceListById = async (
       {
         method: "POST",
         headers: {
-          "Content-Type": "application/json",
+          "Content-Type": "application/json"
         },
         body: JSON.stringify({
           classDateId,
@@ -47,8 +47,61 @@ export const getAttendanceListById = async (
           facultyId,
           operation,
           sectionId,
-          semesterId,
-        }),
+          semesterId
+        })
+      }
+    );
+    const data = await response.json();
+    return data;
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+export const getallocatedcoursesData = async facultyID => {
+  try {
+    const response = await fetch(
+      `${process.env.APIBaseUrl}faculty/getAllocatedCourses2?facultyID=${facultyID}`,
+      {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json"
+        }
+      }
+    );
+    return await response.json();
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+export const getPos = async (courseID, facultyID, options) => {
+  try {
+    const response = await fetch(
+      `${process.env.APIBaseUrl}faculty/COPOMappingServlet?courseID=${courseID}'&facultyID=${facultyID}&options=${options}`,
+      {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json"
+        }
+      }
+    );
+    const data = await response.json();
+    return data;
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+export const getReferenceData = async (courseID, facultyID) => {
+  try {
+    const response = await fetch(
+      `${process.env.APIBaseUrl}faculty/getRefData?courseID=${courseID}'&facultyID=${facultyID}`,
+      {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json"
+        }
       }
     );
     const data = await response.json();
