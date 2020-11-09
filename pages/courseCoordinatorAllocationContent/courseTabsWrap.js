@@ -4,6 +4,7 @@ import css from "@emotion/css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faTimes } from "@fortawesome/free-solid-svg-icons";
 import Syllabus from "../../components/course-coordinator/syllabus";
+import Questions from "../../components/course-coordinator/questions";
 
 const CourseTabsWrap = ({
   getExpandedRowData,
@@ -57,11 +58,19 @@ const CourseTabsWrap = ({
 <Content active={active === 2}>Question Paper Entry data</Content>
 <Content active={active === 3}>Reports data</Content>
 
+
     </div>
-
-     
-
-     
+      <Content active={active === 0}>
+        <Syllabus
+          courseData={courseData}
+        ></Syllabus>
+      </Content>
+      <Content active={active === 1}>CO-PO Mapping data</Content>
+      <Content active={active === 2}>
+        <Questions courseData={courseData}>
+        </Questions>
+      </Content>
+      <Content active={active === 3}>Reports data</Content>
     </React.Fragment>
   );
 };
