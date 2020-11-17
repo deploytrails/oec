@@ -17,6 +17,8 @@ const COPOMapping = ({ courseData }) => {
   ];
   const [posData, setPosData] = useState([]);
   const [copoData, setCopoData] = useState([]);
+  const [posLables, setPosLables] = useState(["", "Engineering knowledge", "Problem	analysis", "Design/development of solutions", "Conduct investigations of complex problems", "Modern tool usage", "The engineer and society", "Environment and sustainability", "Ethics", "Individual and team work", "Communication", "Project management and finance", "Life-Long Learning", "Understand the working of new hardware/software", "Model the computer based systems and design algorithms", "Design, develop and test system software and application software"]);
+  const [copoHeader, setCopoHeader] = useState(["","PO1","PO2","PO3","PO4","PO5","PO6","PO7","PO8","PO9","PO10","PO11","PO12","PSO1","PSO2",'PSO3']);
 
   const loadCopoData = async (coursecode, facultyID) => {
     const copo = await getCopoMappings(coursecode, facultyID)
@@ -34,7 +36,7 @@ const COPOMapping = ({ courseData }) => {
         <React.Fragment>
           {(index === 0 ?
             (
-              <React.Fragment>                
+              <React.Fragment>
                 {createLabelsRow(posData)}
                 {createRow(copo, index)}
               </React.Fragment>
@@ -51,10 +53,9 @@ const COPOMapping = ({ courseData }) => {
     })
   }
 
-  const renderTableHeader = () => {
-    let header = Object.keys(copoData[0])
-    return header.map((key, index) => {
-      return <TABLE.TableTh key={index}>{key.toUpperCase()}</TABLE.TableTh>
+  const renderTableHeader = () => {    
+    return copoHeader.map((cHeader, index) => {
+      return <TABLE.TableTh key={index}>{cHeader}</TABLE.TableTh>
     })
   }
 
@@ -85,28 +86,12 @@ const COPOMapping = ({ courseData }) => {
   }
 
   const createLabelsRow = (posData) => {
-    return (
-      <React.Fragment>
-                <tr>
-                  <TABLE.TableTdd>  </TABLE.TableTdd>
-                  <TABLE.TableTdd>Engineering knowledge</TABLE.TableTdd>
-                  <TABLE.TableTdd>Problem	analysis</TABLE.TableTdd>
-                  <TABLE.TableTdd>Design/development of solutions</TABLE.TableTdd>
-                  <TABLE.TableTdd>Conduct investigations of complex problems</TABLE.TableTdd>
-                  <TABLE.TableTdd>Modern tool usage</TABLE.TableTdd>
-                  <TABLE.TableTdd>The engineer and society</TABLE.TableTdd>
-                  <TABLE.TableTdd>Environment and sustainability</TABLE.TableTdd>
-                  <TABLE.TableTdd>Ethics</TABLE.TableTdd>
-                  <TABLE.TableTdd>Individual and team work</TABLE.TableTdd>
-                  <TABLE.TableTdd>Communication</TABLE.TableTdd>
-                  <TABLE.TableTdd>Project management and finance</TABLE.TableTdd>
-                  <TABLE.TableTdd>Life-long learning</TABLE.TableTdd>
-                  <TABLE.TableTdd>Understand the working of new hardware/software</TABLE.TableTdd>
-                  <TABLE.TableTdd>Model the computer based systems and design algorithms</TABLE.TableTdd>
-                  <TABLE.TableTdd>Design, develop and test system software and application software </TABLE.TableTdd>
-                </tr>                
-              </React.Fragment>
-    )
+
+    return posLables.map((posLabel, index) => {
+
+      return <TABLE.TableTdd key={index}>{posLabel}</TABLE.TableTdd>
+
+    })
   }
 
   const renderSelectItem = (copo) => {
@@ -156,7 +141,7 @@ const COPOMapping = ({ courseData }) => {
 
       <TABLE.TableWrapper id='students'>
         <tbody>
-          {/* <tr>{renderTableHeader()}</tr> */}
+          <tr>{renderTableHeader()}</tr>
           {renderTableData()}
         </tbody>
       </TABLE.TableWrapper>
