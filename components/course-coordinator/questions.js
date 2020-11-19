@@ -14,7 +14,7 @@ const Questions = ({ courseData }) => {
     const [examTypeData, setExamTypeData] = useState({});
 
     const loadQuestionsData = async (e) => {
-        const data = await getQuestionsData(courseData.coordinatorId, e.target.value);
+        const data = await getQuestionsData(courseData?.coordinatorId, e.target.value);
         setQuestionsData(data?.Questions);
         console.log(data?.Questions)
     };
@@ -25,7 +25,7 @@ const Questions = ({ courseData }) => {
     };
 
     useEffect(() => {
-        loadExamTypeData(courseData.coursecode, courseData.coordinatorId);
+        loadExamTypeData(courseData?.coursecode, courseData?.coordinatorId);
        // loadQuestionsData(examTypeData.length > 0 ? examTypeData[0].examTypeId:null);
       }, []);
 

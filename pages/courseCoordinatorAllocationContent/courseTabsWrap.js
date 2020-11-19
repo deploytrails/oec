@@ -61,7 +61,9 @@ const CourseTabsWrap = ({
           >
           </COPOMapping>
         </Content>
-        <Content active={active === 2}>Question Paper Entry data</Content>
+        <Content active={active === 2}>
+          <Questions />
+        </Content>
         <Content active={active === 3}>Reports data</Content>
 
 

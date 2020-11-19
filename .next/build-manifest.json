@@ -24,10 +24,10 @@
       "static/chunks/webpack.js",
       "static/chunks/pages/_error.js"
     ],
-    "/allocated-cources/attendance": [
+    "/class-schedule": [
       "static/chunks/main.js",
       "static/chunks/webpack.js",
-      "static/chunks/pages/allocated-cources/attendance.js"
+      "static/chunks/pages/class-schedule.js"
     ],
     "/courseCoordinatorAllocation": [
       "static/chunks/main.js",
