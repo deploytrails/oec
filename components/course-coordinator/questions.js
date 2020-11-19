@@ -1,19 +1,22 @@
 import React, { useEffect, useState } from 'react';
-import { Formik } from "formik";
+ import { Formik, Form, Field, FieldArray } from 'formik';
+ import FormInput from "../General/formInput";
 import css from "@emotion/css";
 import { COLORS } from "../../constants";
 import * as TABLE from "../../components/dashboards/styles/table.styles";
 import PulseLoader from "react-spinners/PulseLoader";
 import { getExamTypeData,getQuestionsData } from "../../services/courceCoordinatorAllocationService";
+import * as Yup from "yup";
 
 const Questions = ({ courseData }) => {
 
     const [questionsData, setQuestionsData] = useState({});
     const [examTypeData, setExamTypeData] = useState({});
 
-    const loadQuestionsData = async (courseCoordintorId,examType) => {
-        const questionsData = await getQuestionsData(courseCoordintorId,examType);
-        setQuestionsData(questionsData?.Questions);
+    const loadQuestionsData = async (e) => {
+        const data = await getQuestionsData(courseData.coordinatorId, e.target.value);
+        setQuestionsData(data?.Questions);
+        console.log(data?.Questions)
     };
 
     const loadExamTypeData = async (courseCode) => {
@@ -23,74 +26,61 @@ const Questions = ({ courseData }) => {
 
     useEffect(() => {
         loadExamTypeData(courseData.coursecode, courseData.coordinatorId);
-        loadQuestionsData(courseData.coordinatorId,examTypeData.length > 0 ? examTypeData[0].examTypeId:null);
+       // loadQuestionsData(examTypeData.length > 0 ? examTypeData[0].examTypeId:null);
       }, []);
+
+      const validateSchema = Yup.object().shape({
+  friends: Yup.array()
+    .of(
+      Yup.object().shape({
+        name: Yup.string().required("Name is required"),
+        email: Yup.string()
+          .email("Invalid email")
+          .required("Please enter email"),
+        includeAge: Yup.bool(),
+        age: Yup.mixed().when("includeAge", {
+          is: true,
+          then: Yup.number()
+            .nullable()
+            .required("Age is required")
+        })
+      })
+    )
+    .min(1, "Friends is >= 1")
+});
 
     return (
         <React.Fragment>
 
         <div>
-          <Formik
-            initialValues={{
-              examType: ""
-            }}
-          >
-            {({ values, errors, touched, handleBlur,handleChange }) => (
-              <form>
-                <div
-                  className="text-sm font-sans"
-                  css={css`
-                    & > p {
-                      display: block;
-                      margin-right: 10px;
-                    }
-                    & > p > span {
-                      float: right;
-                      width: 35%;
-                      color: ${COLORS.BLACK};
-                    }
-                    & > p > span > svg {
-                      margin-right: 4px;
-                    }
-                  `}
-                >
-                  <p>
-                    <span>
+         
        <label htmlFor="examType" style={{ display: 'block' }}>
         Exam Type
       </label>
       <select
         name="examType"
-        value={values.examType}
-        onChange={handleChange}
-        onBlur={handleBlur}
+        onChange={(e) => loadQuestionsData(e)}
         style={{ display: 'block' }}>
         <option value="" label="Select "  />
         <option value="E13E1F5FD94143C6B1683CA17A5AC5DE" label="MID 1" />
         <option value="AD97F17501B342549441C877CB2313FE" label="MID 2" />
        
       </select>
-             <div
-                        css={css`
-                          position: absolute;
-                          right: 10px;
-                          top: 70px;
-                          font-size: 14px;
-                          color: ${COLORS.RED_DARKER};
-                        `}
-                      >
-                        {errors.examType &&
-                          touched.examType &&
-                          errors.examType}
-                      </div>
-                    </span>
-                  </p>
-                </div>
-              </form>
-            )}
-          </Formik>
-        </div>
-
+           </div> 
+<Formik
+    enableReinitialize
+      initialValues={questionsData}
+    //  validationSchema={validateSchema}
+      onSubmit={values => {
+        setTimeout(() => {
+          alert(JSON.stringify(values, null, 2));
+        }, 500);
+      }}
+      >
+        {({ values, errors, touched, handleBlur,handleChange, handleSubmit }) => (
+      
+          <Form onSubmit={handleSubmit}>
+             
             <TABLE.TableWrapper>
                 <TABLE.TableTR>
                     <TABLE.TableTh>Question No</TABLE.TableTh>
@@ -101,15 +91,32 @@ const Questions = ({ courseData }) => {
                     <TABLE.TableTh>Bloom Level</TABLE.TableTh>
                     <TABLE.TableTh>Bench Mark</TABLE.TableTh>
                 </TABLE.TableTR>
-
-                {questionsData &&
-                    questionsData.length &&
-                    questionsData.map((question) => (
+                <FieldArray
+                  name="questionsDataArray"
+                  render={({ insert, remove, push }) => (
+                   <>   
+                         
+                {values &&
+                    values.length &&
+                    values.map((question,mainIndex) => (
                         <TABLE.TableTbody key={question?.questionNumber}>
-                            {question && question?.noOfQuestions.map((subquestion) => (
+                            {question && question?.noOfQuestions.map((subquestion, subIndex) => (
                         <TABLE.TableTRR key={subquestion?.questionPaperId}>
                             <TABLE.TableTdd>{question.questionNumber}</TABLE.TableTdd>
-                            <TABLE.TableTdd>{subquestion.questionName}</TABLE.TableTdd>
+                            <TABLE.TableTdd>
+                             
+                                <FormInput
+                   
+                   type="text"
+                   name={`values[${mainIndex}].noOfQuestions[${subIndex}].questionName`}
+                  name="questionName'"
+                 value={subquestion.questionName}
+                    placeholder="Question Name"
+                    onChange={handleChange}
+                     onBlur={handleBlur}
+                    
+                  />{subquestion.questionName} :: {values[mainIndex].noOfQuestions[subIndex].questionName}
+                                </TABLE.TableTdd>
                             <TABLE.TableTdd>{subquestion.questions}</TABLE.TableTdd>
                             <TABLE.TableTdd>{subquestion.marks}</TABLE.TableTdd>
                             <TABLE.TableTdd>{subquestion.courseOutcome}</TABLE.TableTdd>
@@ -117,14 +124,26 @@ const Questions = ({ courseData }) => {
                             <TABLE.TableTdd>{subquestion.benchMark}</TABLE.TableTdd>
                         </TABLE.TableTRR>
                         ))}
+                        
+                      
                         </TABLE.TableTbody>
                     ))}
+                   </>
+                      )}
+                /> 
                
+          </TABLE.TableWrapper>
+          <button type="submit" className="btn btn-block btn-primary">
+                  Submit
+                </button>
+                              </Form>
+        )}
+    
+   </Formik>
 
-
-
-                               
-            </TABLE.TableWrapper>
+           
+               
+  
         </React.Fragment>
     );
 }
