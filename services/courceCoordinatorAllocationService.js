@@ -51,7 +51,7 @@ export const getExamTypeData = async (courseCode) => {
   }
 };
 
-export const getQuestionsData = async (courseCoordintorId,examTypeId) => {
+export const getQuestionsData = async (courseCoordintorId, examTypeId) => {
   try {
     const response = await fetch(
       `${process.env.APIBaseUrl}faculty/CourseCoordinatorServlet/getQuestions?courseCoordinatorId=${courseCoordintorId}&examTypeId=${examTypeId}`,
@@ -63,6 +63,24 @@ export const getQuestionsData = async (courseCoordintorId,examTypeId) => {
       }
     );
     return await response.json();
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+export const getCopoMappings = async (coursecode, facultyID) => {
+  try {
+    const response = await fetch(
+      `${process.env.APIBaseUrl}faculty/CourseCoordinatorServlet/ForGetPso?coursecode=${coursecode}&FacultyID=${facultyID}`,
+      {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json"
+        }
+      }
+    );
+    const data = await response.json();
+    return data;
   } catch (error) {
     console.log(error);
   }
