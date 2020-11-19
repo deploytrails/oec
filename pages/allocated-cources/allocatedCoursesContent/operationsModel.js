@@ -18,6 +18,8 @@ const OperationsModal = ({ toggleModal, activeButton, activeTabData, FacultyId }
       <STYLES.PopupWrapper
         css={css`
           width: 95%;
+          overflow:hidden;
+          overflow-x:scroll;
         `}
       >
         <STYLES.PopupTitle>

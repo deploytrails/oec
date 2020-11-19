@@ -24,15 +24,15 @@
       "static/chunks/webpack.js",
       "static/chunks/pages/_error.js"
     ],
-    "/dashboard": [
+    "/allocated-cources/attendance": [
       "static/chunks/main.js",
       "static/chunks/webpack.js",
-      "static/chunks/pages/dashboard.js"
+      "static/chunks/pages/allocated-cources/attendance.js"
     ],
-    "/notifications": [
+    "/courseCoordinatorAllocation": [
       "static/chunks/main.js",
       "static/chunks/webpack.js",
-      "static/chunks/pages/notifications.js"
+      "static/chunks/pages/courseCoordinatorAllocation.js"
     ]
   },
   "ampFirstPages": []

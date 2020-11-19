@@ -15,7 +15,7 @@ const App = ({ children }) => {
     <React.Fragment>
       {userAddress && (
         <SnackbarProvider>
-          <div>{children}</div>
+        {children}
         </SnackbarProvider>
       )}
     </React.Fragment>

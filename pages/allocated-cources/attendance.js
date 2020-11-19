@@ -91,7 +91,20 @@ const Attendance = () => {
             </h3>
           </div>
           <div className="mt-4 w-full">
+          <div>
+            {attend.length === 0 && (
+              <div>
+              {dates.map(dt => (
+               <div className="block shadow p-2 m-2 clearfix">
+               <span key={`dates${dt}`} className="float-left">Date : {dt}</span>
+               <span className="text-red-600 float-right">No Class is Schedule</span>
+               </div>
+              ))}
+              </div>
+            )}
+          </div>
             <div>
+            
               {attend &&
                 attend.map((tbd, i) => (
                   <React.Fragment>
@@ -109,6 +122,11 @@ const Attendance = () => {
                     >
                       <h4 className="w-6/12 float-left">
                         Date :{moment(tbd[0]?.classdate).format("DD/MM/YYYY")}
+                        <p>
+                        {tbd.weeklyDates.map(dt => (
+                          <span key={`dates${dt}`}>{dt}</span>
+                        ))}
+                        </p>
                       </h4>
                       <p className="w-6/12 float-right text-right font-bold">
                         <span
