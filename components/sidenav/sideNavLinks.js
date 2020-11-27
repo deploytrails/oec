@@ -33,7 +33,7 @@ import {
   faRegistered,
   faObjectGroup,
   faLayerGroup,
-  faAddressCard
+  faAddressCard,
 } from "@fortawesome/free-solid-svg-icons";
 
 const SideNavLinks = () => {
@@ -458,14 +458,57 @@ const SideNavLinks = () => {
                 }
               `}
             >
-              <li>
-                <FontAwesomeIcon icon={faRegistered} /> Cource Register
+              <li
+                css={
+                  router.pathname === "/reports/courseRegister"
+                    ? css`
+                        color: ${COLORS.GREEN};
+                      `
+                    : css`
+                        color: ${COLORS.TEXTGRAY};
+                      `
+                }
+              >
+                <Link href="/reports/courseRegister">
+                  <a>
+                    <FontAwesomeIcon icon={faRegistered} /> Cource Register
+                  </a>
+                </Link>
               </li>
-              <li>
-                <FontAwesomeIcon icon={faLayerGroup} /> Cource Wise Attendance
+              <li
+                css={
+                  router.pathname === "/reports/courseWiseAttendance"
+                    ? css`
+                        color: ${COLORS.GREEN};
+                      `
+                    : css`
+                        color: ${COLORS.TEXTGRAY};
+                      `
+                }
+              >
+                <Link href="/reports/courseWiseAttendance">
+                  <a>
+                    <FontAwesomeIcon icon={faLayerGroup} /> Cource Wise
+                    Attendance
+                  </a>
+                </Link>
               </li>
-              <li>
-                <FontAwesomeIcon icon={faAddressCard} /> Day Wise Attendance
+              <li
+                css={
+                  router.pathname === "/reports/dayWiseAttendance"
+                    ? css`
+                        color: ${COLORS.GREEN};
+                      `
+                    : css`
+                        color: ${COLORS.TEXTGRAY};
+                      `
+                }
+              >
+                <Link href="/reports/dayWiseAttendance">
+                  <a>
+                    <FontAwesomeIcon icon={faAddressCard} /> Day Wise Attendance
+                  </a>
+                </Link>
               </li>
             </ul>
           )}
