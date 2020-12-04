@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import css from "@emotion/css";
 import { useRouter } from "next/router";
 import Cookies from "js-cookie";
@@ -61,10 +61,50 @@ const TopHeader = () => {
   const displayHeaderProfile = () => {
     setIsToggle(!isToggle);
   };
+
+  let userRoles = "";
+  console.log('rou', router);
+  const routeName = router.pathname.replace('/', '');
+  const changeRole = (event) => {
+    const targetValue = event.target.value;
+    
+    switch (targetValue) {
+      case 'Faculty' :
+        userRoles = 'Faculty';
+        Cookies.set('roleFinder', userRoles);
+          router.replace(routeName); 
+        break;
+      case 'HOD' :
+        userRoles = 'HOD';
+        Cookies.set('roleFinder', userRoles);
+        router.replace(routeName); 
+        break;
+        case 'Admin' :
+          userRoles = 'Admin';
+          Cookies.set('roleFinder', userRoles);
+          router.replace(routeName); 
+          break;
+      case 'Student' :
+        userRoles = 'Student';
+        Cookies.set('roleFinder', userRoles);
+        router.replace(routeName); 
+        break;
+      default:
+        userRoles = 'Faculty';
+        Cookies.set('roleFinder', userRoles);
+          router.replace(routeName); 
+          break;
+    }
+
+  }
+
+ 
+
   return (
     <React.Fragment>
       <div className="py-4 px-6 clearfix shadow bg-white">
         <div className="float-left cursor-pointer">
+          <React.Fragment>
           {isNavClosed && (
             <strong onClick={openNav}>
               OEC&nbsp;
@@ -72,8 +112,23 @@ const TopHeader = () => {
             </strong>
           )}
           {isNavOpen && (
+            <button type="button" className="h-6 w-6 bg-white shadow rounded-full">
             <FontAwesomeIcon icon={faChevronLeft} onClick={cloasenav} />
+            </button>
           )}
+          </React.Fragment>
+
+          <div className="ml-4 inline-block">
+            <label>
+              <select onChange={(e)=>changeRole(e)} className="font-sans text-sm outline-none border border-solid border-gray-400 rounded px-2">
+                  <option value="">Select Role</option>
+                  <option value="Admin">Admin</option>
+                  <option value="Faculty">Faculty</option>
+                  <option value="HOD">HOD</option>
+                  <option value="Student">Student</option>
+              </select>
+            </label>
+          </div>
         </div>
         <div className="float-right text-gray-600">
           <span className="mr-20">

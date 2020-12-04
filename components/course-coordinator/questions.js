@@ -13,6 +13,7 @@ const Questions = ({ courseData }) => {
     const [questionsData, setQuestionsData] = useState({});
     const [examTypeData, setExamTypeData] = useState({});
 
+
     const loadQuestionsData = async (e) => {
         const data = await getQuestionsData(courseData?.coordinatorId, e.target.value);
         setQuestionsData(data?.Questions);
@@ -28,6 +29,8 @@ const Questions = ({ courseData }) => {
         loadExamTypeData(courseData?.coursecode, courseData?.coordinatorId);
        // loadQuestionsData(examTypeData.length > 0 ? examTypeData[0].examTypeId:null);
       }, []);
+
+
 
       const validateSchema = Yup.object().shape({
   friends: Yup.array()
@@ -109,8 +112,7 @@ const Questions = ({ courseData }) => {
                    
                    type="text"
                    name={`values[${mainIndex}].noOfQuestions[${subIndex}].questionName`}
-                  name="questionName'"
-                 value={subquestion.questionName}
+                    value={subquestion.questionName}
                     placeholder="Question Name"
                     onChange={handleChange}
                      onBlur={handleBlur}

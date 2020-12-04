@@ -4,10 +4,12 @@ import css from "@emotion/css";
 import { COLORS } from "../../constants";
 
 const FormInput = ({
+  id,
   name,
   type,
   placeholder,
   onChange,
+  onFocus,
   className,
   value,
   disabled,
@@ -68,6 +70,7 @@ const FormInput = ({
         type={type}
         placeholder={placeholder}
         onChange={onChange}
+        onFocus={onFocus}
         value={value}
         disabled={disabled}
         className={className}

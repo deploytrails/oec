@@ -1,8 +1,26 @@
 {
+  "./admin-dashboard": [
+    {
+      "id": "./pages/admin-dashboard.js",
+      "file": "static/chunks/1.js"
+    }
+  ],
   "./dev/noop": [
     {
       "id": "./node_modules/next/dist/client/dev/noop.js",
       "file": "static/chunks/0.js"
+    }
+  ],
+  "./hod-dashboard": [
+    {
+      "id": "./pages/hod-dashboard.js",
+      "file": "static/chunks/2.js"
+    }
+  ],
+  "./student-dashboard": [
+    {
+      "id": "./pages/student-dashboard.js",
+      "file": "static/chunks/3.js"
     }
   ]
 }

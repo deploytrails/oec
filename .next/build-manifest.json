@@ -24,15 +24,10 @@
       "static/chunks/webpack.js",
       "static/chunks/pages/_error.js"
     ],
-    "/class-schedule": [
+    "/dashboard": [
       "static/chunks/main.js",
       "static/chunks/webpack.js",
-      "static/chunks/pages/class-schedule.js"
-    ],
-    "/courseCoordinatorAllocation": [
-      "static/chunks/main.js",
-      "static/chunks/webpack.js",
-      "static/chunks/pages/courseCoordinatorAllocation.js"
+      "static/chunks/pages/dashboard.js"
     ]
   },
   "ampFirstPages": []

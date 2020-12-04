@@ -34,7 +34,8 @@ const Home = () => {
       Cookies.set("loggedUserStatus", data?.departmentId);
       Cookies.set("userName", data?.employeeName);
       Cookies.set("employeeID", data?.employeeID);
-      Cookies.set("departId", data.departmentId);
+      Cookies.set("departId", data?.departmentId);
+      Cookies.set("userRole", data?.role);
     }
     if (data?.status === "loggedin") {
       router.push("/dashboard");

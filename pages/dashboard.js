@@ -1,46 +1,29 @@
 import React, { useState, useEffect } from "react";
 import { css } from "@emotion/core";
+import dynamic from 'next/dynamic';
 import Layout from "../components/layout";
 import Link from "next/link";
 import Cookies from "js-cookie";
 import Attendance from "../components/dashboards/attendance";
 import { getNonPostedAttendance } from "../services/dashboardService";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import {
-  faColumns,
-  faFileImport,
-  faNotesMedical,
-  faBook,
-  faBell,
-  faUser,
-  faList,
-  faIdBadge,
-  faCalendar,
-  faKeyboard,
-  faChartBar,
-  faPhone,
-  faTint,
-  faChevronCircleRight,
-  faArrowRight,
-  faChevronRight,
-  faPeopleArrows,
-  faHandPaper,
-  faPaperclip,
-  faNewspaper,
-  faCertificate,
-  faEdit,
-  faGraduationCap,
-  faCompressArrowsAlt,
-  faExchangeAlt,
-  faRegistered,
-  faObjectGroup,
-  faLayerGroup,
-  faAddressCard,
-} from "@fortawesome/free-solid-svg-icons";
+import {useRouter} from 'next/router';
 
+const DynAdminDashboard = dynamic({
+  loader: () => import('./admin-dashboard'),
+  ssr:false,
+});
+const DynHodDashboard = dynamic({
+  loader: () => import('./hod-dashboard'),
+  ssr:false,
+});
+const DynStuDashboard = dynamic({
+  loader: () => import('./student-dashboard'),
+  ssr:false,
+});
 const Dashboard = () => {
   const [nonAttenData, setNonAttenData] = useState([]);
   const facultyId = Cookies.get("employeeID");
+  const roleCheck = Cookies.get("roleFinder");
 
   const getNonPostAtten = async () => {
     const data = await getNonPostedAttendance(facultyId);
@@ -49,7 +32,9 @@ const Dashboard = () => {
 
   useEffect(() => {
     getNonPostAtten();
+   
   }, []);
+
 
   const dashBoardLinks = [
     {
@@ -114,10 +99,14 @@ const Dashboard = () => {
     },
   ];
 
+
+
   return (
     <React.Fragment>
       <Layout>
         <div>{/* <Attendance nonAttenData={nonAttenData?.datesData} /> */}</div>
+        
+      {(roleCheck !== "Admin" && roleCheck !== "Student" && roleCheck !== "Hod" && roleCheck === "Faculty") && (
         <div className="clearfix">
           {dashBoardLinks &&
             dashBoardLinks.map((item) => (
@@ -142,6 +131,26 @@ const Dashboard = () => {
               </div>
             ))}
         </div>
+      )}
+
+  
+      {(roleCheck !== "Student" && roleCheck !== "Faculty" && roleCheck !== "Hod" && roleCheck==="Admin") && (
+        <DynAdminDashboard />
+      )}
+  
+
+   
+      {(roleCheck !== "Student" && roleCheck !== "Faculty" && roleCheck !== "Admin" && roleCheck === "HOD") && (
+        <DynHodDashboard />
+      )}
+
+      {(roleCheck === "Student" && roleCheck !== "Faculty" && roleCheck !== "Admin" && roleCheck !== "HOD") && (
+        <DynStuDashboard />
+      )}
+     
+          
+        
+        
       </Layout>
     </React.Fragment>
   );
