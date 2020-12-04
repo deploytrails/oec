@@ -34,7 +34,7 @@ import {
   faRegistered,
   faObjectGroup,
   faLayerGroup,
-  faAddressCard
+  faAddressCard,
 } from "@fortawesome/free-solid-svg-icons";
 
 const SideNavLinks = () => {
