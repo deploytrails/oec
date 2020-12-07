@@ -100,6 +100,93 @@ const Dashboard = () => {
   ];
 
 
+  const hoddashBoardLinks = [
+    {
+      name: "Dashboard",
+      url: "/dashboard",
+      icon: <img src="/dash-icon-1.png" width="100" />,
+    },
+    {
+      name: "Imports",
+      url: "/hodPages/Imports",
+      icon: <img src="/dash-icon-2.png" width="100" />,
+    },
+    {
+      name: "Staff",
+      url: "/hodPages/staff",
+      icon: <img src="/dash-icon-3.png" width="100" />,
+    },
+    {
+      name: "Student Enroll Details",
+      url: "/hodPages/studentEnrollDetails",
+      icon: <img src="/dash-icon-4.png" width="100" />,
+    },
+    {
+      name: "Allocate Courses",
+      url: "/hodPages/allocateCourses",
+      icon: <img src="/dash-icon-5.png" width="100" />,
+    },
+    {
+      name: "Course Coordinator Allocation",
+      url: "/hodPages/courseCoordinatorAllocation",
+      icon: <img src="/dash-icon-6.png" width="100" />,
+    },
+    {
+      name: "Reports",
+      url: "/",
+      icon: <img src="/dash-icon-7.png" width="100" />,
+    },
+    {
+      name: "Class Schedules",
+      url: "/",
+      icon: <img src="/dash-icon-2.png" width="100" />,
+    },
+    {
+      name: "Po Mapping",
+      url: "/",
+      icon: <img src="/dash-icon-8.png" width="100" />,
+    },
+    {
+      name: "Swap Classes",
+      url: "/hodPages/swapClasses",
+      icon: <img src="/dash-icon-9.png" width="100" />,
+    },
+    {
+      name: "Mentor",
+      url: "/hodPages/mentor",
+      icon: <img src="/dash-icon-10.png" width="100" />,
+    },
+    {
+      name: "Feedback Details",
+      url: "/hodPages/feedbackDetails",
+      icon: <img src="/dash-icon-1.png" width="100" />,
+    },
+    {
+      name: "Assign Group",
+      url: "/hodPages/assignGroup",
+      icon: <img src="/dash-icon-1.png" width="100" />,
+    },
+    {
+      name: "List of Faculty Courses",
+      url: "/hodPages/facultyCoursesList",
+      icon: <img src="/dash-icon-1.png" width="100" />,
+    },
+
+    {
+      name: "Faculty Data Download",
+      url: "/hodPages/facultyDataDownload",
+      icon: <img src="/dash-icon-1.png" width="100" />,
+    },
+    {
+      name: "Assign Electives",
+      url: "/hodPages/assignElectives",
+      icon: <img src="/dash-icon-1.png" width="100" />,
+    },
+    
+
+  ];
+
+
 
   return (
     <React.Fragment>
@@ -141,7 +228,7 @@ const Dashboard = () => {
 
    
       {(roleCheck !== "Student" && roleCheck !== "Faculty" && roleCheck !== "Admin" && roleCheck === "HOD") && (
-        <DynHodDashboard />
+        <DynHodDashboard dashBoardLinks={hoddashBoardLinks}/>
       )}
 
       {(roleCheck === "Student" && roleCheck !== "Faculty" && roleCheck !== "Admin" && roleCheck !== "HOD") && (
