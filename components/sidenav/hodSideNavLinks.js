@@ -39,18 +39,14 @@ import {
 const HodSideNavLinks = () => {
   const router = useRouter();
   const [dropMenu, setDropMenu] = useState(false);
-  const [menterMenu, setMenterMenu] = useState(false);
-  const [examMenu, setExamMenu] = useState(false);
+  const [poMenu, setPoMenu] = useState(false);
   const [reportsMenu, setReportsMenu] = useState(false);
 
   const toggleAlloCourceMenu = () => {
     setDropMenu(!dropMenu);
   };
-  const togglementorMenu = () => {
-    setMenterMenu(!menterMenu);
-  };
-  const toggleExamMenu = () => {
-    setExamMenu(!examMenu);
+  const togglePoMenu = () => {
+    setPoMenu(!poMenu);
   };
   const toggleReportsMenu = () => {
     setReportsMenu(!reportsMenu);
@@ -221,14 +217,161 @@ const HodSideNavLinks = () => {
                 }
               `}
             >
-              <li>
-                <FontAwesomeIcon icon={faRegistered} /> Cource Register
+              <li
+                css={
+                  router.pathname === "/hodPages/reports/nonPostedData"
+                    ? css`
+                        color: ${COLORS.GREEN};
+                      `
+                    : css`
+                        color: ${COLORS.TEXTGRAY};
+                      `
+                }
+              >
+                <Link href="/hodPages/reports/nonPostedData">
+                  <a>
+                    <FontAwesomeIcon icon={faBook} /> NonPosted Data
+                  </a>
+                </Link>
               </li>
-              <li>
-                <FontAwesomeIcon icon={faLayerGroup} /> Cource Wise Attendance
+              <li
+                css={
+                  router.pathname === "/hodPages/reports/facWiseCouReg"
+                    ? css`
+                        color: ${COLORS.GREEN};
+                      `
+                    : css`
+                        color: ${COLORS.TEXTGRAY};
+                      `
+                }
+              >
+                <Link href="/hodPages/reports/facWiseCouReg">
+                  <a>
+                    <FontAwesomeIcon icon={faBook} /> Faculty Wise Course
+                    Register
+                  </a>
+                </Link>
               </li>
-              <li>
-                <FontAwesomeIcon icon={faAddressCard} /> Day Wise Attendance
+              <li
+                css={
+                  router.pathname === "/hodPages/reports/CouWiseAtt"
+                    ? css`
+                        color: ${COLORS.GREEN};
+                      `
+                    : css`
+                        color: ${COLORS.TEXTGRAY};
+                      `
+                }
+              >
+                <Link href="/hodPages/reports/CouWiseAtt">
+                  <a>
+                    <FontAwesomeIcon icon={faBook} /> Course Wise Attendance
+                  </a>
+                </Link>
+              </li>
+              <li
+                css={
+                  router.pathname === "/hodPages/reports/DayWiseAtt"
+                    ? css`
+                        color: ${COLORS.GREEN};
+                      `
+                    : css`
+                        color: ${COLORS.TEXTGRAY};
+                      `
+                }
+              >
+                <Link href="/hodPages/reports/DayWiseAtt">
+                  <a>
+                    <FontAwesomeIcon icon={faBook} /> Day Wise Attendance
+                  </a>
+                </Link>
+              </li>
+              <li
+                css={
+                  router.pathname === "/hodPages/reports/facHandlingCourses"
+                    ? css`
+                        color: ${COLORS.GREEN};
+                      `
+                    : css`
+                        color: ${COLORS.TEXTGRAY};
+                      `
+                }
+              >
+                <Link href="/hodPages/reports/facHandlingCourses">
+                  <a>
+                    <FontAwesomeIcon icon={faBook} /> Faculty Handling Courses
+                  </a>
+                </Link>
+              </li>
+              <li
+                css={
+                  router.pathname === "/hodPages/reports/coordHandlingCou"
+                    ? css`
+                        color: ${COLORS.GREEN};
+                      `
+                    : css`
+                        color: ${COLORS.TEXTGRAY};
+                      `
+                }
+              >
+                <Link href="/hodPages/reports/coordHandlingCou">
+                  <a>
+                    <FontAwesomeIcon icon={faBook} /> Coordinator Handling
+                    Courses
+                  </a>
+                </Link>
+              </li>
+              <li
+                css={
+                  router.pathname === "/hodPages/reports/tentLectSch"
+                    ? css`
+                        color: ${COLORS.GREEN};
+                      `
+                    : css`
+                        color: ${COLORS.TEXTGRAY};
+                      `
+                }
+              >
+                <Link href="/hodPages/reports/tentLectSch">
+                  <a>
+                    <FontAwesomeIcon icon={faBook} /> Tentative Lecture Schedule
+                  </a>
+                </Link>
+              </li>
+              <li
+                css={
+                  router.pathname === "/hodPages/reports/periodAdjNotif"
+                    ? css`
+                        color: ${COLORS.GREEN};
+                      `
+                    : css`
+                        color: ${COLORS.TEXTGRAY};
+                      `
+                }
+              >
+                <Link href="/hodPages/reports/periodAdjNotif">
+                  <a>
+                    <FontAwesomeIcon icon={faBook} /> Period Adjustment
+                    Notification
+                  </a>
+                </Link>
+              </li>
+              <li
+                css={
+                  router.pathname === "/hodPages/reports/facTimeTable"
+                    ? css`
+                        color: ${COLORS.GREEN};
+                      `
+                    : css`
+                        color: ${COLORS.TEXTGRAY};
+                      `
+                }
+              >
+                <Link href="/hodPages/reports/facTimeTable">
+                  <a>
+                    <FontAwesomeIcon icon={faBook} /> Faculty Time Table
+                  </a>
+                </Link>
               </li>
             </ul>
           )}
@@ -236,7 +379,7 @@ const HodSideNavLinks = () => {
 
         <li
           css={
-            router.pathname === "/allocated-coureces"
+            router.pathname === "/classSchedule"
               ? css`
                   color: ${COLORS.GREEN};
                 `
@@ -246,7 +389,7 @@ const HodSideNavLinks = () => {
           }
         >
           <a className="clearfix cursor-pointer" onClick={toggleAlloCourceMenu}>
-            <FontAwesomeIcon icon={faList} /> Allocated Courses
+            <FontAwesomeIcon icon={faList} /> Class Schedule
             <span className="float-right">
               <FontAwesomeIcon
                 icon={faChevronRight}
@@ -275,7 +418,7 @@ const HodSideNavLinks = () => {
             >
               <li
                 css={
-                  router.pathname === "/allocated-cources/allocatedCourses"
+                  router.pathname === "/hodPages/classSchedule/myClasSchedules"
                     ? css`
                         color: ${COLORS.GREEN};
                       `
@@ -284,15 +427,15 @@ const HodSideNavLinks = () => {
                       `
                 }
               >
-                <Link href="/allocated-cources/allocatedCourses">
+                <Link href="/hodPages/classSchedule/myClasSchedules">
                   <a>
-                    <FontAwesomeIcon icon={faBook} /> Allocated Courses
+                    <FontAwesomeIcon icon={faBook} /> My Class Schedules
                   </a>
                 </Link>
               </li>
               <li
                 css={
-                  router.pathname === "/allocated-cources/attendance"
+                  router.pathname === "/hodPages/classSchedule/viewTimeTable"
                     ? css`
                         color: ${COLORS.GREEN};
                       `
@@ -301,31 +444,11 @@ const HodSideNavLinks = () => {
                       `
                 }
               >
-                <Link href="/allocated-cources/attendance">
+                <Link href="/hodPages/classSchedule/viewTimeTable">
                   <a>
-                    <FontAwesomeIcon icon={faPeopleArrows} /> Attendance
+                    <FontAwesomeIcon icon={faPeopleArrows} /> View TimeTable
                   </a>
                 </Link>
-              </li>
-              <li
-                css={
-                  router.pathname === "/allocated-cources/marksEntry"
-                    ? css`
-                        color: ${COLORS.GREEN};
-                      `
-                    : css`
-                        color: ${COLORS.TEXTGRAY};
-                      `
-                }
-              >
-                <Link href="/allocated-cources/marksEntry">
-                  <a>
-                    <FontAwesomeIcon icon={faNewspaper} /> Mark Entry
-                  </a>
-                </Link>
-              </li>
-              <li>
-                <FontAwesomeIcon icon={faEdit} /> Assignment Creation
               </li>
             </ul>
           )}
@@ -333,7 +456,7 @@ const HodSideNavLinks = () => {
 
         <li
           css={
-            router.pathname === "/mentoring"
+            router.pathname === "/poMapping"
               ? css`
                   color: ${COLORS.GREEN};
                 `
@@ -342,13 +465,13 @@ const HodSideNavLinks = () => {
                 `
           }
         >
-          <a className="clearfix cursor-pointer" onClick={togglementorMenu}>
-            <FontAwesomeIcon icon={faKeyboard} /> Mentoring
+          <a className="clearfix cursor-pointer" onClick={togglePoMenu}>
+            <FontAwesomeIcon icon={faKeyboard} /> PO Mapping
             <span className="float-right">
               <FontAwesomeIcon
                 icon={faChevronRight}
                 css={
-                  menterMenu
+                  poMenu
                     ? css`
                         transform: rotate(90deg);
                         transition: all 0.1s ease-in-out;
@@ -361,7 +484,7 @@ const HodSideNavLinks = () => {
               />
             </span>
           </a>
-          {menterMenu && (
+          {poMenu && (
             <ul
               className="ml-6 font-sans text-sm"
               css={css`
@@ -372,7 +495,7 @@ const HodSideNavLinks = () => {
             >
               <li
                 css={
-                  router.pathname === "/mentoring/assignedStudents"
+                  router.pathname === "/hodPages/poMapping/visMisStatement"
                     ? css`
                         color: ${COLORS.GREEN};
                       `
@@ -381,15 +504,16 @@ const HodSideNavLinks = () => {
                       `
                 }
               >
-                <Link href="/mentoring/assignedStudents">
+                <Link href="/hodPages/poMapping/visMisStatement">
                   <a>
-                    <FontAwesomeIcon icon={faGraduationCap} /> Assigned Students
+                    <FontAwesomeIcon icon={faGraduationCap} /> Vision/Mission
+                    Statement
                   </a>
                 </Link>
               </li>
               <li
                 css={
-                  router.pathname === "/mentoring/discrepancy"
+                  router.pathname === "/hodPages/poMapping/progEduObjectives"
                     ? css`
                         color: ${COLORS.GREEN};
                       `
@@ -398,75 +522,16 @@ const HodSideNavLinks = () => {
                       `
                 }
               >
-                <Link href="/mentoring/discrepancy">
+                <Link href="/hodPages/poMapping/progEduObjectives">
                   <a>
-                    <FontAwesomeIcon icon={faCompressArrowsAlt} /> Discrepancy
-                  </a>
-                </Link>
-              </li>
-            </ul>
-          )}
-        </li>
-
-        <li
-          css={
-            router.pathname === "/mentoring"
-              ? css`
-                  color: ${COLORS.GREEN};
-                `
-              : css`
-                  color: ${COLORS.TEXTGRAY};
-                `
-          }
-        >
-          <a className="clearfix cursor-pointer" onClick={togglementorMenu}>
-            <FontAwesomeIcon icon={faKeyboard} /> Mentoring
-            <span className="float-right">
-              <FontAwesomeIcon
-                icon={faChevronRight}
-                css={
-                  menterMenu
-                    ? css`
-                        transform: rotate(90deg);
-                        transition: all 0.1s ease-in-out;
-                      `
-                    : css`
-                        transform: rotate(0deg);
-                        transition: all 0.1s ease-in-out;
-                      `
-                }
-              />
-            </span>
-          </a>
-          {menterMenu && (
-            <ul
-              className="ml-6 font-sans text-sm"
-              css={css`
-                & > li {
-                  padding: 4px 0px;
-                }
-              `}
-            >
-              <li
-                css={
-                  router.pathname === "/mentoring/assignedStudents"
-                    ? css`
-                        color: ${COLORS.GREEN};
-                      `
-                    : css`
-                        color: ${COLORS.TEXTGRAY};
-                      `
-                }
-              >
-                <Link href="/mentoring/assignedStudents">
-                  <a>
-                    <FontAwesomeIcon icon={faGraduationCap} /> Assigned Students
+                    <FontAwesomeIcon icon={faCompressArrowsAlt} /> Program
+                    Educational Objectives
                   </a>
                 </Link>
               </li>
               <li
                 css={
-                  router.pathname === "/mentoring/discrepancy"
+                  router.pathname === "/hodPages/poMapping/pOPSOs"
                     ? css`
                         color: ${COLORS.GREEN};
                       `
@@ -475,9 +540,9 @@ const HodSideNavLinks = () => {
                       `
                 }
               >
-                <Link href="/mentoring/discrepancy">
+                <Link href="/hodPages/poMapping/pOPSOs">
                   <a>
-                    <FontAwesomeIcon icon={faCompressArrowsAlt} /> Discrepancy
+                    <FontAwesomeIcon icon={faCompressArrowsAlt} /> PO & PSO's
                   </a>
                 </Link>
               </li>
