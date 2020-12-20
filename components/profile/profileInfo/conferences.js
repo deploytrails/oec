@@ -90,7 +90,7 @@ const Conferences = ({ isConfData, loadConfInfo }) => {
             isConfData.length &&
             isConfData.map((confInfo) => (
               <TABLE.TableTRR key={confInfo.conferenceID}>
-                <TABLE.TableTdd>{confInfo.employeeID.firstName}</TABLE.TableTdd>
+                <TABLE.TableTdd>{confInfo.hrEmployee.lastName}</TABLE.TableTdd>
                 <TABLE.TableTdd>{confInfo.typeOfconferencename}</TABLE.TableTdd>
                 <TABLE.TableTdd>{confInfo.titleConference}</TABLE.TableTdd>
                 <TABLE.TableTdd>
