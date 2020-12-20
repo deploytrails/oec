@@ -1,24 +1,24 @@
 import React, { useState, useEffect } from "react";
 import { css } from "@emotion/core";
-import dynamic from 'next/dynamic';
+import dynamic from "next/dynamic";
 import Layout from "../components/layout";
 import Link from "next/link";
 import Cookies from "js-cookie";
 import Attendance from "../components/dashboards/attendance";
 import { getNonPostedAttendance } from "../services/dashboardService";
-import {useRouter} from 'next/router';
+import { useRouter } from "next/router";
 
 const DynAdminDashboard = dynamic({
-  loader: () => import('./admin-dashboard'),
-  ssr:false,
+  loader: () => import("./admin-dashboard"),
+  ssr: false,
 });
 const DynHodDashboard = dynamic({
-  loader: () => import('./hod-dashboard'),
-  ssr:false,
+  loader: () => import("./hod-dashboard"),
+  ssr: false,
 });
 const DynStuDashboard = dynamic({
-  loader: () => import('./student-dashboard'),
-  ssr:false,
+  loader: () => import("./student-dashboard"),
+  ssr: false,
 });
 const Dashboard = () => {
   const [nonAttenData, setNonAttenData] = useState([]);
@@ -32,9 +32,7 @@ const Dashboard = () => {
 
   useEffect(() => {
     getNonPostAtten();
-   
   }, []);
-
 
   const dashBoardLinks = [
     {
@@ -64,7 +62,7 @@ const Dashboard = () => {
     },
     {
       name: "Cource Coordinator Allocation",
-      url: "/cource-coordinator-allocation",
+      url: "/courseCoordinatorAllocation",
       icon: <img src="/dash-icon-6.png" width="100" />,
     },
     {
@@ -98,7 +96,6 @@ const Dashboard = () => {
       icon: <img src="/dash-icon-1.png" width="100" />,
     },
   ];
-
 
   const hoddashBoardLinks = [
     {
@@ -182,62 +179,62 @@ const Dashboard = () => {
       url: "/hodPages/assignElectives",
       icon: <img src="/dash-icon-1.png" width="100" />,
     },
-    
-
   ];
-
-
 
   return (
     <React.Fragment>
       <Layout>
         <div>{/* <Attendance nonAttenData={nonAttenData?.datesData} /> */}</div>
-        
-      {(roleCheck !== "Admin" && roleCheck !== "Student" && roleCheck !== "Hod" && roleCheck === "Faculty") && (
-        <div className="clearfix">
-          {dashBoardLinks &&
-            dashBoardLinks.map((item) => (
-              <div className="w-4/12 float-left text-center relative">
-                <Link href={item.url} key={item.name}>
-                  <a className=" p-4 bg-white shadow  box-border block m-1 font-bold hover:shadow-2xl hover:text-green-400">
-                    <span
-                      css={css`
-                        display: block;
-                      `}
-                    >
-                      <span css={css`
-                        display:block;
-                        margin:0px auto;
-                        width:100px;
-                      `}>{item.icon}</span>
-                      {item.name}
-                    </span>
-                   
-                  </a>
-                </Link>
-              </div>
-            ))}
-        </div>
-      )}
 
-  
-      {(roleCheck !== "Student" && roleCheck !== "Faculty" && roleCheck !== "Hod" && roleCheck==="Admin") && (
-        <DynAdminDashboard />
-      )}
-  
+        {roleCheck !== "Admin" &&
+          roleCheck !== "Student" &&
+          roleCheck !== "Hod" &&
+          roleCheck === "Faculty" && (
+            <div className="clearfix">
+              {dashBoardLinks &&
+                dashBoardLinks.map((item) => (
+                  <div className="w-4/12 float-left text-center relative">
+                    <Link href={item.url} key={item.name}>
+                      <a className=" p-4 bg-white shadow  box-border block m-1 font-bold hover:shadow-2xl hover:text-green-400">
+                        <span
+                          css={css`
+                            display: block;
+                          `}
+                        >
+                          <span
+                            css={css`
+                              display: block;
+                              margin: 0px auto;
+                              width: 100px;
+                            `}
+                          >
+                            {item.icon}
+                          </span>
+                          {item.name}
+                        </span>
+                      </a>
+                    </Link>
+                  </div>
+                ))}
+            </div>
+          )}
 
-   
-      {(roleCheck !== "Student" && roleCheck !== "Faculty" && roleCheck !== "Admin" && roleCheck === "HOD") && (
-        <DynHodDashboard dashBoardLinks={hoddashBoardLinks}/>
-      )}
+        {roleCheck !== "Student" &&
+          roleCheck !== "Faculty" &&
+          roleCheck !== "Hod" &&
+          roleCheck === "Admin" && <DynAdminDashboard />}
 
-      {(roleCheck === "Student" && roleCheck !== "Faculty" && roleCheck !== "Admin" && roleCheck !== "HOD") && (
-        <DynStuDashboard />
-      )}
-     
-          
-        
-        
+        {roleCheck !== "Student" &&
+          roleCheck !== "Faculty" &&
+          roleCheck !== "Admin" &&
+          roleCheck === "HOD" && (
+            <DynHodDashboard dashBoardLinks={hoddashBoardLinks} />
+          )}
+
+        {roleCheck === "Student" &&
+          roleCheck !== "Faculty" &&
+          roleCheck !== "Admin" &&
+          roleCheck !== "HOD" && <DynStuDashboard />}
       </Layout>
     </React.Fragment>
   );

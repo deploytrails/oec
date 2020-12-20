@@ -19,7 +19,7 @@ const AllocatedCouses = () => {
 
   const loadAllocatedCourseData = async () => {
     const courseInfo = await getallocatedcoursesData(FacultyId);
-    setIsAllocatedCourseData(courseInfo.allocatedCoursesDetails.CourseDetails);
+    setIsAllocatedCourseData(courseInfo?.allocatedCoursesDetails.CourseDetails);
     // console.log(courseInfo.allocatedCoursesDetails.CourseDetails);
   };
 
@@ -42,7 +42,7 @@ const AllocatedCouses = () => {
 
               {isAllocatedCourseData &&
                 isAllocatedCourseData.length &&
-                isAllocatedCourseData.map(course => (
+                isAllocatedCourseData.map((course) => (
                   <TABLE.TableTRR>
                     <TABLE.TableTdd>{course[0][1].courseCode}</TABLE.TableTdd>
                     <TABLE.TableTdd>{course[0][1].courseName}</TABLE.TableTdd>
@@ -61,9 +61,10 @@ const AllocatedCouses = () => {
                       >
                         CO-PO Mapping
                       </button>
-                      <button 
-                       onClick={() => toggleModal(2, course[0])}
-                      className="py-2 px-4 rounded  bg-blue-400 mr-2 text-center text-white mb-4 hover:bg-blue-500 focus:outline-none">
+                      <button
+                        onClick={() => toggleModal(2, course[0])}
+                        className="py-2 px-4 rounded  bg-blue-400 mr-2 text-center text-white mb-4 hover:bg-blue-500 focus:outline-none"
+                      >
                         Extra Class
                       </button>
                     </TABLE.TableTdd>

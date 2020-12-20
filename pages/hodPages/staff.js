@@ -6,68 +6,92 @@ import {
   getTeachingStaffData,
   getNonTeachingStaffData,
 } from "../../services/hodServices/staffServices";
+import Pagination from "../../components/TableUtilities/pagination";
+import css from "@emotion/css";
 
 const Staff = () => {
   const ProfileId = Cookies.get("employeeID");
   const [isStaffData, setIsStaffData] = useState([]);
+  const [isButtonText, setIsButtonText] = useState();
+  const [countPerPage] = useState(10);
+  const [currentPage, setCurrentPage] = useState(1);
+  const paginate = (pageNumber) => setCurrentPage(pageNumber);
+
+  const indexOfLastPost = currentPage * countPerPage;
+  const indexOfFirstPost = indexOfLastPost - countPerPage;
+  const currentPosts = isStaffData.slice(indexOfFirstPost, indexOfLastPost);
 
   const loadTeachingStaffData = async () => {
     const cData = await getTeachingStaffData(ProfileId);
-    // setIsStaffData(cData?.allocatedCoursesDetails.allocateCourse);
+    setIsStaffData(cData?.teachingStaffDetails);
     console.log(cData);
+    setIsButtonText(!isButtonText);
   };
   const loadNonTeachingStaffData = async () => {
     const cData = await getNonTeachingStaffData(ProfileId);
-    //  setIsStaffData(cData?.allocatedCoursesDetails.allocateCourse);
+    setIsStaffData(cData?.nonTeachingStaffDetails);
+    console.log(cData);
+    setIsButtonText(!isButtonText);
   };
 
   useEffect(() => {
     loadTeachingStaffData();
+    setIsButtonText(true);
   }, []);
   return (
     <React.Fragment>
-      <Layout className="h-screen">
+      <Layout>
         <div>
-          <TABLE.TableWrapper>
-            <TABLE.TableTR>
-              <TABLE.TableTh>Course Code</TABLE.TableTh>
-              <TABLE.TableTh>Course Name</TABLE.TableTh>
-              <TABLE.TableTh>Semester Year</TABLE.TableTh>
-              <TABLE.TableTh>Semester No.</TABLE.TableTh>
-            </TABLE.TableTR>
-            {isStaffData &&
-              isStaffData.length &&
-              isStaffData.map((course, i) => (
-                <TABLE.TableTbody key={isStaffData[i].coordinatorId}>
-                  <TABLE.TableTRR
-                    onClick={() =>
-                      getExpandedRowData(isStaffData[i].coordinatorId)
-                    }
-                  >
-                    <TABLE.TableTdd>{course[i].coursecode}</TABLE.TableTdd>
-                    <TABLE.TableTdd>{course[i].coursename}</TABLE.TableTdd>
-                    <TABLE.TableTdd>{course[i].semesteryear}</TABLE.TableTdd>
-                    <TABLE.TableTdd>{course[i].semesterno}</TABLE.TableTdd>
-                  </TABLE.TableTRR>
-                  {isCocrdinatorId === isStaffData[i].coordinatorId && (
-                    <TABLE.TableTRR>
-                      <td
-                        colSpan={4}
-                        css={css`
-                          padding-left: 15px !important;
-                        `}
-                      >
-                        {console.log("Test My logic")}
-                        <CourseTabsWrap
-                          getExpandedRowData={getExpandedRowData}
-                          courseData={course[i]}
-                        />
-                      </td>
+          <div>
+            <button
+              type="button"
+              className=" float-right bg-blue-400 block  mx-auto px-2 py-1 rounded"
+              onClick={
+                isButtonText ? loadNonTeachingStaffData : loadTeachingStaffData
+              }
+            >
+              {isButtonText ? "Non-Teaching Staff" : "Teaching Staff"}
+            </button>
+            <TABLE.TableWrapper>
+              <TABLE.TableTR>
+                <TABLE.TableTh>Faculty Number</TABLE.TableTh>
+                <TABLE.TableTh>Faculty Name</TABLE.TableTh>
+                <TABLE.TableTh>Designation</TABLE.TableTh>
+                <TABLE.TableTh> Highest Qualification</TABLE.TableTh>
+                <TABLE.TableTh> Total Years of Experience</TABLE.TableTh>
+              </TABLE.TableTR>
+              <TABLE.TableTbody>
+                {currentPosts &&
+                  currentPosts.length &&
+                  currentPosts.map((staff) => (
+                    <TABLE.TableTRR key={staff.teachingStaffID}>
+                      <TABLE.TableTdd>
+                        {staff.teachingStaffID || staff.nonTeachingStaffID}
+                      </TABLE.TableTdd>
+                      <TABLE.TableTdd>
+                        {staff.teachingStaffName || staff.nonTeachingStaffName}
+                      </TABLE.TableTdd>
+                      <TABLE.TableTdd>
+                        {staff.teachingStaffDisg || staff.nonTeachingStaffDisg}
+                      </TABLE.TableTdd>
+                      <TABLE.TableTdd>
+                        {staff.teachingStaffhigestQual ||
+                          staff.nonTeachingStaffhigestQual}
+                      </TABLE.TableTdd>
+                      <TABLE.TableTdd>
+                        {staff.teachingStaffExp || staff.nonTeachingStaffExp}
+                      </TABLE.TableTdd>
                     </TABLE.TableTRR>
-                  )}
-                </TABLE.TableTbody>
-              ))}
-          </TABLE.TableWrapper>
+                  ))}
+              </TABLE.TableTbody>
+            </TABLE.TableWrapper>
+          </div>
+          <Pagination
+            countPerPage={countPerPage}
+            totalRecs={isStaffData.length}
+            paginate={paginate}
+            currentPage={currentPage}
+          />
         </div>
       </Layout>
     </React.Fragment>

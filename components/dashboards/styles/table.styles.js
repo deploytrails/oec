@@ -47,7 +47,7 @@ export const TableTd = styled.td`
   color: #fff;
   font-weight: 400;
   font-size: 14px;
-  text-align: center;
+  text-align: left;
   color: ${COLORS.BLACK};
   border-right: 1px solid ${COLORS.WHITE};
 
@@ -83,7 +83,7 @@ export const TableTRR = styled.tr`
 export const TableTdd = styled.td`
   color: #fff;
   font-weight: 400;
-  text-align: center;
+  text-align: left;
   font-size: 14px;
   padding: 12px 5px;
   color: ${COLORS.BLACK};

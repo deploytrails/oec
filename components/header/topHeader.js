@@ -11,7 +11,7 @@ import {
   faCross,
   faTimes,
   faSignOutAlt,
-  faChevronLeft
+  faChevronLeft,
 } from "@fortawesome/free-solid-svg-icons";
 
 const TopHeader = () => {
@@ -63,69 +63,73 @@ const TopHeader = () => {
   };
 
   let userRoles = "";
-  console.log('rou', router);
-  const routeName = router.pathname.replace('/', '');
+  console.log("rou", router);
+  //const routeName = router.pathname.replace('/', '');
+  const routeName = "/dashboard";
   const changeRole = (event) => {
     const targetValue = event.target.value;
-    
+
     switch (targetValue) {
-      case 'Faculty' :
-        userRoles = 'Faculty';
-        Cookies.set('roleFinder', userRoles);
-          router.replace(routeName); 
+      case "Faculty":
+        userRoles = "Faculty";
+        Cookies.set("roleFinder", userRoles);
+        router.replace(routeName);
         break;
-      case 'HOD' :
-        userRoles = 'HOD';
-        Cookies.set('roleFinder', userRoles);
-        router.replace(routeName); 
+      case "HOD":
+        userRoles = "HOD";
+        Cookies.set("roleFinder", userRoles);
+        router.replace(routeName);
         break;
-        case 'Admin' :
-          userRoles = 'Admin';
-          Cookies.set('roleFinder', userRoles);
-          router.replace(routeName); 
-          break;
-      case 'Student' :
-        userRoles = 'Student';
-        Cookies.set('roleFinder', userRoles);
-        router.replace(routeName); 
+      case "Admin":
+        userRoles = "Admin";
+        Cookies.set("roleFinder", userRoles);
+        router.replace(routeName);
+        break;
+      case "Student":
+        userRoles = "Student";
+        Cookies.set("roleFinder", userRoles);
+        router.replace(routeName);
         break;
       default:
-        userRoles = 'Faculty';
-        Cookies.set('roleFinder', userRoles);
-          router.replace(routeName); 
-          break;
+        userRoles = "Faculty";
+        Cookies.set("roleFinder", userRoles);
+        router.replace(routeName);
+        break;
     }
-
-  }
-
- 
+  };
 
   return (
     <React.Fragment>
       <div className="py-4 px-6 clearfix shadow bg-white">
         <div className="float-left cursor-pointer">
           <React.Fragment>
-          {isNavClosed && (
-            <strong onClick={openNav}>
-              OEC&nbsp;
-              <FontAwesomeIcon icon={faBars} />
-            </strong>
-          )}
-          {isNavOpen && (
-            <button type="button" className="h-6 w-6 bg-white shadow rounded-full">
-            <FontAwesomeIcon icon={faChevronLeft} onClick={cloasenav} />
-            </button>
-          )}
+            {isNavClosed && (
+              <strong onClick={openNav}>
+                OEC&nbsp;
+                <FontAwesomeIcon icon={faBars} />
+              </strong>
+            )}
+            {isNavOpen && (
+              <button
+                type="button"
+                className="h-6 w-6 bg-white shadow rounded-full"
+              >
+                <FontAwesomeIcon icon={faChevronLeft} onClick={cloasenav} />
+              </button>
+            )}
           </React.Fragment>
 
           <div className="ml-4 inline-block">
             <label>
-              <select onChange={(e)=>changeRole(e)} className="font-sans text-sm outline-none border border-solid border-gray-400 rounded px-2">
-                  <option value="">Select Role</option>
-                  <option value="Admin">Admin</option>
-                  <option value="Faculty">Faculty</option>
-                  <option value="HOD">HOD</option>
-                  <option value="Student">Student</option>
+              <select
+                onChange={(e) => changeRole(e)}
+                className="font-sans text-sm outline-none border border-solid border-gray-400 rounded px-2"
+              >
+                <option value="">Select Role</option>
+                <option value="Admin">Admin</option>
+                <option value="Faculty">Faculty</option>
+                <option value="HOD">HOD</option>
+                <option value="Student">Student</option>
               </select>
             </label>
           </div>

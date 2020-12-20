@@ -8,6 +8,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faUser, faChevronDown } from "@fortawesome/free-solid-svg-icons";
 import StudentTabsWrap from "./assignStudentContent/studentTabs";
 import MoreDetailsModal from "./assignStudentContent/moreDetailsModal";
+import PulseLoader from "react-spinners/PulseLoader";
 
 const Assignedstudents = () => {
   const [show, setShow] = useState(false);
@@ -18,13 +19,13 @@ const Assignedstudents = () => {
   const [studentModelData, setstudentModelData] = useState({});
   const [activeButton, setActiveButton] = useState(0);
 
-  const toggleModal = id => {
+  const toggleModal = (id) => {
     setShow(!show);
     setIsMoreOptionsStdId("");
     setActiveButton(id);
   };
 
-  const getMoreOptions = async studentObj => {
+  const getMoreOptions = async (studentObj) => {
     //  console.log(studentObj);
     setstudentModelData(studentObj);
     isMoreOptionsStdId == studentObj.enrollstudentId
@@ -32,7 +33,7 @@ const Assignedstudents = () => {
       : setIsMoreOptionsStdId(studentObj.enrollstudentId);
   };
 
-  const getExpandedRowData = async id => {
+  const getExpandedRowData = async (id) => {
     isRowStudentId == id ? setIsRowStudentId("") : setIsRowStudentId(id);
   };
 
