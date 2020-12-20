@@ -16,7 +16,7 @@ const ClassSchedule = () => {
     const data = await getClassScheduleData(facultyId);
     setClassScheduleData(data);
   };
-  const getClassScheduleDayWise = async startdate => {
+  const getClassScheduleDayWise = async (startdate) => {
     const data = await getClassScheduleDataDayWise(facultyId, startdate);
     setClassScheduleData(data);
   };
@@ -25,12 +25,15 @@ const ClassSchedule = () => {
     getClassSchedule();
   }, []);
 
-  const periodList = (period,classday) => {
+  const periodList = (period, classday) => {
     let timetabledata = classScheduleData?.facTimeTableDetails?.timetabledata;
 
     for (let timedat of timetabledata) {
-      if (timedat.length == 1 && timedat[0][22].includes(period) && timedat[0][5].includes(classday)) 
-      {
+      if (
+        timedat.length == 1 &&
+        timedat[0][22].includes(period) &&
+        timedat[0][5].includes(classday)
+      ) {
         return (
           timedat[0][2] +
           "-" +
@@ -44,7 +47,7 @@ const ClassSchedule = () => {
     }
   };
 
-  const timeconvert = date => {
+  const timeconvert = (date) => {
     let time = new Date(date);
     let hours = time.getHours() > 12 ? time.getHours() - 12 : time.getHours();
     let am_pm = time.getHours() >= 12 ? "PM" : "AM";
@@ -61,7 +64,7 @@ const ClassSchedule = () => {
         <div>
           <Formik
             initialValues={{
-              classDate: ""
+              classDate: "",
             }}
           >
             {({ values, errors, touched, handleBlur }) => (
@@ -88,7 +91,9 @@ const ClassSchedule = () => {
                       <input
                         type="date"
                         name="classdate"
-                        onChange={e => getClassScheduleDayWise(e.target.value)}
+                        onChange={(e) =>
+                          getClassScheduleDayWise(e.target.value)
+                        }
                         onBlur={handleBlur}
                         placeholder="Class Date"
                         value={values.classdate}
@@ -127,14 +132,15 @@ const ClassSchedule = () => {
           <TABLE.TableWrapper>
             <TABLE.TableTR>
               <TABLE.TableTh>Day</TABLE.TableTh>
-              {classScheduleData?.facTimeTableDetails?.totalperiods.map(
-                (period, index) => (
-                  <TABLE.TableTh key={index}>
-                    {period[3]}--{timeconvert(period[1])} --{" "}
-                    {timeconvert(period[2])}
-                  </TABLE.TableTh>
-                )
-              )}
+              {classScheduleData &&
+                classScheduleData?.facTimeTableDetails?.totalperiods.map(
+                  (period, index) => (
+                    <TABLE.TableTh key={index}>
+                      {period[3]}--{timeconvert(period[1])} --{" "}
+                      {timeconvert(period[2])}
+                    </TABLE.TableTh>
+                  )
+                )}
             </TABLE.TableTR>
 
             {classScheduleData?.facTimeTableDetails?.dayDate.map(
@@ -144,7 +150,7 @@ const ClassSchedule = () => {
                   {classScheduleData?.facTimeTableDetails?.totalperiods.map(
                     (period, index) => (
                       <TABLE.TableTdd key={index}>
-                        {periodList(period[3],classday)}
+                        {periodList(period[3], classday)}
                       </TABLE.TableTdd>
                     )
                   )}

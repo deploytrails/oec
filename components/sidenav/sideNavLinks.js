@@ -252,9 +252,9 @@ const SideNavLinks = () => {
                       </a>
                     </Link>
                   </li>
-                  <li>
+                  {/* <li>
                     <FontAwesomeIcon icon={faEdit} /> Assignment Creation
-                  </li>
+                  </li> */}
                 </ul>
               )}
             </li>

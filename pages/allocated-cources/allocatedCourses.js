@@ -19,7 +19,9 @@ const AllocatedCouses = () => {
 
   const loadAllocatedCourseData = async () => {
     const courseInfo = await getallocatedcoursesData(FacultyId);
-    setIsAllocatedCourseData(courseInfo?.allocatedCoursesDetails.CourseDetails);
+    setIsAllocatedCourseData(
+      courseInfo?.allocatedCoursesDetails?.CourseDetails
+    );
     // console.log(courseInfo.allocatedCoursesDetails.CourseDetails);
   };
 

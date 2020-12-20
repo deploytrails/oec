@@ -4,7 +4,7 @@ import Cookies from "js-cookie";
 import { COLORS } from "../../constants";
 import {
   getSemSection,
-  getSemSectionStudents
+  getSemSectionStudents,
 } from "../../services/mentoringServices";
 import * as TABLE from "../../components/dashboards/styles/table.styles";
 import Layout from "../../components/layout";
@@ -23,15 +23,16 @@ const DiscrepancyIssue = () => {
 
   const getSemAndSection = async () => {
     const data = await getSemSection(ProfileId);
-    setSemSecList(data?.DiscrepancyData.ClassRoster);
+    setSemSecList(data?.DiscrepancyData?.ClassRoster);
   };
 
-  const getStudents = async id => {
+  const getStudents = async (id) => {
     const std = await getSemSectionStudents(id);
-    setStudentList(std?.studentobj.EnrollStudentDetails);
+    console.log(std);
+    setStudentList(std?.studentobj?.EnrollStudentDetails);
   };
 
-  const handleChange = e => {
+  const handleChange = (e) => {
     setIsSemSectionId(e.target.value);
     getStudents(e.target.value);
   };
@@ -42,7 +43,7 @@ const DiscrepancyIssue = () => {
     setShow(false);
     setIsEnrollStudentData();
   };
-  const openDiscrepancyModel = studentData => {
+  const openDiscrepancyModel = (studentData) => {
     setIsEnrollStudentData(studentData);
     openModal();
   };
@@ -92,7 +93,7 @@ const DiscrepancyIssue = () => {
                 Select Your option
               </option>
               {semSecList &&
-                semSecList.map(section => (
+                semSecList.map((section) => (
                   <option value={section[1].sectionPrimaryId}>
                     {section[0].semesterCode}-{section[1].sectionName}
                   </option>
@@ -102,7 +103,9 @@ const DiscrepancyIssue = () => {
         </div>
         <br></br>
         {/* /Table Starts Here/ */}
-        {studentList && studentList.length && (
+        {!studentList || studentList?.length <= 0 ? (
+          <div> {isSemSectionId && "No Data Available"}</div>
+        ) : (
           <TABLE.TableWrapper>
             <TABLE.TableTR>
               <TABLE.TableTh>Roll No</TABLE.TableTh>
@@ -116,7 +119,7 @@ const DiscrepancyIssue = () => {
 
             {studentList &&
               studentList.length &&
-              studentList.map(student => (
+              studentList.map((student) => (
                 <TABLE.TableTRR key={student[0].enrollstudentId}>
                   <TABLE.TableTdd>{student[0].roll}</TABLE.TableTdd>
                   <TABLE.TableTdd>{student[0].firstName}</TABLE.TableTdd>
