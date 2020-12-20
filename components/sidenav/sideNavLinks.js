@@ -492,7 +492,7 @@ const SideNavLinks = () => {
               )}
             </li>
 
-            <li
+            {/* <li
               css={
                 router.pathname === "/query-form"
                   ? css`
@@ -526,7 +526,7 @@ const SideNavLinks = () => {
                   <FontAwesomeIcon icon={faTint} /> Skins
                 </a>
               </Link>
-            </li>
+            </li> */}
           </ul>
         )}
 
