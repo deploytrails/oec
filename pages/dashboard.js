@@ -85,16 +85,16 @@ const Dashboard = () => {
       url: "/dashboard",
       icon: <img src="/dash-icon-9.png" width="100" />,
     },
-    {
-      name: "QueryForm",
-      url: "/query-form",
-      icon: <img src="/dash-icon-10.png" width="100" />,
-    },
-    {
-      name: "Skins",
-      url: "/dashboard",
-      icon: <img src="/dash-icon-1.png" width="100" />,
-    },
+    // {
+    //   name: "QueryForm",
+    //   url: "/query-form",
+    //   icon: <img src="/dash-icon-10.png" width="100" />,
+    // },
+    // {
+    //   name: "Skins",
+    //   url: "/dashboard",
+    //   icon: <img src="/dash-icon-1.png" width="100" />,
+    // },
   ];
 
   const hoddashBoardLinks = [
