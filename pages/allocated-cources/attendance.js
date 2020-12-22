@@ -190,16 +190,16 @@ const Attendance = () => {
                                   {x?.course?.courseName}
                                 </td>
                                 <td className="border w-2/12 px-2 py-2 text-sm">
-                                  {moment(x?.starttime).format("hh:mm A")}
+                                  {moment(x?.classStartTime).format("hh:mm A")}
                                 </td>
                                 <td className="border w-1/12 px-2 py-2 text-sm">
                                   {x?.room?.roomNO}
                                 </td>
                                 <td className="border w-1/12 px-2 py-2 text-sm">
-                                  {x?.semester?.semesterCode}
+                                  {x?.semesterDetails?.semesterCode}
                                 </td>
                                 <td className="border w-1/12 px-2 py-2 text-sm">
-                                  {x?.semsection?.sectionName}
+                                  {x?.semesterSections?.sectionName}
                                 </td>
                                 <td className="border w-2/12 px-2 py-2 border-r-0 text-sm">
                                   <button
@@ -212,8 +212,8 @@ const Attendance = () => {
                                         x?.course?.courseCode,
                                         x?.employeePrimaryId,
                                         Operation,
-                                        x?.semsection?.sectionPrimaryId,
-                                        x?.semester?.semesterID
+                                        x?.semesterSections?.sectionPrimaryId,
+                                        x?.semesterDetails?.semesterID
                                       ).then((data) => {
                                         openClassAttendanceData(data);
                                         console.log("dataaa", data);
