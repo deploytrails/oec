@@ -66,10 +66,6 @@ const Attendance = () => {
     console.log("xos", classAttend);
   };
 
- 
-  
- 
-
   const tableHeaders = [
     "Cource Code",
     "	Course Name",
@@ -91,21 +87,25 @@ const Attendance = () => {
             </h3>
           </div>
           <div className="mt-4 w-full">
-          <div>
-            {attend.length === 0 && (
-              <div>
-              {dates.map(dt => (
-               <div className="block shadow p-2 m-2 clearfix">
-               <span key={`dates${dt}`} className="float-left">Date : {dt}</span>
-               <span className="text-red-600 float-right">No Class is Schedule</span>
-               </div>
-              ))}
-              </div>
-            )}
-          </div>
             <div>
-            
+              {attend.length === 0 && (
+                <div>
+                  {dates.map((dt) => (
+                    <div className="block shadow p-2 m-2 clearfix">
+                      <span key={`dates${dt}`} className="float-left">
+                        Date : {dt}
+                      </span>
+                      <span className="text-red-600 float-right">
+                        No Class is Schedule
+                      </span>
+                    </div>
+                  ))}
+                </div>
+              )}
+            </div>
+            <div>
               {attend &&
+                attend.length > 0 &&
                 attend.map((tbd, i) => (
                   <React.Fragment>
                     <div
@@ -123,9 +123,11 @@ const Attendance = () => {
                       <h4 className="w-6/12 float-left">
                         Date :{moment(tbd[0]?.classdate).format("DD/MM/YYYY")}
                         <p>
-                        {tbd.weeklyDates.map(dt => (
-                          <span key={`dates${dt}`}>{dt}</span>
-                        ))}
+                          {tbd &&
+                            tbd.length > 0 &&
+                            tbd.weeklyDates?.map((dt) => (
+                              <span key={`dates${dt}`}>{dt}</span>
+                            ))}
                         </p>
                       </h4>
                       <p className="w-6/12 float-right text-right font-bold">
@@ -179,7 +181,7 @@ const Attendance = () => {
                             </th>
                           </tr>
                           <tr className="block">
-                            {tbd.map((x) => (
+                            {tbd?.map((x) => (
                               <React.Fragment>
                                 <td className="border w-2/12 px-2 py-2 border-l-0 text-sm">
                                   {x?.course?.courseCode}
@@ -205,7 +207,7 @@ const Attendance = () => {
                                     className="bg-green-400 block  mx-auto px-2 py-1 rounded mb-2"
                                     onClick={() =>
                                       getAttendanceListById(
-                                        x.currclassdateid,
+                                        x?.currclassdateid,
                                         x?.course?.coursePrimaryId,
                                         x?.course?.courseCode,
                                         x?.employeePrimaryId,
@@ -213,7 +215,6 @@ const Attendance = () => {
                                         x?.semsection?.sectionPrimaryId,
                                         x?.semester?.semesterID
                                       ).then((data) => {
-                                       
                                         openClassAttendanceData(data);
                                         console.log("dataaa", data);
                                       })
