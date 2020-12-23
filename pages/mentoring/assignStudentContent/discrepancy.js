@@ -49,15 +49,15 @@ const DiscrepancyData = ({ studentModelData }) => {
           isDiscrepancyData.map(discrepancyArray => (
             <TABLE.TableTRR>
               <TABLE.TableTdd>
-                {discrepancyArray[0].studentID.firstName} -{" "}
-                {discrepancyArray[0].studentID.roll}
+                {discrepancyArray[0].enrollStudentDetails.firstName} -{" "}
+                {discrepancyArray[0].enrollStudentDetails.roll}
               </TABLE.TableTdd>
               <TABLE.TableTdd>
-                {discrepancyArray[0].employeeID.firstName} -{" "}
-                {discrepancyArray[0].employeeID.username}
+                {discrepancyArray[0].hrEmployee.firstName} -{" "}
+                {discrepancyArray[0].hrEmployee.username}
               </TABLE.TableTdd>
               <TABLE.TableTdd>
-                {discrepancyArray[0].courseID.courseCode}
+                {discrepancyArray[0].course.courseCode}
               </TABLE.TableTdd>
               <TABLE.TableTdd>
                 {moment(discrepancyArray[0].issueDate).format("DD/MM/YYYY")}

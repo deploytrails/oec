@@ -7,8 +7,8 @@ const CourseFacultyData = ({ studentModelData }) => {
   const loadCourseFacultyData = async () => {
     const courseFacultyInfo = await getStudentCourseFacultyDetail(
       studentModelData.enrollstudentId,
-      studentModelData.sectionID.sectionPrimaryId,
-      studentModelData.semesterID.semesterID
+      studentModelData.semesterSections.sectionPrimaryId,
+      studentModelData.semesterDetails.semesterID
     );
     setIsCourseFacultyData(courseFacultyInfo.coursedetails);
     //console.log(courseFacultyInfo);
