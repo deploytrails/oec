@@ -7,13 +7,13 @@ export const getAttendanceList = async (facultyId, selectedDate, operation) => {
       {
         method: "POST",
         headers: {
-          "Content-Type": "application/json"
+          "Content-Type": "application/json",
         },
         body: JSON.stringify({
           facultyId,
           selectedDate,
-          operation
-        })
+          operation,
+        }),
       }
     );
     const data = await response.json();
@@ -38,7 +38,7 @@ export const getAttendanceListById = async (
       {
         method: "POST",
         headers: {
-          "Content-Type": "application/json"
+          "Content-Type": "application/json",
         },
         body: JSON.stringify({
           classDateId,
@@ -47,8 +47,8 @@ export const getAttendanceListById = async (
           facultyId,
           operation,
           sectionId,
-          semesterId
-        })
+          semesterId,
+        }),
       }
     );
     const data = await response.json();
@@ -58,15 +58,15 @@ export const getAttendanceListById = async (
   }
 };
 
-export const getallocatedcoursesData = async facultyID => {
+export const getallocatedcoursesData = async (facultyID) => {
   try {
     const response = await fetch(
       `${process.env.APIBaseUrl}faculty/getAllocatedCourses2?facultyID=${facultyID}`,
       {
         method: "GET",
         headers: {
-          "Content-Type": "application/json"
-        }
+          "Content-Type": "application/json",
+        },
       }
     );
     return await response.json();
@@ -82,8 +82,8 @@ export const getPos = async (courseID, facultyID, options) => {
       {
         method: "POST",
         headers: {
-          "Content-Type": "application/json"
-        }
+          "Content-Type": "application/json",
+        },
       }
     );
     const data = await response.json();
@@ -93,15 +93,15 @@ export const getPos = async (courseID, facultyID, options) => {
   }
 };
 
-export const getReferenceData = async (courseID, facultyID) => {
+export const getReferenceData = async (facultyID, courseID) => {
   try {
     const response = await fetch(
-      `${process.env.APIBaseUrl}faculty/getRefData?courseID=${courseID}'&facultyID=${facultyID}`,
+      `${process.env.APIBaseUrl}faculty/getRefData?courseID=${courseID}&facultyID=${facultyID}`,
       {
         method: "POST",
         headers: {
-          "Content-Type": "application/json"
-        }
+          "Content-Type": "application/json",
+        },
       }
     );
     const data = await response.json();
