@@ -32,11 +32,11 @@ const CourseFacultyData = ({ studentModelData }) => {
           isCourseFacultyData.length &&
           isCourseFacultyData.map(course => (
             <TABLE.TableTRR>
-              <TABLE.TableTdd>{course[0]}</TABLE.TableTdd>
-              <TABLE.TableTdd>{course[1]}</TABLE.TableTdd>
-              <TABLE.TableTdd>{course[2]}</TABLE.TableTdd>
-              <TABLE.TableTdd>{course[3]}</TABLE.TableTdd>
-              <TABLE.TableTdd>{course[4]}</TABLE.TableTdd>
+              <TABLE.TableTdd>{course[0][0]}</TABLE.TableTdd>
+              <TABLE.TableTdd>{course[0][1]}</TABLE.TableTdd>
+              <TABLE.TableTdd>{course[0][2]}</TABLE.TableTdd>
+              <TABLE.TableTdd>{course[0][3]}</TABLE.TableTdd>
+              <TABLE.TableTdd>{course[0][4]}</TABLE.TableTdd>
             </TABLE.TableTRR>
           ))}
       </TABLE.TableWrapper>
