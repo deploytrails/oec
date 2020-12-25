@@ -15,7 +15,7 @@ const CoPoModelData = ({ activeTabData, FacultyId }) => {
       "ForGetPos"
     );
     setAllocatedCoursesPos(coursePoInfo.POS[0]);
-    console.log(activeTabData);
+    // console.log(coursePoInfo);
   };
 
   useEffect(() => {
@@ -23,7 +23,7 @@ const CoPoModelData = ({ activeTabData, FacultyId }) => {
   }, []);
   return (
     <React.Fragment>
-      {allocatedCoursesPos.length > 0 ? (
+      {allocatedCoursesPos ? (
         <div>
           <label>
             <b>Course Code:</b>
@@ -37,73 +37,73 @@ const CoPoModelData = ({ activeTabData, FacultyId }) => {
 
           <TABLE.TableWrapper>
             <TABLE.TableTR>
-              {allocatedCoursesPos[0] && (
+              {allocatedCoursesPos && (
                 <TABLE.TableTh>CO/PO & PSO</TABLE.TableTh>
               )}
-              {allocatedCoursesPos[0] && <TABLE.TableTh>PO1</TABLE.TableTh>}
-              {allocatedCoursesPos[1] && <TABLE.TableTh>PO2</TABLE.TableTh>}
-              {allocatedCoursesPos[2] && <TABLE.TableTh>PO3</TABLE.TableTh>}
-              {allocatedCoursesPos[3] && <TABLE.TableTh>PO4</TABLE.TableTh>}
-              {allocatedCoursesPos[4] && <TABLE.TableTh>PO5</TABLE.TableTh>}
-              {allocatedCoursesPos[5] && <TABLE.TableTh>PO6</TABLE.TableTh>}
-              {allocatedCoursesPos[6] && <TABLE.TableTh>PO7</TABLE.TableTh>}
-              {allocatedCoursesPos[7] && <TABLE.TableTh>PO8</TABLE.TableTh>}
-              {allocatedCoursesPos[8] && <TABLE.TableTh>PO9</TABLE.TableTh>}
-              {allocatedCoursesPos[9] && <TABLE.TableTh>PO10</TABLE.TableTh>}
-              {allocatedCoursesPos[10] && <TABLE.TableTh>PO11</TABLE.TableTh>}
-              {allocatedCoursesPos[11] && <TABLE.TableTh>PO12</TABLE.TableTh>}
-              {allocatedCoursesPos[12] && <TABLE.TableTh>PSO1</TABLE.TableTh>}
-              {allocatedCoursesPos[13] && <TABLE.TableTh>PSO2</TABLE.TableTh>}
-              {allocatedCoursesPos[14] && <TABLE.TableTh>PSO3</TABLE.TableTh>}
+              {allocatedCoursesPos.po1 && <TABLE.TableTh>PO1</TABLE.TableTh>}
+              {allocatedCoursesPos.po2 && <TABLE.TableTh>PO2</TABLE.TableTh>}
+              {allocatedCoursesPos.po3 && <TABLE.TableTh>PO3</TABLE.TableTh>}
+              {allocatedCoursesPos.po4 && <TABLE.TableTh>PO4</TABLE.TableTh>}
+              {allocatedCoursesPos.po5 && <TABLE.TableTh>PO5</TABLE.TableTh>}
+              {allocatedCoursesPos.po6 && <TABLE.TableTh>PO6</TABLE.TableTh>}
+              {allocatedCoursesPos.po7 && <TABLE.TableTh>PO7</TABLE.TableTh>}
+              {allocatedCoursesPos.po8 && <TABLE.TableTh>PO8</TABLE.TableTh>}
+              {allocatedCoursesPos.po9 && <TABLE.TableTh>PO9</TABLE.TableTh>}
+              {allocatedCoursesPos.po10 && <TABLE.TableTh>PO10</TABLE.TableTh>}
+              {allocatedCoursesPos.po11 && <TABLE.TableTh>PO11</TABLE.TableTh>}
+              {allocatedCoursesPos.po12 && <TABLE.TableTh>PO12</TABLE.TableTh>}
+              {allocatedCoursesPos.pso1 && <TABLE.TableTh>PSO1</TABLE.TableTh>}
+              {allocatedCoursesPos.pso2 && <TABLE.TableTh>PSO2</TABLE.TableTh>}
+              {allocatedCoursesPos.pso3 && <TABLE.TableTh>PSO3</TABLE.TableTh>}
             </TABLE.TableTR>
             <TABLE.TableTRR>
               <TABLE.TableTdd></TABLE.TableTdd>
-              {allocatedCoursesPos[0] && (
+              {allocatedCoursesPos.po1 && (
                 <TABLE.TableTdd>Engineering knowledge</TABLE.TableTdd>
               )}
-              {allocatedCoursesPos[1] && (
+              {allocatedCoursesPos.po2 && (
                 <TABLE.TableTdd>Problem analysis</TABLE.TableTdd>
               )}
-              {allocatedCoursesPos[2] && (
+              {allocatedCoursesPos.po3 && (
                 <TABLE.TableTdd>Design/development of solutions</TABLE.TableTdd>
               )}
-              {allocatedCoursesPos[3] && (
+              {allocatedCoursesPos.po4 && (
                 <TABLE.TableTdd>
                   Conduct investigations of complex problems
                 </TABLE.TableTdd>
               )}
-              {allocatedCoursesPos[4] && (
+              {allocatedCoursesPos.po5 && (
                 <TABLE.TableTdd>Modern tool usage</TABLE.TableTdd>
               )}
-              {allocatedCoursesPos[5] && (
+              {allocatedCoursesPos.po6 && (
                 <TABLE.TableTdd>The engineer and society</TABLE.TableTdd>
               )}
-              {allocatedCoursesPos[6] && (
+              {allocatedCoursesPos.po7 && (
                 <TABLE.TableTdd>Environment and sustainability</TABLE.TableTdd>
               )}
-              {allocatedCoursesPos[7] && (
+              {allocatedCoursesPos.po8 && (
                 <TABLE.TableTdd>Ethics</TABLE.TableTdd>
               )}
-              {allocatedCoursesPos[8] && (
+              {allocatedCoursesPos.po9 && (
                 <TABLE.TableTdd>Individual and team work</TABLE.TableTdd>
               )}
-              {allocatedCoursesPos[9] && (
+              {allocatedCoursesPos.po10 && (
                 <TABLE.TableTdd>Communication</TABLE.TableTdd>
               )}
-              {allocatedCoursesPos[10] && (
+              {allocatedCoursesPos.po11 && (
                 <TABLE.TableTdd>Project management and finance</TABLE.TableTdd>
               )}
-              {allocatedCoursesPos[11] && (
+              {allocatedCoursesPos.po12 && (
                 <TABLE.TableTdd>Life-long learning</TABLE.TableTdd>
               )}
-              {allocatedCoursesPos[12] && (
-                <TABLE.TableTdd>{allocatedCoursesPos[12]}</TABLE.TableTdd>
+              {allocatedCoursesPos.pso1 && (
+                <TABLE.TableTdd>{allocatedCoursesPos.pso1}</TABLE.TableTdd>
               )}
-              {allocatedCoursesPos[13] && (
-                <TABLE.TableTdd>{allocatedCoursesPos[13]}</TABLE.TableTdd>
+              {allocatedCoursesPos.pso2 && (
+                <TABLE.TableTdd>{allocatedCoursesPos.pso2}</TABLE.TableTdd>
               )}
-              {allocatedCoursesPos[14] && (
-                <TABLE.TableTdd>{allocatedCoursesPos[14]}</TABLE.TableTdd>
+              {allocatedCoursesPos.pso3 && (
+                <TABLE.TableTdd>{allocatedCoursesPos.pso3}</TABLE.TableTdd>
               )}
             </TABLE.TableTRR>
           </TABLE.TableWrapper>

@@ -15,7 +15,13 @@ const ViewMarksEntry = ({
 }) => {
   return (
     <STYLES.PopupMask>
-      <STYLES.PopupWrapper>
+      <STYLES.PopupWrapper
+        css={css`
+          width: 95%;
+          overflow: hidden;
+          overflow-x: scroll;
+        `}
+      >
         <STYLES.PopupTitle>
           <FontAwesomeIcon
             icon={faTimes}
@@ -32,30 +38,32 @@ const ViewMarksEntry = ({
         {!studentMarks || studentMarks <= 0 ? (
           <div>No Data Available</div>
         ) : (
-
-            <TABLE.TableWrapper>
-              <React.Fragment>
-
-                <TABLE.TableTR>
-                  <TABLE.TableTh>S.No</TABLE.TableTh>
-                  <TABLE.TableTh>Roll No</TABLE.TableTh>
-                  <TABLE.TableTh>Student Name</TABLE.TableTh>
-                  {questions &&
-                    questions.map((item, i) => (
-                      <TABLE.TableTh>{"Q"}{item?.questionNumber}{item?.questionName}</TABLE.TableTh>
-                    ))}
-                </TABLE.TableTR>
-                {studentMarks &&
-                  studentMarks.map((item, i) => (
-                    <TABLE.TableTRR key={item?.enrollstudentId}>
-                      <TABLE.TableTdd>{i + 1}</TABLE.TableTdd>
-                      <TABLE.TableTdd>{item?.roll}</TABLE.TableTdd>
-                      <TABLE.TableTdd>{item?.firstName}</TABLE.TableTdd>
-                    </TABLE.TableTRR>
+          <TABLE.TableWrapper>
+            <React.Fragment>
+              <TABLE.TableTR>
+                <TABLE.TableTh>S.No</TABLE.TableTh>
+                <TABLE.TableTh>Roll No</TABLE.TableTh>
+                <TABLE.TableTh>Student Name</TABLE.TableTh>
+                {questions &&
+                  questions.map((item, i) => (
+                    <TABLE.TableTh>
+                      {"Q"}
+                      {item?.questionNumber}
+                      {item?.questionName}
+                    </TABLE.TableTh>
                   ))}
-              </React.Fragment>
-            </TABLE.TableWrapper>
-          )}
+              </TABLE.TableTR>
+              {studentMarks &&
+                studentMarks.map((item, i) => (
+                  <TABLE.TableTRR key={item?.enrollstudentId}>
+                    <TABLE.TableTdd>{i + 1}</TABLE.TableTdd>
+                    <TABLE.TableTdd>{item?.roll}</TABLE.TableTdd>
+                    <TABLE.TableTdd>{item?.firstName}</TABLE.TableTdd>
+                  </TABLE.TableTRR>
+                ))}
+            </React.Fragment>
+          </TABLE.TableWrapper>
+        )}
       </STYLES.PopupWrapper>
     </STYLES.PopupMask>
   );

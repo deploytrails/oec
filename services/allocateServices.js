@@ -78,7 +78,7 @@ export const getallocatedcoursesData = async (facultyID) => {
 export const getPos = async (courseID, facultyID, options) => {
   try {
     const response = await fetch(
-      `${process.env.APIBaseUrl}faculty/COPOMappingServlet?courseID=${courseID}'&facultyID=${facultyID}&options=${options}`,
+      `${process.env.APIBaseUrl}faculty/COPOMappingServlet?courseID=${courseID}&facultyID=${facultyID}&options=${options}`,
       {
         method: "POST",
         headers: {
