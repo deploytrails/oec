@@ -2,12 +2,14 @@ import React from "react";
 import { css } from "@emotion/core";
 import * as STYLES from "../../components/General/modalStyles";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import * as TABLE from "../../components/dashboards/styles/table.styles";
 
 import { faTimes } from "@fortawesome/free-solid-svg-icons";
 
 const ViewMarksEntry = ({
   closeMarksView,
   studentMarks,
+  questions,
   courseCode,
   courseName,
 }) => {
@@ -30,43 +32,30 @@ const ViewMarksEntry = ({
         {!studentMarks || studentMarks <= 0 ? (
           <div>No Data Available</div>
         ) : (
-          <table
-            className="block w-full pr-0 mt-4"
-            css={css`
-              border: 1px solid #ddd;
-              & > tr > th {
-                border-bottom: 1px solid #ddd;
-                width: 213px;
-                padding: 6px 0px;
-              }
-              & > tr > td {
-                width: 213px;
-                padding: 6px 0px;
-                text-align: center;
-                font-size: 14px;
-              }
-              & > tr:nth-of-type(even) {
-                background-color: #f5f5f5;
-              }
-            `}
-          >
-            <React.Fragment>
-              <tr className="block w-full">
-                <th>S.No</th>
-                <th>Roll No</th>
-                <th>Student Name</th>
-              </tr>
-              {studentMarks &&
-                studentMarks.map((item, i) => (
-                  <tr key={item?.enrollstudentId}>
-                    <td>{i + 1}</td>
-                    <td>{item?.roll}</td>
-                    <td>{item?.firstName}</td>
-                  </tr>
-                ))}
-            </React.Fragment>
-          </table>
-        )}
+
+            <TABLE.TableWrapper>
+              <React.Fragment>
+
+                <TABLE.TableTR>
+                  <TABLE.TableTh>S.No</TABLE.TableTh>
+                  <TABLE.TableTh>Roll No</TABLE.TableTh>
+                  <TABLE.TableTh>Student Name</TABLE.TableTh>
+                  {questions &&
+                    questions.map((item, i) => (
+                      <TABLE.TableTh>{"Q"}{item?.questionNumber}{item?.questionName}</TABLE.TableTh>
+                    ))}
+                </TABLE.TableTR>
+                {studentMarks &&
+                  studentMarks.map((item, i) => (
+                    <TABLE.TableTRR key={item?.enrollstudentId}>
+                      <TABLE.TableTdd>{i + 1}</TABLE.TableTdd>
+                      <TABLE.TableTdd>{item?.roll}</TABLE.TableTdd>
+                      <TABLE.TableTdd>{item?.firstName}</TABLE.TableTdd>
+                    </TABLE.TableTRR>
+                  ))}
+              </React.Fragment>
+            </TABLE.TableWrapper>
+          )}
       </STYLES.PopupWrapper>
     </STYLES.PopupMask>
   );

@@ -15,6 +15,7 @@ const MarksTable = ({ marksData, examType }) => {
 
     const [isMarksView, setMarksView] = useState(false);
     const [studentMarks, setStudentMarks] = useState({});
+    const [questionsInfo, setQuestionsInfo] = useState({});
 
     const uniqueTypes = [];
     marksData.filter(marks => marks.examType === examType).map(filteredMarks => (
@@ -31,6 +32,7 @@ const MarksTable = ({ marksData, examType }) => {
 
     const openMarksViewData = (data) => {
         setStudentMarks(data);
+        setQuestionsInfo(data);
         toggleMarksView();
     };
 
@@ -123,6 +125,7 @@ const MarksTable = ({ marksData, examType }) => {
                 <ViewMarksEntry
                     closeMarksView={closeMarksView}
                     studentMarks={studentMarks?.MarksArray}
+                    questions={questionsInfo?.questions}
                     courseCode={uniqueTypes[0]?.courseCode}
                     courseName={uniqueTypes[0]?.courseName}
                 />
