@@ -1,76 +1,148 @@
 import React, { useState, useEffect } from "react";
 import { css } from "@emotion/core";
+import { useSnackbar } from "react-simple-snackbar";
+import {
+  insertStudentAttendance,
+  updateStudentAttendance,
+} from "../../services/allocateServices";
+import Cookies from "js-cookie";
 
-const AttendanceDetails = ({ closeAttendDetails, classAttend }) => {
+const AttendanceDetails = ({
+  closeAttendDetails,
+  classAttend,
+  periodProps,
+}) => {
   const [frmValue, setFrmValue] = useState([]);
   const [checkValues, setCheckValues] = useState([]);
   const [filterIDs, setFilterIds] = useState([]);
   const presentIds = [];
   const absentIds = [];
+  const ProfileId = Cookies.get("employeeID");
+  const [openSnackbar, closeSnackbar] = useSnackbar();
 
-
-  classAttend.map((item) => {
-    presentIds.push(item.roll);
-  });
+  if (classAttend?.EnrolledStudents) {
+    classAttend?.EnrolledStudents.map((item) => {
+      presentIds.push(item.roll);
+    });
+  } else {
+    classAttend?.EnrolledStudentsAttendance[0].map((item, i) => {
+      presentIds.push(item[2]);
+      if (item[4] === "Absent") {
+        filterIDs.push(item[2]);
+      }
+    });
+  }
 
   const selectCheck = (selectedVal) => {
     const indexFound = filterIDs.indexOf(selectedVal);
-    const checkSelect = checkValues;
-    checkSelect.push(selectedVal);
-    setCheckValues(checkSelect);
+    alert(indexFound);
+    // const checkSelect = checkValues;
+    // checkSelect.push(selectedVal);
+    // setCheckValues(checkSelect);
     if (indexFound > -1) {
       filterIDs.splice(indexFound, 1);
-      setFilterIds(filterIDs)
+      setFilterIds(filterIDs);
     }
-    
-    console.log('absentIds', filterIDs)
+
+    console.log("absentIds", filterIDs);
   };
 
   const unSelectCheck = (selectedVal) => {
-    const indexFound = checkValues.indexOf(selectedVal);
-    if (indexFound > -1) {
-      checkValues.splice(indexFound, 1);
-      setCheckValues(checkValues);
-    }
-    const idsSelect = presentIds.filter(item => item.indexOf(selectedVal) !== indexFound);
-    filterIDs.push(...idsSelect);
-    setFilterIds(filterIDs)
-    console.log('absentIds', filterIDs)
+    console.log(filterIDs);
+    // const indexFound = checkValues.indexOf(selectedVal);
+    // if (indexFound > -1) {
+    //   checkValues.splice(indexFound, 1);
+    //   setCheckValues(checkValues);
+    // }
+    // const idsSelect = presentIds.filter(
+    //   (item) => item.indexOf(selectedVal) !== indexFound
+    // );
+    filterIDs.push(selectedVal);
+    setFilterIds(filterIDs);
+    console.log("absentIds", filterIDs);
   };
 
-  
-  const checkAttend = (e) => {
-    const targetCheck = e.target.checked;
-    const targetVal = e.target.value;
+  const insertAttendanceData = async () => {
+    classAttend?.EnrolledStudents.map((item, i) => {
+      if (classAttend.EnrolledStudents[i].Attendance === undefined) {
+        classAttend.EnrolledStudents[i].Attendance = true;
+      }
+    });
+    const data = await insertStudentAttendance(
+      JSON.stringify(classAttend.EnrolledStudents),
+      ProfileId,
+      periodProps.classdate,
+      periodProps.classStartTime,
+      periodProps.courseid,
+      periodProps.classdateid,
+      periodProps.semesterid,
+      periodProps.sectionid,
+      periodProps.selectedDate,
+      "ForInsertStudent"
+    );
 
+    if (data?.AttendanceStatus === "inserted") {
+      openSnackbar("Students Attendance is inserted Successfully");
+      closeAttendDetails();
+    } else {
+      openSnackbar("SomeThing Went Wrong");
+    }
+  };
+
+  const updateAttendanceData = async () => {
+    classAttend.EnrolledStudentsAttendance[0].map((item, i) => {
+      if (item[4] === "Present") {
+        classAttend.EnrolledStudentsAttendance[0][i][4] = true;
+      } else if (item[4] === "Absent") {
+        classAttend.EnrolledStudentsAttendance[0][i][4] = false;
+      }
+    });
+
+    const data = await updateStudentAttendance(
+      JSON.stringify(classAttend?.EnrolledStudentsAttendance[0]),
+      periodProps.courseCode,
+      "ForUpdateStudentAttendance"
+    );
+
+    if (data?.AttendanceStatus === "updated") {
+      openSnackbar("Students Attendance is Updated Successfully");
+      closeAttendDetails();
+    } else {
+      openSnackbar("SomeThing Went Wrong");
+    }
+  };
+
+  const checkAttend = (e, i, targetVal) => {
+    const targetCheck = e.target.checked;
+    // const targetVal = e.target.value;
+    if (classAttend?.EnrolledStudents) {
+      classAttend.EnrolledStudents[i].Attendance = targetCheck;
+    } else {
+      classAttend.EnrolledStudentsAttendance[0][i][4] = targetCheck;
+    }
     if (targetCheck) {
       selectCheck(targetVal);
-      
     } else {
       unSelectCheck(targetVal);
     }
-
- 
     setFrmValue(filterIDs.join("\n"));
   };
-  
 
   useEffect(() => {
-    const totalIDS = document.getElementById("attendIds");
-    const x = document.querySelectorAll(".atend");
-    totalIDS.checked = true;
-    let checkState = totalIDS.checked;
-    if(checkState === true){
-      for(let i = 0; i < x.length; i+=1){
-        x[i].checked = true;
-      }
-    } else{
-      for(let i = 0; i < x.length; i+=1){
-        x[i].checked = false;
-      }
-     
-    }
-    
+    // console.log(classAttend);
+    // const totalIDS = document.getElementById("attendIds");
+    // const x = document.querySelectorAll(".atend");
+    // totalIDS.checked = true;
+    // let checkState = totalIDS.checked;
+    // if (checkState === true) {
+    //   for (let i = 0; i < x.length; i += 1) {
+    //     x[i].checked = true;
+    //   }
+    // } else {
+    //   for (let i = 0; i < x.length; i += 1) {
+    //     x[i].checked = false;
+    //   }
+    // }
   });
 
   return (
@@ -116,34 +188,69 @@ const AttendanceDetails = ({ closeAttendDetails, classAttend }) => {
                 <th>Roll No</th>
                 <th>Name</th>
                 <th>
-                  <lable htmlFor="attendIds">
-                    <input type="checkbox" name="attendIds" className="attendIds" id="attendIds" />
-                  </lable>
+                  {/* <lable htmlFor="attendIds">
+                    <input
+                      type="checkbox"
+                      name="attendIds"
+                      className="attendIds"
+                      id="attendIds"
+                      onChange={(e) => markAllStudents(e)}
+                    />
+                  </lable> */}
                   Attendance
                 </th>
                 <th>Remarks</th>
               </tr>
-              {classAttend &&
-                classAttend.map((item, i) => (
+              {classAttend?.EnrolledStudents &&
+                classAttend?.EnrolledStudents.map((item, i) => (
                   <tr key={item.enrollstudentId}>
                     <td>{i + 1}</td>
                     <td>{item.roll}</td>
                     <td>{item.firstName}</td>
                     <td>
-                    <lable htmlFor={item.enrollstudentId} >
-                      <input
+                      <lable htmlFor={item.enrollstudentId}>
+                        <input
                           type="checkbox"
                           className="atend"
                           name={item.enrollstudentId}
                           id={item.enrollstudentId}
-                          value={item.roll}
-                          onChange={(e) => checkAttend(e)}
-                          checked={filterIDs.indexOf(item) !== -1}
+                          defaultChecked={true}
+                          onChange={(e) => checkAttend(e, i, item.roll)}
+                          // checked={filterIDs.indexOf(item) !== -1}
                           //checked={checkValues.indexOf(item) === -1}
-                          
                         />
-                  </lable>
-                      
+                      </lable>
+                    </td>
+                    <td>
+                      <input
+                        type="text"
+                        className="border py-1 rounded px-2 border-gray-400 focus:outline-none"
+                      />
+                    </td>
+                  </tr>
+                ))}
+              {classAttend?.EnrolledStudentsAttendance &&
+                classAttend?.EnrolledStudentsAttendance[0].map((item, i) => (
+                  <tr key={item[1]}>
+                    <td>{i + 1}</td>
+                    <td>{item[2]}</td>
+                    <td>{item[5]}</td>
+                    <td>
+                      <lable htmlFor={item[1]}>
+                        <input
+                          type="checkbox"
+                          className="atend"
+                          name={item[1]}
+                          id={item[1]}
+                          //value={item.enrollStudentDetails.roll}
+                          onChange={(e) => checkAttend(e, i, item[2])}
+                          defaultChecked={
+                            item[4] === "Present" || item[4] === true
+                          }
+                          // checked={filterIDs.indexOf(item) !== -1}
+                          //checked={checkValues.indexOf(item) === -1}
+                        />
+                      </lable>
                     </td>
                     <td>
                       <input
@@ -164,7 +271,7 @@ const AttendanceDetails = ({ closeAttendDetails, classAttend }) => {
                   rows="3"
                   cols="4"
                   id="attendIds"
-                  value={frmValue}
+                  value={frmValue.length > 0 ? frmValue : filterIDs.join("\n")}
                   className="w-full border py-1 rounded px-2 border-gray-400 focus:outline-none resize-none"
                 ></textarea>
               </label>
@@ -178,10 +285,16 @@ const AttendanceDetails = ({ closeAttendDetails, classAttend }) => {
                   No of Absent : {filterIDs.length}
                 </p>
                 <button
+                  onClick={() =>
+                    classAttend.EnrolledStudents
+                      ? insertAttendanceData()
+                      : updateAttendanceData()
+                  }
                   type="button"
                   className="bg-green-400 py-2 shadow-md px-2 rounded focus:outline-none mt-2 font-bold text-sm text-white"
                 >
-                  Submit Attendane
+                  {classAttend?.EnrolledStudents ? "Submit " : "Update "}
+                  Attendance
                 </button>
               </div>
             </div>

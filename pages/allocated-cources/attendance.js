@@ -20,6 +20,7 @@ const Attendance = () => {
   const [classId, setClassId] = useState();
   const [classAttend, setClassAttend] = useState({});
   const [attendDetails, setAttendDetails] = useState(false);
+  const [periodProps, setPeriodProps] = useState({});
 
   const getAllAttendance = async () => {
     const data = await getAttendanceList(
@@ -59,7 +60,9 @@ const Attendance = () => {
   };
 
   const openClassAttendanceData = (data) => {
+    console.log(data);
     setClassAttend(data);
+
     if (data?.status === "success") {
       toggleAttendDetails();
     }
@@ -215,6 +218,19 @@ const Attendance = () => {
                                         x?.semesterSections?.sectionPrimaryId,
                                         x?.semesterDetails?.semesterID
                                       ).then((data) => {
+                                        setPeriodProps({
+                                          classdateid: x?.currclassdateid,
+                                          semesterid:
+                                            x?.semesterDetails?.semesterID,
+                                          classdate: tbd[0]?.classdate,
+                                          classStartTime: x?.classStartTime,
+                                          courseid: x?.course?.coursePrimaryId,
+                                          sectionid:
+                                            x?.semesterSections
+                                              ?.sectionPrimaryId,
+                                          selectedDate: tbd[0]?.classdate,
+                                          courseCode: x?.course?.courseCode,
+                                        });
                                         openClassAttendanceData(data);
                                         console.log("dataaa", data);
                                       })
@@ -236,7 +252,8 @@ const Attendance = () => {
                         {attendDetails && (
                           <AttendanceDetails
                             closeAttendDetails={closeAttendDetails}
-                            classAttend={classAttend?.EnrolledStudents}
+                            classAttend={classAttend}
+                            periodProps={periodProps}
                           />
                         )}
                       </React.Fragment>

@@ -110,3 +110,71 @@ export const getReferenceData = async (facultyID, courseID) => {
     console.log(error);
   }
 };
+
+export const insertStudentAttendance = async (
+  studentdataArray,
+  facultyId,
+  classdate,
+  classStartTime,
+  courseId,
+  classDateId,
+  semesterId,
+  sectionId,
+  selectedDate,
+  operation
+) => {
+  try {
+    const response = await fetch(
+      `${process.env.APIBaseUrl}faculty/AttendanceServletForInsertStudent`,
+      {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          studentdata: studentdataArray,
+          facultyId,
+          classdate,
+          classStartTime,
+          courseId,
+          classDateId,
+          semesterId,
+          sectionId,
+          selectedDate,
+          operation,
+        }),
+      }
+    );
+    const data = await response.json();
+    return data;
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+export const updateStudentAttendance = async (
+  studentdataArray,
+  coursecode,
+  operation
+) => {
+  try {
+    const response = await fetch(
+      `${process.env.APIBaseUrl}faculty/AttendanceServletForUpdateStudentAttendance`,
+      {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          studentattendancedata: studentdataArray,
+          coursecode,
+          operation,
+        }),
+      }
+    );
+    const data = await response.json();
+    return data;
+  } catch (error) {
+    console.log(error);
+  }
+};
