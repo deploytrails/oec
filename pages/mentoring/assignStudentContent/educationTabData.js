@@ -27,21 +27,23 @@ const EducationTabData = ({ studentProfileId }) => {
 
         {!isProfileData && <PulseLoader size="10" color="#3aafa9" />}
 
-        {isProfileData &&
-          isProfileData.length &&
-          isProfileData.map(eduArray => (
-            <TABLE.TableTRR key={eduArray.data.enrollstudentId}>
-              <TABLE.TableTdd>{eduArray.data.roll}</TABLE.TableTdd>
-              <TABLE.TableTdd>{eduArray.data.firstName}</TABLE.TableTdd>
-              <TABLE.TableTdd>
-                {eduArray.data.semesterID.semesterCode}
-              </TABLE.TableTdd>
-              <TABLE.TableTdd>
-                {eduArray.data.sectionID.sectionName}
-              </TABLE.TableTdd>
-              <TABLE.TableTdd>{eduArray.data.issuestatus}</TABLE.TableTdd>
+
+            <TABLE.TableTRR >
+              <TABLE.TableTdd>{isProfileData?.qual1}</TABLE.TableTdd>
+              <TABLE.TableTdd>{isProfileData?.board1}</TABLE.TableTdd>
+              <TABLE.TableTdd>{isProfileData?.place1}</TABLE.TableTdd>
+              <TABLE.TableTdd>{isProfileData?.marks1}</TABLE.TableTdd>
+               <TABLE.TableTdd>{isProfileData?.percentage1}</TABLE.TableTdd>
             </TABLE.TableTRR>
-          ))}
+
+            <TABLE.TableTRR >
+              <TABLE.TableTdd>{isProfileData?.qual2}</TABLE.TableTdd>
+              <TABLE.TableTdd>{isProfileData?.board2}</TABLE.TableTdd>
+              <TABLE.TableTdd>{isProfileData?.place2}</TABLE.TableTdd>
+              <TABLE.TableTdd>{isProfileData?.marks2}</TABLE.TableTdd>
+               <TABLE.TableTdd>{isProfileData?.percentage2}</TABLE.TableTdd>
+            </TABLE.TableTRR>
+          
       </TABLE.TableWrapper>
       <br></br>
     </React.Fragment>

@@ -75,10 +75,10 @@ const Assignedstudents = () => {
                       {studentArray.data.firstName}
                     </TABLE.TableTdd>
                     <TABLE.TableTdd>
-                      {studentArray.data.semesterID.semesterCode}
+                      {studentArray.data.semesterDetails.semesterCode}
                     </TABLE.TableTdd>
                     <TABLE.TableTdd>
-                      {studentArray.data.sectionID.sectionName}
+                      {studentArray.data?.semesterSections?.sectionName}
                     </TABLE.TableTdd>
                     <TABLE.TableTdd>
                       {studentArray.data.issuestatus}

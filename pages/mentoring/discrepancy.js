@@ -94,8 +94,8 @@ const DiscrepancyIssue = () => {
               </option>
               {semSecList &&
                 semSecList.map((section) => (
-                  <option value={section[1].sectionPrimaryId}>
-                    {section[0].semesterCode}-{section[1].sectionName}
+                  <option value={section[1]}>
+                    {section[0].semesterCode}
                   </option>
                 ))}
             </select>
