@@ -4,7 +4,6 @@ import * as IMPRTCSS from "./importsModalStyle.js";
 import { css } from "@emotion/core";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faTimes } from "@fortawesome/free-solid-svg-icons";
-import { useSnackbar } from "react-simple-snackbar";
 
 const ImportFileModal = ({ toggleModal, importName, uploadFucntionProp }) => {
   const [selectedFiles, setSelectedFiles] = useState([]);
@@ -16,7 +15,6 @@ const ImportFileModal = ({ toggleModal, importName, uploadFucntionProp }) => {
   const uploadRef = useRef();
   const progressRef = useRef();
   const validTypes = ["csv"];
-  // const [openSnackbar, closeSnackbar] = useSnackbar();
 
   const fileInputClicked = () => {
     fileInputRef.current.click();
@@ -51,34 +49,21 @@ const ImportFileModal = ({ toggleModal, importName, uploadFucntionProp }) => {
     uploadModalRef.current.style.display = "none";
   };
 
-  const uploadFiles = () => {
+  const uploadFiles = async () => {
+    uploadFucntionProp(validFiles[0]);
     uploadModalRef.current.style.display = "block";
     uploadRef.current.innerHTML = "File(s) Uploading...";
-    //console.log(fileInputRef.current.files);
-    //console.log("valid files"+validFiles[0]);
 
-    for (var i = 0; i < 100; i++) {
-      setTimeout(function () {
-        const uploadPercentage = Math.floor((i / 100) * 100);
-        progressRef.current.innerHTML = `${uploadPercentage}%`;
-        progressRef.current.style.width = `${uploadPercentage}%`;
-        if (uploadPercentage === 100) {
-          uploadRef.current.innerHTML = "File(s) Uploaded";
-          validFiles.length = 0;
-          setValidFiles([...validFiles]);
-          setSelectedFiles([...validFiles]);
-          setUnsupportedFiles([...validFiles]);
-        }
-        // i = i + 9;
-      }, 1000 * 1);
-      if (uploadFucntionProp(validFiles[0])) {
-        //  openSnackbar("Imported Successfully!");
-        closeUploadModal();
-        toggleModal();
-      } else {
-        // openSnackbar("SomeThing Went Wrong!");
-      }
-    }
+    progressRef.current.innerHTML = `100%`;
+    progressRef.current.style.width = `100%`;
+    setTimeout(function () {
+      uploadRef.current.innerHTML = "File(s) Uploaded";
+      validFiles.length = 0;
+      setValidFiles([...validFiles]);
+      setSelectedFiles([...validFiles]);
+      setUnsupportedFiles([...validFiles]);
+      toggleModal();
+    }, 1000);
 
     /*const timer = setTimeout(() => {
       uploadRef.current.innerHTML = `<span class="error">Error Uploading File(s)</span>`;

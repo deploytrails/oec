@@ -22,12 +22,14 @@ const Imports = () => {
       functionName: "COUT",
     },
   ];
-  const toggleModal = (item) => {
-    setImportName(item?.name ? item?.name : "");
-    setUploadFucntionName(item?.functionName ? item?.functionName : "");
-    setShow(!show);
+  const showModal = (item) => {
+    setImportName(item?.name);
+    setUploadFucntionName(item?.functionName);
+    setShow(true);
   };
-
+  const toggleModal = () => {
+    setShow(false);
+  };
   const successfun = async () => {
     if (result?.status && result?.status?.length > 0) {
       return true;
@@ -39,7 +41,8 @@ const Imports = () => {
   const uploadFucntionProp = async (file) => {
     if (uploadFucntionName === "COBJ") {
       setResult(await uploadCourseObjectiveFile(file));
-      successfun();
+      console.log(result);
+      //successfun();
     } else if (uploadFucntionName === "COUT") {
     }
 
@@ -50,12 +53,12 @@ const Imports = () => {
   return (
     <React.Fragment>
       <Layout>
-        <div className="clearfix  h-screen">
+        <div>
           {importLinks &&
             importLinks.map((item) => (
               <div
                 className="w-4/12 float-left text-center relative"
-                onClick={() => toggleModal(item)}
+                onClick={() => showModal(item)}
               >
                 <a className=" p-4 bg-white shadow  box-border block m-1 font-bold hover:shadow-2xl hover:text-green-400">
                   <span
@@ -78,6 +81,25 @@ const Imports = () => {
               </div>
             ))}
         </div>
+        {result?.status && (
+          <div className="clearfix my-4">
+            <div className="w-6/12 float-left">
+              <h3 className="font-sans font-bold text-red-600">
+                {importName} Import Result
+              </h3>
+              <label>
+                Total Records Present : {result?.status?.length}
+                <br></br>
+                Total Records Inserted :{" "}
+                {
+                  (result?.status.filter(
+                    (stat) => stat === " Saved successfully"
+                  )).length
+                }
+              </label>
+            </div>
+          </div>
+        )}
       </Layout>
       {show && (
         <ImportFileModal
