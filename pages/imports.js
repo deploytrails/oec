@@ -8,11 +8,11 @@ const Imports = () => {
   const [importName, setImportName] = useState("");
   const importLinks = [
     {
-      name: "Attendance Import",
+      name: "Course Objectives",
       icon: <img src="/dash-icon-1.png" width="100" />,
     },
     {
-      name: "Marks Import",
+      name: "Course Outcomes",
       icon: <img src="/dash-icon-2.png" width="100" />,
     },
   ];

@@ -4,6 +4,9 @@ import * as IMPRTCSS from "./importsModalStyle.js";
 import { css } from "@emotion/core";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faTimes } from "@fortawesome/free-solid-svg-icons";
+import {
+  uploadCourseObjectiveFile
+} from "../../services/importService";
 
 const ImportFileModal = ({ toggleModal, importName }) => {
   const [selectedFiles, setSelectedFiles] = useState([]);
@@ -15,6 +18,15 @@ const ImportFileModal = ({ toggleModal, importName }) => {
   const uploadRef = useRef();
   const progressRef = useRef();
   const validTypes = ["csv"];
+  const [courseObj, setcourseObj] = useState([]);
+
+
+  const uploadCourseObjectives = async (file) => {
+    const data = await uploadCourseObjectiveFile(file);
+    console.log(data);
+    setcourseObj(data);
+    uploadRef.current.innerHTML=courseObj;
+  };
 
   const fileInputClicked = () => {
     fileInputRef.current.click();
@@ -52,6 +64,9 @@ const ImportFileModal = ({ toggleModal, importName }) => {
   const uploadFiles = () => {
     uploadModalRef.current.style.display = "block";
     uploadRef.current.innerHTML = "File(s) Uploading...";
+    //console.log(fileInputRef.current.files);
+    //console.log("valid files"+validFiles[0]);
+    uploadCourseObjectives(validFiles[0]);
     for (var i = 0; i < 100; i++) {
       setTimeout(function () {
         const uploadPercentage = Math.floor((i / 100) * 100);
@@ -67,11 +82,12 @@ const ImportFileModal = ({ toggleModal, importName }) => {
         // i = i + 9;
       }, 1000 * 1);
     }
-    const timer = setTimeout(() => {
+    
+    /*const timer = setTimeout(() => {
       uploadRef.current.innerHTML = `<span class="error">Error Uploading File(s)</span>`;
       progressRef.current.style.backgroundColor = "red";
     }, 5000);
-    return () => clearTimeout(timer);
+    return () => clearTimeout(timer);*/
   };
 
   const handleFiles = (files) => {
@@ -180,7 +196,6 @@ const ImportFileModal = ({ toggleModal, importName }) => {
                     ref={fileInputRef}
                     className="file-input"
                     type="file"
-                    multiple
                     onChange={filesSelected}
                     css={css`
                       display: none;
