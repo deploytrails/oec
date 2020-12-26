@@ -2,8 +2,11 @@ import React, { useState } from "react";
 import Layout from "../components/layout";
 import { css } from "@emotion/core";
 import ImportFileModal from "./importsModal/importsFileModal";
-import { uploadCourseObjectiveFile,uploadCourseOutcomeFile,uploadSubjectExpFile } 
-    from "../services/importService";
+import { 
+  uploadCourseObjectiveFile,
+  uploadCourseOutcomeFile,
+  uploadSubjectExpFile 
+  } from "../services/importService";
 
 const Imports = () => {
   const [show, setShow] = useState(false);
@@ -53,9 +56,10 @@ const Imports = () => {
     else if (uploadFucntionName === "COUT") {
       setResult(await uploadCourseOutcomeFile(file));
     }
-    else if (uploadFunctionName == "SUBJEXP") {
+    else if (uploadFucntionName === "SUBJEXP") {
       setResult(await uploadSubjectExpFile(file));
     }
+    
 
     // setcourseObj(result);
     // uploadRef.current.innerHTML = courseObj;
