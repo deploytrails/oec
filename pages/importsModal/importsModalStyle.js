@@ -1,5 +1,4 @@
 import styled from "@emotion/styled";
-import { COLORS, FONT_FAMILY } from "../../constants";
 export const title = styled.p`
   font-size: 1rem;
 
