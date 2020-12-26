@@ -2,7 +2,8 @@ import React, { useState } from "react";
 import Layout from "../components/layout";
 import { css } from "@emotion/core";
 import ImportFileModal from "./importsModal/importsFileModal";
-import { uploadCourseObjectiveFile } from "../services/importService";
+import { uploadCourseObjectiveFile,uploadCourseOutcomeFile,uploadSubjectExpFile } 
+    from "../services/importService";
 
 const Imports = () => {
   const [show, setShow] = useState(false);
@@ -14,13 +15,18 @@ const Imports = () => {
     {
       name: "Course Objectives",
       icon: <img src="/dash-icon-1.png" width="100" />,
-      functionName: "COBJ",
+      functionName: "COBJ"
     },
     {
       name: "Course Outcomes",
       icon: <img src="/dash-icon-2.png" width="100" />,
-      functionName: "COUT",
+      functionName: "COUT"
     },
+    {
+      name: "Subject Experience",
+      icon: <img src="/dash-icon-6.png" width="100" />,
+      functionName: "SUBJEXP"
+    }
   ];
   const showModal = (item) => {
     setImportName(item?.name);
@@ -43,7 +49,12 @@ const Imports = () => {
       setResult(await uploadCourseObjectiveFile(file));
       console.log(result);
       //successfun();
-    } else if (uploadFucntionName === "COUT") {
+    } 
+    else if (uploadFucntionName === "COUT") {
+      setResult(await uploadCourseOutcomeFile(file));
+    }
+    else if (uploadFunctionName == "SUBJEXP") {
+      setResult(await uploadSubjectExpFile(file));
     }
 
     // setcourseObj(result);

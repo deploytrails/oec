@@ -18,3 +18,41 @@ export const uploadCourseObjectiveFile = async (fil) => {
     console.log(error);
   }
 };
+
+export const uploadCourseOutcomeFile = async (fil) => {
+  try {
+    var data1 = new FormData();
+    data1.append("file", fil);
+
+    const response = await fetch(
+      `${process.env.APIBaseUrl}faculty/CourseOutComesDataForInsert`,
+      {
+        method: "POST",
+        body: data1,
+      }
+    );
+    const data = await response.json();
+    return data;
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+export const uploadSubjectExpFile = async (fil) => {
+  try {
+    var data1 = new FormData();
+    data1.append("file", fil);
+
+    const response = await fetch(
+      `${process.env.APIBaseUrl}faculty/HrFacSubjectExpDataForInsert`,
+      {
+        method: "POST",
+        body: data1,
+      }
+    );
+    const data = await response.json();
+    return data;
+  } catch (error) {
+    console.log(error);
+  }
+};
