@@ -92,7 +92,7 @@ const CourseRegister = () => {
         <button
           type="button"
           className="bg-green-400 block  mx-auto px-2 py-1 rounded mb-2"
-          onClick={(event) => { event.preventDefault(); window.open("http://15.206.189.30:8081/faculty/DeptFacAttdReport?StartDate=2020-01-01&EndDate=2020-12-24&Department_ID=20196101013404918557388"); }}
+          onClick={(event) => { event.preventDefault(); window.open("http://15.206.189.30:8081/faculty/DownloadAttendenceServlet?name=courseregister&operation=downloadreport&empName=Dr. M. Rudra Kumar&courseparam=201961010181722142801645&param2=01-12-2020&param3=26-12-2020&empID=64D1E79A8B6B11E98B0957863D7CDB1C&coursecode=R17-7G134-A&coursename=Discrete Mathematics&deptname=20196101013404918557388"); }}
         >
           Download
                                   </button>
