@@ -20,7 +20,7 @@ const CourseWiseAttendance = () => {
               }
             `}
           >
-            <b> Student Roll No</b>
+            <b> Student Roll Number</b>
             <input  css={css`
                 display: block;
                 width: 20%;
