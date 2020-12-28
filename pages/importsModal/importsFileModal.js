@@ -5,7 +5,7 @@ import { css } from "@emotion/core";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faTimes } from "@fortawesome/free-solid-svg-icons";
 
-const ImportFileModal = ({ toggleModal, importName }) => {
+const ImportFileModal = ({ toggleModal, importName, uploadFucntionProp }) => {
   const [selectedFiles, setSelectedFiles] = useState([]);
   const [errorMessage, setErrorMessage] = useState("");
   const [validFiles, setValidFiles] = useState([]);
@@ -49,29 +49,27 @@ const ImportFileModal = ({ toggleModal, importName }) => {
     uploadModalRef.current.style.display = "none";
   };
 
-  const uploadFiles = () => {
+  const uploadFiles = async () => {
+    uploadFucntionProp(validFiles[0]);
     uploadModalRef.current.style.display = "block";
     uploadRef.current.innerHTML = "File(s) Uploading...";
-    for (var i = 0; i < 100; i++) {
-      setTimeout(function () {
-        const uploadPercentage = Math.floor((i / 100) * 100);
-        progressRef.current.innerHTML = `${uploadPercentage}%`;
-        progressRef.current.style.width = `${uploadPercentage}%`;
-        if (uploadPercentage === 100) {
-          uploadRef.current.innerHTML = "File(s) Uploaded";
-          validFiles.length = 0;
-          setValidFiles([...validFiles]);
-          setSelectedFiles([...validFiles]);
-          setUnsupportedFiles([...validFiles]);
-        }
-        // i = i + 9;
-      }, 1000 * 1);
-    }
-    const timer = setTimeout(() => {
+
+    progressRef.current.innerHTML = `100%`;
+    progressRef.current.style.width = `100%`;
+    setTimeout(function () {
+      uploadRef.current.innerHTML = "File(s) Uploaded";
+      validFiles.length = 0;
+      setValidFiles([...validFiles]);
+      setSelectedFiles([...validFiles]);
+      setUnsupportedFiles([...validFiles]);
+      toggleModal();
+    }, 1000);
+
+    /*const timer = setTimeout(() => {
       uploadRef.current.innerHTML = `<span class="error">Error Uploading File(s)</span>`;
       progressRef.current.style.backgroundColor = "red";
     }, 5000);
-    return () => clearTimeout(timer);
+    return () => clearTimeout(timer);*/
   };
 
   const handleFiles = (files) => {
@@ -180,7 +178,6 @@ const ImportFileModal = ({ toggleModal, importName }) => {
                     ref={fileInputRef}
                     className="file-input"
                     type="file"
-                    multiple
                     onChange={filesSelected}
                     css={css`
                       display: none;
