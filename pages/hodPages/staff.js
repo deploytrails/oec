@@ -8,6 +8,7 @@ import {
 } from "../../services/hodServices/staffServices";
 import Pagination from "../../components/TableUtilities/pagination";
 import css from "@emotion/css";
+import TableWrap from "../../components/TableUtilities/TableWrap";
 
 const Staff = () => {
   const ProfileId = Cookies.get("employeeID");
@@ -24,9 +25,33 @@ const Staff = () => {
   const loadTeachingStaffData = async () => {
     const cData = await getTeachingStaffData(ProfileId);
     setIsStaffData(cData?.teachingStaffDetails);
-    console.log(cData);
     setIsButtonText(!isButtonText);
   };
+
+  const tdValuesTeachingStaff = [
+    { valueProperty: "teachingStaffNo" },
+    { valueProperty: "teachingStaffName" },
+    { valueProperty: "teachingStaffDisg" },
+    { valueProperty: "teachingStaffhigestQual" },
+    { valueProperty: "teachingStaffExp" },
+  ];
+
+  const tdValuesNonTeachingStaff = [
+    { valueProperty: "nonTeachingStaffNo" },
+    { valueProperty: "nonTeachingStaffName" },
+    { valueProperty: "nonTeachingStaffDisg" },
+    { valueProperty: "nonTeachingStaffhigestQual" },
+    { valueProperty: "nonTeachingStaffExp" },
+  ];
+
+  const thValues = [
+    "Faculty Number",
+    "Faculty Name",
+    "Designation",
+    "Highest Qualification",
+    "Total Years of Experience",
+  ];
+
   const loadNonTeachingStaffData = async () => {
     const cData = await getNonTeachingStaffData(ProfileId);
     setIsStaffData(cData?.nonTeachingStaffDetails);
@@ -52,40 +77,17 @@ const Staff = () => {
             >
               {isButtonText ? "Non-Teaching Staff" : "Teaching Staff"}
             </button>
-            <TABLE.TableWrapper>
-              <TABLE.TableTR>
-                <TABLE.TableTh>Faculty Number</TABLE.TableTh>
-                <TABLE.TableTh>Faculty Name</TABLE.TableTh>
-                <TABLE.TableTh>Designation</TABLE.TableTh>
-                <TABLE.TableTh> Highest Qualification</TABLE.TableTh>
-                <TABLE.TableTh> Total Years of Experience</TABLE.TableTh>
-              </TABLE.TableTR>
-              <TABLE.TableTbody>
-                {currentPosts &&
-                  currentPosts.length &&
-                  currentPosts.map((staff) => (
-                    <TABLE.TableTRR key={staff.teachingStaffID}>
-                      <TABLE.TableTdd>
-                        {staff.teachingStaffID || staff.nonTeachingStaffID}
-                      </TABLE.TableTdd>
-                      <TABLE.TableTdd>
-                        {staff.teachingStaffName || staff.nonTeachingStaffName}
-                      </TABLE.TableTdd>
-                      <TABLE.TableTdd>
-                        {staff.teachingStaffDisg || staff.nonTeachingStaffDisg}
-                      </TABLE.TableTdd>
-                      <TABLE.TableTdd>
-                        {staff.teachingStaffhigestQual ||
-                          staff.nonTeachingStaffhigestQual}
-                      </TABLE.TableTdd>
-                      <TABLE.TableTdd>
-                        {staff.teachingStaffExp || staff.nonTeachingStaffExp}
-                      </TABLE.TableTdd>
-                    </TABLE.TableTRR>
-                  ))}
-              </TABLE.TableTbody>
-            </TABLE.TableWrapper>
           </div>
+          {isStaffData && isStaffData.length > 0 && (
+            <TableWrap
+              thValues={thValues}
+              tdValues={
+                isButtonText ? tdValuesTeachingStaff : tdValuesNonTeachingStaff
+              }
+              data={isStaffData}
+            />
+          )}
+
           <Pagination
             countPerPage={countPerPage}
             totalRecs={isStaffData.length}
