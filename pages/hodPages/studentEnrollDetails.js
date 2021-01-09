@@ -28,6 +28,7 @@ const StudentEnrollDetails = () => {
 
   const loadAcademicDetailsData = async (degreeId) => {
     console.log(degreeId);
+    console.log(Cookies.get("departId"));
     const cData = await getAcademicDetailsData(
       Cookies.get("departId"),
       degreeId
@@ -171,8 +172,8 @@ const StudentEnrollDetails = () => {
                 </option>
                 {isAcademicYearData &&
                   isAcademicYearData.map((acadYear) => (
-                    <option value={acadYear.academicDetails.academicID}>
-                      {acadYear.academicDetails.academicYear}
+                    <option value={acadYear[1]}>
+                      {acadYear[0]}
                     </option>
                   ))}
               </select>
