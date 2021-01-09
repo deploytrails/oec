@@ -3,7 +3,7 @@ import fetch from "cross-fetch";
 export const getTeachingStaffData = async (facultyID) => {
   try {
     const response = await fetch(
-      `${process.env.APIBaseUrl}faculty/getTeachingStaffOfHODEmployee?employeeId=${facultyID}`,
+      `${process.env.APIBaseUrl}faculty/getTeachingStaffOfHODEmployee?employeeID=${facultyID}`,
       {
         method: "GET",
         headers: {
@@ -20,7 +20,7 @@ export const getTeachingStaffData = async (facultyID) => {
 export const getNonTeachingStaffData = async (facultyID) => {
   try {
     const response = await fetch(
-      `${process.env.APIBaseUrl}faculty/getNonTeachingStaffOfHODEmployee?employeeId=${facultyID}`,
+      `${process.env.APIBaseUrl}faculty/getNonTeachingStaffOfHODEmployee?employeeID=${facultyID}`,
       {
         method: "GET",
         headers: {

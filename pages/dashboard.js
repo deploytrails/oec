@@ -150,7 +150,7 @@ const Dashboard = () => {
     },
     {
       name: "Mentor",
-      url: "/hodPages/mentor",
+      url: "/hodPages/Mentors/mentor",
       icon: <img src="/dash-icon-10.png" width="100" />,
     },
     {
