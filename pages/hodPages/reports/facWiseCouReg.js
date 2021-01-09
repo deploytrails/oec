@@ -24,7 +24,6 @@ const FacWiseCouReg = () => {
     try {
       loadCourseData(e.target.value);
       setCourseListData(courseListData1.courseArray);
-      console.log(courseList)
     } catch (error) {
     }
 

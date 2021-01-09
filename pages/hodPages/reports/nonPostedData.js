@@ -16,8 +16,6 @@ const NonPostedData = () => {
     setStartDate(e.target.value)
   }
   const handleDepartmentNonPostedData = (e) => {
-    console.log(startDate);
-    console.log(endDate);
     // let stddate=moment(startDate).format("DD-MM-yyyy");
     // let edate=moment(endDate).format("DD-MM-yyyy");
      window.open("http://15.206.189.30:8081/faculty/getNonPosteddata?sdate="+startDate+"&deptID="+deptId+"&toDate="+endDate); 
