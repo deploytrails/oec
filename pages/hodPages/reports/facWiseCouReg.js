@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Layout from "../../../components/layout";
 import css from "@emotion/css";
 import Cookies from "js-cookie";
@@ -7,27 +7,60 @@ import { getCoursesData } from "../../../services/reportsService";
 import moment from "moment";
 
 const FacWiseCouReg = () => {
-  const [courseList, setCourseListData] = useState([]);
+  const [courseList, setCourseListData] = useState();
+  const ProfileId = Cookies.get("employeeID");
   const [courseListData1, setCourseListData1] = useState([]);
-
+  const [startDate, setStartDate] = useState(new Date());
+  const [courseId, setCourseId] = useState([]);
+  const [courseCode, setCourseCode] = useState([]);
+  const [courseName, setCourseName] = useState([]);
+  const [facName, setFacName] = useState([]);
+  const [endDate, setEndDate] = useState(new Date());
+  const deptName = Cookies.get("departId");
   const loadCourseData = async (facultyNo) => {
     const courseData = await getCoursesData(facultyNo);
-
     if (courseData != undefined) {
-      setCourseListData1(courseData);
-      //   setStartDate(studentData.semesterDetails.startdate);
-      //   setStudentId(studentData.enrollstudentId);
+      setCourseListData1(courseData.courseArray);
     }
 
   };
+  const handleCourseChange = (e) => {
+
+    console.log(courseListData1[e.target.value])
+
+
+    setStartDate(courseListData1[e.target.value].semesterStartDate);
+    setCourseCode(courseListData1[e.target.value].courseCode);
+    setCourseId(courseListData1[e.target.value].courseId);
+    setCourseName(courseListData1[e.target.value].courseName)
+    setFacName(courseListData1[e.target.value].facultyName)
+    //     setStudentId(studentData.enrollstudentId);
+
+    // setStartDate(courseCodeList[e.target.value].startDate);
+    // setCourseListDate(courseCodeList[e.target.value].startDate);
+    // setCourseId(courseCodeList[e.target.value].courseId);
+    // setCourseCode(courseCodeList[e.target.value].courseCode);
+    // setCourseName(courseCodeList[e.target.value].courseName);
+  }
+  const handleEndate = (e) => {
+    setEndDate(e.target.value)
+  }
+  const handleDownloadFacwiseCourseRegisterReport = (e) => {
+    let stddate = moment(startDate).format("DD-MM-yyyy");
+    let edate = moment(endDate).format("DD-MM-yyyy");
+    window.open("http://15.206.189.30:8081/faculty/DownloadAttendenceServlet?name=courseregister&operation=downloadreport&empName="+facName+"&courseparam=" + courseId + "&param2=" + stddate + "&param3=" + edate + "&empID=" + ProfileId + "&coursecode=" + courseCode + "&coursename=" + courseName + "&deptname=" + deptName)
+  }
   const handleChange = (e) => {
     try {
       loadCourseData(e.target.value);
-      setCourseListData(courseListData1.courseArray);
+
     } catch (error) {
     }
 
   }
+  useEffect((facNo) => {
+    loadCourseData(facNo);
+  }, []);
   return (
     <React.Fragment>
       <Layout>
@@ -103,14 +136,41 @@ const FacWiseCouReg = () => {
               <option value="" selected disabled>
                 Select Your option
               </option>
-              { courseList && courseList.map((course, i) => (
+              {courseListData1 && courseListData1.map((course, i) => (
                 <option value={i}>
                   {course.courseName}
                 </option>
-              ))} 
+              ))}
             </select>
           </label>
         </div>
+        <React.Fragment>
+          <b> Start Date</b>
+          <input
+            type="date"
+            name="startDate"
+            value={moment(startDate).format("YYYY-MM-DD")}
+            placeholder="Start Date"
+            className="block w-5/12 text-black py-2 px-4 box-border  float-right mt-4 rounded shadow focus: outline-none"
+          />
+          <b>End Date</b>
+          <input
+            type="date"
+            name="endDate"
+            placeholder="End Date"
+            onChange={(event) => handleEndate(event)}
+            className="block w-5/12 text-black py-2 px-4 box-border  float-right mt-4 rounded shadow focus: outline-none"
+          />
+
+
+          <button
+            type="button"
+            className="bg-green-400 block  mx-auto px-2 py-1 rounded mb-2"
+            onClick={(event) => handleDownloadFacwiseCourseRegisterReport(event)}
+          >
+            Download
+                                  </button>
+        </React.Fragment>
       </Layout>
     </React.Fragment>
   );

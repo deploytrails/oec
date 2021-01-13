@@ -254,7 +254,7 @@ const HodSideNavLinks = () => {
               </li>
               <li
                 css={
-                  router.pathname === "/hodPages/reports/CouWiseAtt"
+                  router.pathname === "/hodPages/reports/couWiseAtt"
                     ? css`
                         color: ${COLORS.GREEN};
                       `
@@ -263,7 +263,7 @@ const HodSideNavLinks = () => {
                       `
                 }
               >
-                <Link href="/hodPages/reports/CouWiseAtt">
+                <Link href="/hodPages/reports/couWiseAtt">
                   <a>
                     <FontAwesomeIcon icon={faBook} /> Course Wise Attendance
                   </a>
@@ -271,7 +271,7 @@ const HodSideNavLinks = () => {
               </li>
               <li
                 css={
-                  router.pathname === "/hodPages/reports/DayWiseAtt"
+                  router.pathname === "/hodPages/reports/dayWiseAtt"
                     ? css`
                         color: ${COLORS.GREEN};
                       `
@@ -280,7 +280,7 @@ const HodSideNavLinks = () => {
                       `
                 }
               >
-                <Link href="/hodPages/reports/DayWiseAtt">
+                <Link href="/hodPages/reports/dayWiseAtt">
                   <a>
                     <FontAwesomeIcon icon={faBook} /> Day Wise Attendance
                   </a>

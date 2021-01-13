@@ -18,33 +18,33 @@ const NonPostedData = () => {
   const handleDepartmentNonPostedData = (e) => {
     // let stddate=moment(startDate).format("DD-MM-yyyy");
     // let edate=moment(endDate).format("DD-MM-yyyy");
-     window.open("http://15.206.189.30:8081/faculty/getNonPosteddata?sdate="+startDate+"&deptID="+deptId+"&toDate="+endDate); 
+    window.open("http://15.206.189.30:8081/faculty/getNonPosteddata?fromDate=" + startDate + "&departmentID=" + deptId + "&toDate=" + endDate);
 
   }
   return (
     <React.Fragment>
       <Layout>
         <div>DepartmentWise Faulty Non Posted Attendance Details Report</div>
-          <React.Fragment>
-            <b> Start Date</b>
-            <input
-              type="date"
-              name="startDate"
-              //value={moment(startDate).format("YYYY-MM-DD")}
-              onChange={(event) => handleStartDate(event)}
-              placeholder="Start Date"
-              className="block w-5/12 text-black py-2 px-4 box-border  float-right mt-4 rounded shadow focus: outline-none"
-            />
-            <b>End Date</b>
-            <input
-              type="date"
-              name="endDate"
-              placeholder="End Date"
-              onChange={(event) => handleEndate(event)}
-              className="block w-5/12 text-black py-2 px-4 box-border  float-right mt-4 rounded shadow focus: outline-none"
-            />
+        <React.Fragment>
+          <b> Start Date</b>
+          <input
+            type="date"
+            name="startDate"
+            //value={moment(startDate).format("YYYY-MM-DD")}
+            onChange={(event) => handleStartDate(event)}
+            placeholder="Start Date"
+            className="block w-5/12 text-black py-2 px-4 box-border  float-right mt-4 rounded shadow focus: outline-none"
+          />
+          <b>End Date</b>
+          <input
+            type="date"
+            name="endDate"
+            placeholder="End Date"
+            onChange={(event) => handleEndate(event)}
+            className="block w-5/12 text-black py-2 px-4 box-border  float-right mt-4 rounded shadow focus: outline-none"
+          />
 
-
+          {startDate!=undefined && endDate!=undefined &&
             <button
               type="button"
               className="bg-green-400 block  mx-auto px-2 py-1 rounded mb-2"
@@ -52,8 +52,8 @@ const NonPostedData = () => {
             >
               Download
                                     </button>
-
-          </React.Fragment>
+          }
+        </React.Fragment>
       </Layout>
     </React.Fragment>
   );

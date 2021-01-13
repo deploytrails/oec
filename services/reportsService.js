@@ -70,7 +70,24 @@ export const getStudentDetails= async (rollNo) => {
 export const getCoursesData= async (facultyNo) => {
     try {
         const response = await fetch(
-            `${process.env.APIBaseUrl}faculty/fetchAllocatedCourses/?facultyID=${facultyNo}`,
+            `${process.env.APIBaseUrl}faculty/fetchAllocatedCourses/?employeeID=${facultyNo}`,
+            {
+                method: "GET",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+            }
+        );
+        const data = await response.json();
+        return data;
+    } catch (error) {
+        console.log(error);
+    }
+};
+export const getFacultyData= async (facultyNo) => {
+    try {
+        const response = await fetch(
+            `${process.env.APIBaseUrl}faculty/getFacultyDataForFacultyHandlingReport/?facNumber=${facultyNo}`,
             {
                 method: "GET",
                 headers: {
