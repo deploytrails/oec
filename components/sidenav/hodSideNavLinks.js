@@ -570,7 +570,7 @@ const HodSideNavLinks = () => {
 
         <li
           css={
-            router.pathname === "/hodPages/mentor"
+            router.pathname === "/hodPages/Mentors/mentor"
               ? css`
                   color: ${COLORS.GREEN};
                 `
@@ -579,7 +579,7 @@ const HodSideNavLinks = () => {
                 `
           }
         >
-          <Link href="/hodPages/mentor">
+          <Link href="/hodPages/Mentors/mentor">
             <a>
               <FontAwesomeIcon icon={faCalendar} /> Mentor
             </a>

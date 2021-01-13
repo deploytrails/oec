@@ -7,7 +7,7 @@ const TableTd = ({ tdValue }) => {
 
   return (
     <React.Fragment>
-      <TABLE.TableTdd>{tdValue}</TABLE.TableTdd>
+      <TABLE.TableTdd key={tdValue}>{tdValue}</TABLE.TableTdd>
     </React.Fragment>
   );
 };

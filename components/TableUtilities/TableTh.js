@@ -5,6 +5,7 @@ const TableTh = ({ thValues }) => {
   return (
     <React.Fragment>
       <TABLE.TableTR>
+        <TABLE.TableTh key="S.No.">S.No.</TABLE.TableTh>
         {thValues &&
           thValues.length > 0 &&
           thValues.map((thead) => (

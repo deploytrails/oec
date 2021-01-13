@@ -14,6 +14,7 @@ const TableTr = ({ tdValues, data }) => {
         data.length > 0 &&
         data.map((value, i) => (
           <TABLE.TableTRR key={i}>
+            <TableTd tdValue={i + 1} />
             {tdValues &&
               tdValues.length > 0 &&
               tdValues.map((property) => (
