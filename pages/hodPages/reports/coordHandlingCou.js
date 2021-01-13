@@ -17,7 +17,6 @@ const CoordHandlingCou = () => {
     setDeptId(dept);
   }
   const handleChange = (e) => {
-    //console.log(e.target.value)
     setFacultyNo(e.target.value);
     loadFacultyData(e.target.value);
   }
