@@ -11,11 +11,12 @@ const Pagination = ({ countPerPage, totalRecs, paginate, currentPage }) => {
   return (
     <nav
       css={css`
-        position: absolute;
-        top: 90%;
+        position: relative;
+        top: 100%;
         right: 0;
         width: 20%;
-        height: auto;
+        margin-top: 20px;
+        margin-bottom: 5%;
       `}
     >
       <ul className="pagination">

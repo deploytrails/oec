@@ -7,19 +7,9 @@ import Cookies from "js-cookie";
 const Mentor = () => {
   const ProfileId = Cookies.get("employeeID");
 
-  useEffect(() => {
-    // getMentorList();
-  }, []);
-
-  // const getMentorList = async () => {
-  //   const cData = await getMentorData(ProfileId);
-  //   console.log(cData);
-  //   setIsMentorsData(cData?.MentorsDetailList);
-  // };
   return (
     <React.Fragment>
       <Layout>
-        {/* <div>HOD Mentor Component</div> */}
         <div className=" bg-white mt-8">
           <MentorTabsWrap profileId={ProfileId} />
         </div>

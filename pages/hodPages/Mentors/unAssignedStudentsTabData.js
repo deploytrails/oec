@@ -6,8 +6,7 @@ const UnAssignedStudentsTabData = ({ profileId }) => {
   const [isUnAssignedStudentsData, setIsUnAssignedStudentsData] = useState([]);
   const getUnAssignedStudentsDetails = async () => {
     const cData = await getUnAssignedStudentsData(profileId);
-    setIsUnAssignedStudentsData(cData);
-    console.log(cData);
+    setIsUnAssignedStudentsData(cData?.unassignedStudentsData);
   };
   const thValues = ["Student Roll Number", "Student Name", "Semester"];
 

@@ -1,41 +1,54 @@
 import React, { useState, useEffect } from "react";
-import { getMentorData } from "../../../services/hodServices/mentorService";
 import TableWrap from "../../../components/TableUtilities/TableWrap";
+import StudentDetailsModal from "./studentDetailsModal";
 
-const AssignMentorTabData = ({ profileId }) => {
-  const [isMentorsData, setIsMentorsData] = useState([]);
-  const getMentorList = async () => {
-    const cData = await getMentorData(profileId);
-    setIsMentorsData(cData?.MentorsDetailList);
-    console.log(cData);
-  };
+const AssignMentorTabData = ({ isUnAssignedData }) => {
+  const [show, setShow] = useState(false);
+  const [isUnAssignedMentor, setIsUnAssignedMentor] = useState(false);
   const thValues = [
     "Faculty Number",
     "Faculty Name",
     "No.of Students Assigned",
     "Mentors Assigned to Students",
   ];
-
+  const openModal = (index) => {
+    setShow(!show);
+    setIsUnAssignedMentor(isUnAssignedData[index]);
+    console.log(isUnAssignedData[index]);
+  };
   const tdValues = [
     { valueProperty: "2" },
     { valueProperty: "1" },
     { valueProperty: "3" },
+    {
+      valueProperty: "Assigned Students",
+      type: "button",
+      onClickfunction: (e) => {
+        openModal(e);
+      },
+      // ,
+      // valueMethod: "test",
+      // valueButton: "AssignStudents",
+    },
   ];
 
-  useEffect(() => {
-    getMentorList();
-  }, []);
   return (
     <React.Fragment>
       <div>
-        {isMentorsData && isMentorsData.length > 0 && (
+        {isUnAssignedData && isUnAssignedData.length > 0 && (
           <TableWrap
             thValues={thValues}
             tdValues={tdValues}
-            data={isMentorsData}
+            data={isUnAssignedData}
           />
         )}
       </div>
+      {show && (
+        <StudentDetailsModal
+          openModal={openModal}
+          employeeData={isUnAssignedMentor}
+        />
+      )}
     </React.Fragment>
   );
 };

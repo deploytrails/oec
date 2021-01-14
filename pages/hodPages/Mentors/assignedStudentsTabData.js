@@ -6,9 +6,7 @@ const AssignedStudentsTabData = ({ profileId }) => {
   const [isAssignedStudentsData, setIsAssignedStudentsData] = useState([]);
   const getAssignedStudentsDetails = async () => {
     const cData = await getAssignedStudentsData(profileId);
-    console.log(cData);
-    setIsAssignedStudentsData(cData["Student Details and Mentor Details"]);
-    console.log(isAssignedStudentsData);
+    setIsAssignedStudentsData(cData?.assignedStudentsData);
   };
   const thValues = [
     "Student Roll Number",
@@ -18,9 +16,10 @@ const AssignedStudentsTabData = ({ profileId }) => {
   ];
 
   const tdValues = [
-    { valueProperty: "roll" },
-    { valueProperty: "firstName" },
-    { valueProperty: "semesterCode" },
+    { valueProperty: "1" },
+    { valueProperty: "0" },
+    { valueProperty: "2" },
+    { valueProperty: "3" },
   ];
 
   useEffect(() => {
@@ -28,8 +27,7 @@ const AssignedStudentsTabData = ({ profileId }) => {
   }, []);
   return (
     <React.Fragment>
-      <div>Assigned Students</div>
-      {/* <div>
+      <div>
         {isAssignedStudentsData && isAssignedStudentsData.length > 0 && (
           <TableWrap
             thValues={thValues}
@@ -37,7 +35,7 @@ const AssignedStudentsTabData = ({ profileId }) => {
             data={isAssignedStudentsData}
           />
         )}
-      </div> */}
+      </div>
     </React.Fragment>
   );
 };
