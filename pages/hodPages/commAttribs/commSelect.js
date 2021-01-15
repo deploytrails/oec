@@ -31,7 +31,6 @@ const CommSelect = ({ onSectionChange }) => {
     setIsAcademicYearData(cData?.academicYearArray);
     setIsSemesterData([]);
     setIsSectionsData([]);
-    setIsStudentsData([]);
 
     console.log(cData);
   };
@@ -40,7 +39,6 @@ const CommSelect = ({ onSectionChange }) => {
     const cData = await getSemsterData(acadYear);
     setIsSemesterData(cData?.semesterArray);
     setIsSectionsData([]);
-    setIsStudentsData([]);
 
     console.log(cData);
   };
@@ -48,7 +46,6 @@ const CommSelect = ({ onSectionChange }) => {
   const loadSectionsData = async (semester) => {
     const cData = await getSectionsData(semester);
     setIsSectionsData(cData?.sectionArray);
-    setIsStudentsData([]);
     console.log(cData);
   };
 
