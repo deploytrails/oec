@@ -220,7 +220,7 @@ const AssignGroup = () => {
                           name={student.id}
                           id={student.id}
                           defaultChecked={false}
-                          onChange={(e) => checkAssignGroup(e, index, student.rollNumber)}
+                          onChange={(e) => checkAssignGroup(e, index, student.studentID)}
                         />
                       </lable>
                       {student.studentSelect}</TABLE.TableTdd>
