@@ -20,6 +20,7 @@ const AssignGroup = () => {
   const [studentList, setStudentList] = useState([]);
   const [sectionsList, setSectionsList] = useState([]);
   const [filterIDs, setFilterIds] = useState([]);
+  const [semesterId, setSemesterId] = useState();
 
   const getSemesterInfo = async (employeeId) => {
     const data = await getSemesters(employeeId);
@@ -49,12 +50,13 @@ const AssignGroup = () => {
     getSemesterInfo('64D1E79A8B6B11E98B0957863D7CDB1C');
   }, []);
 
-  const retrieveSections = (e) => {
-    getSectionsinfo('20196101014224570834265');
+  const retrieveSections = (e) => {   
+    setSemesterId(e.target.value);
+    getSectionsinfo(e.target.value);
   };
 
   const retrieveStudentsSems = (e) => {
-    getStudentSemesters('20196101014224570834265', '20196101023191319030046');
+    getStudentSemesters(semesterId, e.target.value);
   };
 
   const selectCheck = (selectedVal) => {
@@ -72,15 +74,12 @@ const AssignGroup = () => {
 
   const checkAssignGroup = (e, i, targetVal) => {
     const targetCheck = e.target.checked;
-    console.log(targetVal + " Hellow: " + targetCheck);
-
     if (!targetCheck) {
       selectCheck(targetVal);
     } else {
       deSelectCheck(targetVal);
     }
 
-    console.log("Ids list:  " + filterIDs)
   };
 
   return (
@@ -126,7 +125,7 @@ const AssignGroup = () => {
               </option>
               {semesterList &&
                 semesterList.map((semester) => (
-                  <option value={semester?.semesterCode}>
+                  <option value={semester?.semesterID}>
                     {semester?.semesterCode}
                   </option>
                 ))}
@@ -221,7 +220,7 @@ const AssignGroup = () => {
                           name={student.id}
                           id={student.id}
                           defaultChecked={false}
-                          onChange={(e) => checkAssignGroup(e, index, student.rollNumber)}
+                          onChange={(e) => checkAssignGroup(e, index, student.studentID)}
                         />
                       </lable>
                       {student.studentSelect}</TABLE.TableTdd>
