@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import TableWrap from "../../../components/TableUtilities/TableWrap";
 import StudentDetailsModal from "./studentDetailsModal";
 
-const AssignMentorTabData = ({ isUnAssignedData }) => {
+const AssignMentorTabData = ({ isUnAssignedData, getMentorList }) => {
   const [show, setShow] = useState(false);
   const [isUnAssignedMentor, setIsUnAssignedMentor] = useState(false);
   const thValues = [
@@ -14,7 +14,6 @@ const AssignMentorTabData = ({ isUnAssignedData }) => {
   const openModal = (index) => {
     setShow(!show);
     setIsUnAssignedMentor(isUnAssignedData[index]);
-    console.log(isUnAssignedData[index]);
   };
   const tdValues = [
     { valueProperty: "2" },
@@ -26,9 +25,6 @@ const AssignMentorTabData = ({ isUnAssignedData }) => {
       onClickfunction: (e) => {
         openModal(e);
       },
-      // ,
-      // valueMethod: "test",
-      // valueButton: "AssignStudents",
     },
   ];
 
@@ -47,6 +43,7 @@ const AssignMentorTabData = ({ isUnAssignedData }) => {
         <StudentDetailsModal
           openModal={openModal}
           employeeData={isUnAssignedMentor}
+          getMentorList={getMentorList}
         />
       )}
     </React.Fragment>

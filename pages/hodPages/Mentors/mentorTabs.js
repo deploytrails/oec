@@ -75,7 +75,10 @@ const MentorTabsWrap = ({ profileId }) => {
         </Tabs>
 
         <Content active={active === 0}>
-          <AssignMentorTabData isUnAssignedData={isUnAssignedData} />
+          <AssignMentorTabData
+            isUnAssignedData={isUnAssignedData}
+            getMentorList={getMentorList}
+          />
         </Content>
         <Content active={active === 1}>
           <UnAssignedMentorsTabData isUnAssignedData={isUnAssignedData} />

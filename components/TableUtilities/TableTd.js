@@ -24,6 +24,18 @@ const TableTd = ({ tdValue, property, tdIndex }) => {
           </button>
         </TABLE.TableTdd>
       )}
+      {property?.type === "checkbox" && (
+        <TABLE.TableTdd key={property.valueProperty}>
+          <input
+            className="checkbox"
+            name={tdIndex}
+            id={tdIndex}
+            type="checkbox"
+            defaultChecked={tdValue[property.valueProperty]}
+            onChange={(e) => property.onChangefunction(tdIndex, e)}
+          />
+        </TABLE.TableTdd>
+      )}
     </React.Fragment>
   );
 };

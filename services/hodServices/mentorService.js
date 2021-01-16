@@ -121,41 +121,50 @@ export const getSectionData = async (semesterID) => {
   }
 };
 
-// semesterID,degreeID,acadYearID,sectionID,programID
-export const getStudentsData = async () => {
-  const dataObj = {
-    semesterID: "201961010142243267854922",
-    degreeID: "5C8F976CE5064A9B82556FC8A6A9D0C5",
-    acadYearID: "201961010429723213238372",
-    sectionID: "2019923828268041003620",
-    departmentID: "20196101013404918557388",
-  };
-
-  const semesterID = "201961010142243267854922";
-  const degreeID = "5C8F976CE5064A9B82556FC8A6A9D0C5";
-  const acadYearID = "201961010429723213238372";
-  const sectionID = "2019923828268041003620";
-  const departmentID = "20196101013404918557388";
-
-  const enc = encodeURIComponent(JSON.stringify(dataObj));
-  console.log(dataObj.semesterID);
+//
+export const getStudentsData = async (
+  semesterID,
+  degreeID,
+  acadYearID,
+  sectionID,
+  departmentID
+) => {
   try {
     const response = await fetch(
       `${process.env.APIBaseUrl}faculty/getStudentsDetails`,
       {
-        method: "GET",
+        method: "POST",
         headers: {
           "Content-Type": "application/json",
         },
         body: JSON.stringify({
-          semesterID,
-          degreeID,
-          acadYearID,
-          sectionID,
-          departmentID,
+          semesterID: semesterID,
+          degreeID: degreeID,
+          acadYearID: acadYearID,
+          sectionID: sectionID,
+          departmentID: departmentID,
         }),
       }
     );
+    const data = await response.json();
+    return data;
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+export const insertStudentAttendance = async (profileId, studentdataArray) => {
+  try {
+    const response = await fetch(`${process.env.APIBaseUrl}faculty/setSaving`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        employeeID: profileId,
+        studentDetails: studentdataArray,
+      }),
+    });
     const data = await response.json();
     return data;
   } catch (error) {
