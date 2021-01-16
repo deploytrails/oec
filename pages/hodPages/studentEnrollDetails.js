@@ -9,9 +9,9 @@ import {
 } from "../../services/hodServices/studentEnrollService";
 import Cookies from "js-cookie";
 
-import css from "@emotion/css";
-import { COLORS } from "../../constants";
 import TableWrap from "../../components/TableUtilities/TableWrap";
+import {Formik,Form} from 'formik';
+import FormikControl from "../../components/General/FormikControl";
 
 const StudentEnrollDetails = () => {
   const [isDegreeData, setIsDegreeData] = useState([]);
@@ -20,41 +20,71 @@ const StudentEnrollDetails = () => {
   const [isSectionsData, setIsSectionsData] = useState([]);
   const [isStudentsData, setIsStudentsData] = useState([]);
 
-  const loadDegreeData = async () => {
+    const loadDegreeData = async () => {
+    
     const cData = await getDegreeData();
-    setIsDegreeData(cData?.degreeArray);
-    console.log(cData);
-  };
+    let degreeOptions = [];
+     cData?.degreeArray.forEach(element => {
+      degreeOptions.push({
+        value:element[0],
+        key:element[1]
+      })
+      });
+    setIsDegreeData(degreeOptions);
+    console.log("degreeOptions"+degreeOptions);
+    };
 
   const loadAcademicDetailsData = async (degreeId) => {
     console.log(degreeId);
-    console.log(Cookies.get("departId"));
     const cData = await getAcademicDetailsData(
       Cookies.get("departId"),
       degreeId
     );
-    setIsAcademicYearData(cData?.academicYearArray);
+    //let acadOptions = JSON.parse(JSON.stringify(options));
+    let acadOptions = [];
+    cData?.academicYearArray.forEach(element => {
+      acadOptions.push({
+        value:element[1],
+        key:element[0]
+      })
+      });
+    setIsAcademicYearData(acadOptions);
     setIsSemesterData([]);
     setIsSectionsData([]);
     setIsStudentsData([]);
 
-    console.log(cData);
+    console.log(acadOptions);
   };
 
-  const loadSemesterData = async (acadYear) => {
-    const cData = await getSemsterData(acadYear);
-    setIsSemesterData(cData?.semesterArray);
+  const loadSemesterData = async (degreeID,acadYear) => {
+    console.log("Degree "+degreeID);
+    const cData = await getSemsterData(degreeID,acadYear);
+    let semOptions = [];
+    cData?.semesterArray.forEach(element => {
+      semOptions.push({
+        value:element[0],
+        key:element[1]
+      })
+      });
+    setIsSemesterData(semOptions);
     setIsSectionsData([]);
     setIsStudentsData([]);
 
-    console.log(cData);
+    console.log(semOptions);
   };
 
   const loadSectionsData = async (semester) => {
     const cData = await getSectionsData(semester);
-    setIsSectionsData(cData?.sectionArray);
+    let sectionsOptions = [];
+    cData?.sectionArray.forEach(element => {
+      sectionsOptions.push({
+        value:element[0],
+        key:element[1]
+      })
+      });
+    setIsSectionsData(sectionsOptions);
     setIsStudentsData([]);
-    console.log(cData);
+    console.log(sectionsOptions);
   };
   const loadStudentsData = async (section) => {
     const cData = await getStudentsData(section);
@@ -76,202 +106,71 @@ const StudentEnrollDetails = () => {
     { valueProperty: "4" },
   ];
 
+  const initialValues={
+    Degree:'',
+    AcadYear:'',
+    Semester:'',
+    Sections:''
+  }
+
+  const onSubmit = (values) =>{
+    console.log("values "+values);
+  }
+
   useEffect(() => {
     loadDegreeData();
-  }, []);
+    }, []);
 
   return (
     <React.Fragment>
       <Layout>
+        <Formik
+        initialValues={initialValues}
+        onSubmit={onSubmit}
+        >
+        {(
+          {
+            values,
+            handleChange
+          }         
+          ) =>( 
+        <Form>
         <div className="grid grid-cols-4">
           <div className=" w-screen">
-            <label
-              htmlFor="Degree"
-              css={css`
-                font-size: 14px;
-                display: block;
-                color: ${COLORS.BLACK};
-                .errorBorder {
-                  border-color: ${COLORS.RED};
-                }
-              `}
-            >
-              <b> Degree</b>
-              <select
-                // onChange={handleChange}
-                name="Degree"
-                onChange={(e) => loadAcademicDetailsData(e.target.value)}
-                css={css`
-                  display: block;
-                  width: 20%;
-                  height: 42px;
-                  padding: 0px 10px;
-                  margin-bottom: 0px;
-                  box-sizing: border-box;
-                  font-family: "Open Sans", sans-serif;
-                  border: 1px solid ${COLORS.GRAY_DARK};
-                  -webkit-border-radius: 4px;
-                  -moz-border-radius: 4px;
-                  -ms-border-radius: 4px;
-                  border-radius: 4px;
-                  font-size: 14px;
-                  &:focus {
-                    outline: none;
-                  }
-                `}
-              >
-                <option value="" selected disabled>
-                  Select Your option
-                </option>
-                {isDegreeData &&
-                  isDegreeData.map((degree) => (
-                    <option value={degree[0]}>{degree[1]}</option>
-                  ))}
-              </select>
-            </label>
+            <FormikControl control = 'select' label='Degree' name='Degree' 
+            options ={isDegreeData} onChange={(e) => {
+              handleChange(e);
+              loadAcademicDetailsData(e.target.value);
+            }}/>
           </div>
 
           <div className=" w-screen">
-            <label
-              htmlFor="AcadYear"
-              css={css`
-                font-size: 14px;
-                display: block;
-                color: ${COLORS.BLACK};
-                .errorBorder {
-                  border-color: ${COLORS.RED};
-                }
-              `}
-            >
-              <b> Academic Year</b>
-              <select
-                // onChange={handleChange}
-                name="AcadYear"
-                onChange={(e) => loadSemesterData(e.target.value)}
-                css={css`
-                  display: block;
-                  width: 20%;
-                  height: 42px;
-                  padding: 0px 10px;
-                  margin-bottom: 0px;
-                  box-sizing: border-box;
-                  font-family: "Open Sans", sans-serif;
-                  border: 1px solid ${COLORS.GRAY_DARK};
-                  -webkit-border-radius: 4px;
-                  -moz-border-radius: 4px;
-                  -ms-border-radius: 4px;
-                  border-radius: 4px;
-                  font-size: 14px;
-                  &:focus {
-                    outline: none;
-                  }
-                `}
-              >
-                <option value="" selected disabled>
-                  Select Your option
-                </option>
-                {isAcademicYearData &&
-                  isAcademicYearData.map((acadYear) => (
-                    <option value={acadYear[1]}>
-                      {acadYear[0]}
-                    </option>
-                  ))}
-              </select>
-            </label>
+          <FormikControl control = 'select' label='Academic Year' name='AcadYear' 
+            options ={isAcademicYearData }  onChange={(e) => {
+              handleChange(e);
+              loadSemesterData(values.Degree,e.target.value);
+            }}/>
           </div>
 
           <div className=" w-screen">
-            <label
-              htmlFor="Semester"
-              css={css`
-                font-size: 14px;
-                display: block;
-                color: ${COLORS.BLACK};
-                .errorBorder {
-                  border-color: ${COLORS.RED};
-                }
-              `}
-            >
-              <b> Semester </b>
-              <select
-                onChange={(e) => loadSectionsData(e.target.value)}
-                name="Semester"
-                css={css`
-                  display: block;
-                  width: 20%;
-                  height: 42px;
-                  padding: 0px 10px;
-                  margin-bottom: 0px;
-                  box-sizing: border-box;
-                  font-family: "Open Sans", sans-serif;
-                  border: 1px solid ${COLORS.GRAY_DARK};
-                  -webkit-border-radius: 4px;
-                  -moz-border-radius: 4px;
-                  -ms-border-radius: 4px;
-                  border-radius: 4px;
-                  font-size: 14px;
-                  &:focus {
-                    outline: none;
-                  }
-                `}
-              >
-                <option value="" selected disabled>
-                  Select Your option
-                </option>
-                {isSemesterData &&
-                  isSemesterData.map((semester) => (
-                    <option value={semester[0]}>{semester[1]}</option>
-                  ))}
-              </select>
-            </label>
+          <FormikControl control = 'select' label='Semester' name='Semester' 
+            options ={isSemesterData }  onChange={(e) => {
+              handleChange(e);
+              loadSectionsData(e.target.value);
+            }}/>
           </div>
 
           <div className=" w-screen">
-            <label
-              htmlFor="Sections"
-              css={css`
-                font-size: 14px;
-                display: block;
-                color: ${COLORS.BLACK};
-                .errorBorder {
-                  border-color: ${COLORS.RED};
-                }
-              `}
-            >
-              <b> Sections </b>
-              <select
-                onChange={(e) => loadStudentsData(e.target.value)}
-                name="Sections"
-                css={css`
-                  display: block;
-                  width: 20%;
-                  height: 42px;
-                  padding: 0px 10px;
-                  margin-bottom: 0px;
-                  box-sizing: border-box;
-                  font-family: "Open Sans", sans-serif;
-                  border: 1px solid ${COLORS.GRAY_DARK};
-                  -webkit-border-radius: 4px;
-                  -moz-border-radius: 4px;
-                  -ms-border-radius: 4px;
-                  border-radius: 4px;
-                  font-size: 14px;
-                  &:focus {
-                    outline: none;
-                  }
-                `}
-              >
-                <option value="" selected disabled>
-                  Select Your option
-                </option>
-                {isSectionsData &&
-                  isSectionsData.map((section) => (
-                    <option value={section[0]}>{section[1]}</option>
-                  ))}
-              </select>
-            </label>
+          <FormikControl control = 'select' label='Sections' name='Sections' 
+            options ={isSectionsData} onChange={(e) => {
+              handleChange(e);
+              loadStudentsData(e.target.value);
+            }}/>
           </div>
         </div>
+        </Form>
+        )}
+        </Formik>
         {isStudentsData && isStudentsData.length > 0 && (
           <div>
             <TableWrap
@@ -282,33 +181,7 @@ const StudentEnrollDetails = () => {
           </div>
         )}
 
-        {/* {isStudentsData && isStudentsData.length > 0 && (
-          <div>
-            <TABLE.TableWrapper>
-              <TABLE.TableTR>
-                <TABLE.TableTh>Roll Number</TABLE.TableTh>
-                <TABLE.TableTh>Student Name</TABLE.TableTh>
-                <TABLE.TableTh>Mobile Number</TABLE.TableTh>
-                <TABLE.TableTh>Email Id</TABLE.TableTh>
-                <TABLE.TableTh>Semester</TABLE.TableTh>
-              </TABLE.TableTR>
-              <TABLE.TableTbody>
-                {isStudentsData &&
-                  isStudentsData.length > 0 &&
-                  isStudentsData.map((student) => (
-                    <TABLE.TableTRR key={student[0]}>
-                      <TABLE.TableTdd>{student[0]}</TABLE.TableTdd>
-                      <TABLE.TableTdd>{student[1]}</TABLE.TableTdd>
-                      <TABLE.TableTdd>{student[2]}</TABLE.TableTdd>
-                      <TABLE.TableTdd>{student[3]}</TABLE.TableTdd>
-                      <TABLE.TableTdd>{student[4]}</TABLE.TableTdd>
-                    </TABLE.TableTRR>
-                  ))}
-              </TABLE.TableTbody>
-            </TABLE.TableWrapper>
-          </div>
-        )} */}
-      </Layout>
+        </Layout>
     </React.Fragment>
   );
 };

@@ -34,10 +34,10 @@ export const getAcademicDetailsData = async (departmentID,degreeID) => {
   }
 };
 
-export const getSemsterData = async (acadYear) => {
+export const getSemsterData = async (degreeID,acadYear) => {
   try {
     const response = await fetch(
-      `${process.env.APIBaseUrl}faculty/fetchStudentEnrolledSemesterDetails?departmentID=20196101013404918557388&degreeID=5C8F976CE5064A9B82556FC8A6A9D0C5&acadYearID=${acadYear}`,
+      `${process.env.APIBaseUrl}faculty/fetchStudentEnrolledSemesterDetails?departmentID=20196101013404918557388&degreeID=${degreeID}&acadYearID=${acadYear}`,
       {
         method: "GET",
         headers: {

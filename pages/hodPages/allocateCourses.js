@@ -14,6 +14,9 @@ import css from "@emotion/css";
 import { COLORS } from "../../constants";
 import TableWrap from "../../components/TableUtilities/TableWrap";
 import FormInput from "../../components/General/formInput";
+import {Formik,Form} from 'formik';
+import FormikControl from "../../components/General/FormikControl";
+
 
 const AllocateCourses = () => {
   const ProfileId = Cookies.get("employeeID");
@@ -27,51 +30,130 @@ const AllocateCourses = () => {
   const [isSectionsData, setIsSectionsData] = useState([]);
   const [isCoursesData, setIsCoursesData] = useState([]);
   const [isFacultyCoursesData, setIsFacultyCoursesData] = useState([]);
+  const [isSubjectExpData,setIsSubjectExpData] = useState([]);
+  const [isDesignationData,setIsDesignationData] = useState([]);
 
   const loadAcadProgrmFacultyData = async () => {
     const cData = await getAcadProgrmFacultyData('64D1E79A8B6B11E98B0957863D7CDB1C');
-    setIsDepartmentData(cData?.departmentDetailsArray);
-    setIsAcademicYearData(cData?.academicDetailsArray);
-    setIsFacultyData(cData?.facultyDetailsArray);
-    console.log(cData);
+    let acdyearOptions = [];
+     cData?.academicDetailsArray.forEach(acadYear => {
+      acdyearOptions.push({
+        value:acadYear.academicID,
+        key:acadYear.academicYear
+      })
+      });
+    setIsAcademicYearData(acdyearOptions);
+    console.log(acdyearOptions);
+    let departOptions = [];
+    cData?.departmentDetailsArray.forEach(department => {
+      departOptions.push({
+        value:department.departmentID,
+        key:department.departmentCode+"-"+department.departmentName
+      })
+      });
+    setIsDepartmentData(departOptions);
+    console.log(departOptions);
+    let facultyOptions = [];
+    cData?.facultyDetailsArray.forEach(faculty => {
+      facultyOptions.push({
+        value:faculty.employeeID,
+        key:faculty.employeeName,
+        designation:faculty.employeeDesignation
+      })
+      });
+    
+    setIsFacultyData(facultyOptions);
+    console.log(facultyOptions);
   };
 
   const loadSemesterData = async (department) => {
     const cData = await getSemsterData('201961010429723213238372',department);
-    setIsSemesterData(cData?.semesterDetailsArray);
+
+    let semesterOptions = [];
+    cData?.semesterDetailsArray.forEach(semester => {
+      semesterOptions.push({
+        value:semester.semesterID,
+        key:semester.semesterCode
+      })
+      });
+    
+    setIsSemesterData(semesterOptions);
     setIsSectionsData([]);
-    console.log(cData);
+    console.log(semesterOptions);
   };
 
   const loadSectionsData = async (semester) => {
     const cData = await getSectionsData(semester);
-    setIsSectionsData(cData?.semesterSectionDetailsArray);
-    console.log(cData);
+    let sectionOptions = [];
+    cData?.semesterSectionDetailsArray.forEach(section => {
+      sectionOptions.push({
+        value:section.sectionID,
+        key:section.sectionName
+      })
+      });
+    setIsSectionsData(sectionOptions);
+    console.log(sectionOptions);
   };
 
   const loadCoursesData = async (section) => {
     const cData = await getCoursesData('20196101014224570834265',section,'64D1E79A8B6B11E98B0957863D7CDB1C');
-    setIsCoursesData(cData?.courseArray);
-    console.log(cData);
+    let courseOptions = [];
+    cData?.courseArray.forEach(course => {
+      courseOptions.push({
+        value:course.courseCode,
+        key:course.courseName
+      })
+    })
+    setIsCoursesData(courseOptions);
+    console.log(courseOptions);
   };
 
   const loadSecondaryFacultyData = async(empid) => {
-  loadFacultyCoursesData(empid);  
-  setIsSecondaryFacultyData(isFacultyData);  
-  //setIsSecondaryFacultyData(isSecondaryFacultyData.filter((faculty) => faculty.employeeID!=empid));
+  const design= empid && isFacultyData.filter(faculty=> faculty.value.includes(empid));
+  setIsDesignationData(Array.isArray(design) ? design[0]?.designation:'');
+  loadFacultyCoursesData(empid);
+  loadSubjExperienceData(empid);  
+  setIsSecondaryFacultyData(isFacultyData);
+  setIsSecondaryFacultyData(isFacultyData.filter((faculty) => !faculty.value.includes(empid)));
   };
 
   const loadTertiaryFacultyData =  async(empid) => {
     setIsTertiaryFacultyData(isSecondaryFacultyData);
+    setIsTertiaryFacultyData(isSecondaryFacultyData.filter((faculty) => !faculty.value.includes(empid)));
   }
 
   const loadQuaternaryFacultyData =  async(empid) => {
     setIsQuaternaryFacultyData(isTertiaryFacultyData);
+    setIsQuaternaryFacultyData(isTertiaryFacultyData.filter((faculty) => !faculty.value.includes(empid)));
   }
 
   const loadFacultyCoursesData =  async(empid) => {
     const cData = await getFacultyCoursesData(empid);
     setIsFacultyCoursesData(cData?.courseDetailsArray);
+  }
+
+  const loadSubjExperienceData =  async(empid) => {
+    const cData = await getSubjExpData('7G155','201961010429723213238372',empid);
+    const subjectExp = cData?.subjectExperienceArray[0]?.subjectexpcount
+    setIsSubjectExpData(typeof subjectExp !== "undefined" ? subjectExp : '');
+    console.log("subject exp"+cData?.subjectExperienceArray[0]?.subjectexpcount);
+  }
+  const initialValues={
+    AcadYear:'',
+    Program:'',
+    Semester:'',
+    Sections:'',
+	  Faculty:'',
+	  DesignationName:'',
+	  subjectExperienceName:'',
+	  Course:'',
+	  SecondaryFaculty:'',
+	  TertiaryFaculty:'',
+	  QuaternaryFaculty:''
+  }
+
+  const onSubmit = (values) =>{
+    console.log("values ",values);
   }
 
 
@@ -103,460 +185,125 @@ const AllocateCourses = () => {
   return (
     <React.Fragment>
       <Layout>
+      <Formik
+        initialValues={initialValues}
+        onSubmit={onSubmit}
+        >
+        {(
+          {
+            values,
+            handleChange
+          }         
+          ) =>( 
+        <Form>
         <div className="grid grid-cols-4">
           <div className=" w-screen">
-            <label
-              htmlFor="AcadYear"
-              css={css`
-                font-size: 14px;
-                display: block;
-                color: ${COLORS.BLACK};
-                .errorBorder {
-                  border-color: ${COLORS.RED};
-                }
-              `}
-            >
-              <b> Academic Year</b>
-              <select
-                // onChange={handleChange}
-                name="AcadYear"
-                css={css`
-                  display: block;
-                  width: 20%;
-                  height: 42px;
-                  padding: 0px 10px;
-                  margin-bottom: 0px;
-                  box-sizing: border-box;
-                  font-family: "Open Sans", sans-serif;
-                  border: 1px solid ${COLORS.GRAY_DARK};
-                  -webkit-border-radius: 4px;
-                  -moz-border-radius: 4px;
-                  -ms-border-radius: 4px;
-                  border-radius: 4px;
-                  font-size: 14px;
-                  &:focus {
-                    outline: none;
-                  }
-                `}
-              >
-                <option value="" selected disabled>
-                  Select Your option
-                </option>
-                {isAcademicYearData &&
-                  isAcademicYearData.map((acadYear) => (
-                    <option value={acadYear.academicID}>
-                      {acadYear.academicYear}
-                    </option>
-                  ))}
-              </select>
-            </label>
+          <FormikControl control = 'select' label='Academic Year' name='AcadYear' 
+            options ={isAcademicYearData} onChange={(e) => {
+              handleChange(e);
+             }}/>
           </div>
 
           <div className=" w-screen">
-            <label
-              htmlFor="Program"
-              css={css`
-                font-size: 14px;
-                display: block;
-                color: ${COLORS.BLACK};
-                .errorBorder {
-                  border-color: ${COLORS.RED};
-                }
-              `}
-            >
-              <b> Program </b>
-              <select
-                name="Program"
-                onChange={(e) => loadSemesterData(e.target.value)}
-                css={css`
-                  display: block;
-                  width: 20%;
-                  height: 42px;
-                  padding: 0px 10px;
-                  margin-bottom: 0px;
-                  box-sizing: border-box;
-                  font-family: "Open Sans", sans-serif;
-                  border: 1px solid ${COLORS.GRAY_DARK};
-                  -webkit-border-radius: 4px;
-                  -moz-border-radius: 4px;
-                  -ms-border-radius: 4px;
-                  border-radius: 4px;
-                  font-size: 14px;
-                  &:focus {
-                    outline: none;
-                  }
-                `}
-              >
-                <option value="" selected disabled>
-                  Select Your option
-                </option>
-                {isDepartmentData &&
-                  isDepartmentData.map((department) => (
-                    <option value={department.departmentID}>
-                      {department.departmentCode}-{department.departmentName}
-                      </option>
-                  ))}
-              </select>
-            </label>
+          <FormikControl control = 'select' label='Program' name='Program' 
+            options ={isDepartmentData} onChange={(e) => {
+              handleChange(e);
+              loadSemesterData(e.target.value);
+             }}/>
+            </div>
+
+          <div className=" w-screen">
+          <FormikControl control = 'select' label='Semester' name='Semester' 
+            options ={isSemesterData} onChange={(e) => {
+              handleChange(e);
+              loadSectionsData(e.target.value);
+             }}/>
           </div>
 
           <div className=" w-screen">
-            <label
-              htmlFor="Semester"
-              css={css`
-                font-size: 14px;
-                display: block;
-                color: ${COLORS.BLACK};
-                .errorBorder {
-                  border-color: ${COLORS.RED};
-                }
-              `}
-            >
-              <b> Semester </b>
-              <select
-                onChange={(e) => loadSectionsData(e.target.value)}
-                name="Semester"
-                css={css`
-                  display: block;
-                  width: 20%;
-                  height: 42px;
-                  padding: 0px 10px;
-                  margin-bottom: 0px;
-                  box-sizing: border-box;
-                  font-family: "Open Sans", sans-serif;
-                  border: 1px solid ${COLORS.GRAY_DARK};
-                  -webkit-border-radius: 4px;
-                  -moz-border-radius: 4px;
-                  -ms-border-radius: 4px;
-                  border-radius: 4px;
-                  font-size: 14px;
-                  &:focus {
-                    outline: none;
-                  }
-                `}
-              >
-                <option value="" selected disabled>
-                  Select Your option
-                </option>
-                {isSemesterData &&
-                  isSemesterData.map((semester) => (
-                    <option value={semester.semesterID}>{semester.semesterCode}</option>
-                  ))}
-              </select>
-            </label>
-          </div>
-
-          <div className=" w-screen">
-            <label
-              htmlFor="Sections"
-              css={css`
-                font-size: 14px;
-                display: block;
-                color: ${COLORS.BLACK};
-                .errorBorder {
-                  border-color: ${COLORS.RED};
-                }
-              `}
-            >
-              <b> Sections </b>
-              <select
-                onChange={(e) => loadCoursesData(e.target.value)}
-                name="Sections"
-                css={css`
-                  display: block;
-                  width: 20%;
-                  height: 42px;
-                  padding: 0px 10px;
-                  margin-bottom: 0px;
-                  box-sizing: border-box;
-                  font-family: "Open Sans", sans-serif;
-                  border: 1px solid ${COLORS.GRAY_DARK};
-                  -webkit-border-radius: 4px;
-                  -moz-border-radius: 4px;
-                  -ms-border-radius: 4px;
-                  border-radius: 4px;
-                  font-size: 14px;
-                  &:focus {
-                    outline: none;
-                  }
-                `}
-              >
-                <option value="" selected disabled>
-                  Select Your option
-                </option>
-                {isSectionsData &&
-                  isSectionsData.map((section) => (
-                    <option value={section.sectionID}>{section.sectionName}</option>
-                  ))}
-              </select>
-            </label>
+          <FormikControl control = 'select' label='Sections' name='Sections' 
+            options ={isSectionsData} onChange={(e) => {
+              handleChange(e);
+              loadCoursesData(e.target.value);
+             }}/>
           </div>
         </div>
 
         <div className="grid grid-cols-4">
           <div className=" w-screen">
-            <label
-              htmlFor="Faculty"
-              css={css`
-                font-size: 14px;
-                display: block;
-                color: ${COLORS.BLACK};
-                .errorBorder {
-                  border-color: ${COLORS.RED};
-                }
-              `}
-            >
-              <b> Faculty </b>
-              <select
-                name="Faculty"
-                onChange={(e) => loadSecondaryFacultyData(e.target.value)}
-                css={css`
-                  display: block;
-                  width: 20%;
-                  height: 42px;
-                  padding: 0px 10px;
-                  margin-bottom: 0px;
-                  box-sizing: border-box;
-                  font-family: "Open Sans", sans-serif;
-                  border: 1px solid ${COLORS.GRAY_DARK};
-                  -webkit-border-radius: 4px;
-                  -moz-border-radius: 4px;
-                  -ms-border-radius: 4px;
-                  border-radius: 4px;
-                  font-size: 14px;
-                  &:focus {
-                    outline: none;
-                  }
-                `}
-              >
-                <option value="" selected disabled>
-                  Select Your option
-                </option>
-                {isFacultyData &&
-                  isFacultyData.map((faculty) => (
-                    <option value={faculty.employeeID}>
-                      {faculty.employeeName}
-                    </option>
-                  ))}
-              </select>
-            </label>
+          <FormikControl control = 'select' label='Faculty' name='Faculty' 
+            options ={isFacultyData} onChange={(e) => {
+              handleChange(e);
+              loadSecondaryFacultyData(e.target.value);
+             }}/>
           </div>
 
           <div className=" w-screen">
           <div className="w-2/12 float-left pr-2">
-               <FormInput
+               <FormikControl
                     label="Designation"
-                    type="text"
+                    control="input"
                     name="DesignationName"
-                    /*value={values.bookPublisherName}*/
-                    placeholder="Designation"
+                    value={isDesignationData}
+                    onChange={handleChange}
                     disabled
                 />
           </div>
           </div>
           <div className=" w-screen">          
           <div className="w-2/12 float-left pr-2">       
-              <FormInput
+              <FormikControl
                     label="Subject Experience"
-                    type="text"
+                    control="input"
                     name="subjectExperienceName"
-                    /*value={values.bookPublisherName}*/
-                    placeholder="SubjectExperience"
+                    value={isSubjectExpData}
+                    onChange={handleChange}
                     disabled
                   />
             </div>
           </div>
 
           <div className=" w-screen">
-            <label
-              htmlFor="Course"
-              css={css`
-                font-size: 14px;
-                display: block;
-                color: ${COLORS.BLACK};
-                .errorBorder {
-                  border-color: ${COLORS.RED};
-                }
-              `}
-            >
-              <b> Course </b>
-              <select
-                name="course"
-                css={css`
-                  display: block;
-                  width: 20%;
-                  height: 42px;
-                  padding: 0px 10px;
-                  margin-bottom: 0px;
-                  box-sizing: border-box;
-                  font-family: "Open Sans", sans-serif;
-                  border: 1px solid ${COLORS.GRAY_DARK};
-                  -webkit-border-radius: 4px;
-                  -moz-border-radius: 4px;
-                  -ms-border-radius: 4px;
-                  border-radius: 4px;
-                  font-size: 14px;
-                  &:focus {
-                    outline: none;
-                  }
-                `}
-              >
-                <option value="" selected disabled>
-                  Select Your option
-                </option>
-                {isCoursesData &&
-                  isCoursesData.map((course) => (
-                    <option value={course.courseCode}>{course.courseName}</option>
-                  ))}
-              </select>
-            </label>
+          <FormikControl control = 'select' label='Course' name='Course' 
+            options ={isCoursesData} onChange={(e) => {
+              handleChange(e);
+              }}/>
           </div>
         </div>              
         <div className="grid grid-cols-4">
           <div className=" w-screen">
-            <label
-              htmlFor="SecondaryFaculty"
-              css={css`
-                font-size: 14px;
-                display: block;
-                color: ${COLORS.BLACK};
-                .errorBorder {
-                  border-color: ${COLORS.RED};
-                }
-              `}
-            >
-              <b> Secondary Faculty </b>
-              <select
-                name="SecondaryFaculty"
-                onChange={(e) => loadTertiaryFacultyData(e.target.value)}
-                css={css`
-                  display: block;
-                  width: 20%;
-                  height: 42px;
-                  padding: 0px 10px;
-                  margin-bottom: 0px;
-                  box-sizing: border-box;
-                  font-family: "Open Sans", sans-serif;
-                  border: 1px solid ${COLORS.GRAY_DARK};
-                  -webkit-border-radius: 4px;
-                  -moz-border-radius: 4px;
-                  -ms-border-radius: 4px;
-                  border-radius: 4px;
-                  font-size: 14px;
-                  &:focus {
-                    outline: none;
-                  }
-                `}
-              >
-                <option value="" selected disabled>
-                  Select Your option
-                </option>
-                {isSecondaryFacultyData &&
-                  isSecondaryFacultyData.map((faculty) => (
-                    <option value={faculty.employeeID}>
-                      {faculty.employeeName}
-                    </option>
-                  ))}
-              </select>
-            </label>
+          <FormikControl control = 'select' label='Secondary Faculty' name='SecondaryFaculty' 
+            options ={isSecondaryFacultyData} onChange={(e) => {
+              handleChange(e);
+              loadTertiaryFacultyData(e.target.value);
+              }}/>
           </div>
           <div className=" w-screen">
-            <label
-              htmlFor="TertiaryFaculty"
-              css={css`
-                font-size: 14px;
-                display: block;
-                color: ${COLORS.BLACK};
-                .errorBorder {
-                  border-color: ${COLORS.RED};
-                }
-              `}
-            >
-              <b> Tertiary Faculty </b>
-              <select
-                name="TertiaryFaculty"
-                onChange={(e) => loadQuaternaryFacultyData(e.target.value)}
-                css={css`
-                  display: block;
-                  width: 20%;
-                  height: 42px;
-                  padding: 0px 10px;
-                  margin-bottom: 0px;
-                  box-sizing: border-box;
-                  font-family: "Open Sans", sans-serif;
-                  border: 1px solid ${COLORS.GRAY_DARK};
-                  -webkit-border-radius: 4px;
-                  -moz-border-radius: 4px;
-                  -ms-border-radius: 4px;
-                  border-radius: 4px;
-                  font-size: 14px;
-                  &:focus {
-                    outline: none;
-                  }
-                `}
-              >
-                <option value="" selected disabled>
-                  Select Your option
-                </option>
-                {isTertiaryFacultyData &&
-                  isTertiaryFacultyData.map((faculty) => (
-                    <option value={faculty.employeeID}>
-                      {faculty.employeeName}
-                    </option>
-                  ))}
-              </select>
-            </label>
+          <FormikControl control = 'select' label='Tertiary Faculty' name='TertiaryFaculty' 
+            options ={isTertiaryFacultyData} onChange={(e) => {
+              handleChange(e);
+              loadQuaternaryFacultyData(e.target.value);
+              }}/>
           </div>
 
            <div className=" w-screen">
-            <label
-              htmlFor="QuaternaryFaculty"
-              css={css`
-                font-size: 14px;
-                display: block;
-                color: ${COLORS.BLACK};
-                .errorBorder {
-                  border-color: ${COLORS.RED};
-                }
-              `}
-            >
-              <b> Quaternary Faculty </b>
-              <select
-                name="QuaternaryFaculty"
-                css={css`
-                  display: block;
-                  width: 20%;
-                  height: 42px;
-                  padding: 0px 10px;
-                  margin-bottom: 0px;
-                  box-sizing: border-box;
-                  font-family: "Open Sans", sans-serif;
-                  border: 1px solid ${COLORS.GRAY_DARK};
-                  -webkit-border-radius: 4px;
-                  -moz-border-radius: 4px;
-                  -ms-border-radius: 4px;
-                  border-radius: 4px;
-                  font-size: 14px;
-                  &:focus {
-                    outline: none;
-                  }
-                `}
-              >
-                <option value="" selected disabled>
-                  Select Your option
-                </option>
-                {isQuaternaryFacultyData &&
-                  isQuaternaryFacultyData.map((faculty) => (
-                    <option value={faculty.employeeID}>
-                      {faculty.employeeName}
-                    </option>
-                  ))}
-              </select>
-            </label>
+           <FormikControl control = 'select' label='Quaternary Faculty' name='QuaternaryFaculty' 
+            options ={isQuaternaryFacultyData} onChange={(e) => {
+              handleChange(e);
+              }}/>
           </div>          
-
+          <div>
+          <div className=" w-screen">  
+          <button type="submit"
+              className="float-left bg-blue-400 block  mx-auto px-2 py-1 rounded">
+			       Allocate Course
+            </button>
+            </div>
+          </div>          
         </div>             
-
+        </Form>
+        )}
+        </Formik>           
         {isFacultyCoursesData && isFacultyCoursesData.length > 0 && (
           <div>
             <TableWrap
