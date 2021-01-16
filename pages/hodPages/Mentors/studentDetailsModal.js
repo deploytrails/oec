@@ -9,36 +9,46 @@ import {
   getSemesterData,
   getSectionData,
   getStudentsData,
+  insertStudentAttendance,
 } from "../../../services/hodServices/mentorService";
 import Cookies from "js-cookie";
+import TableWrap from "../../../components/TableUtilities/TableWrap";
 
-const StudentDetailsModal = ({ openModal, employeeData }) => {
+const StudentDetailsModal = ({ openModal, employeeData, getMentorList }) => {
   const departmentId = "20196101013404918557388";
   const [isAcademicYearData, setIsAcademicYearData] = useState([]);
   const [isDegreeData, setIsDegreeData] = useState([]);
   const [isSemesterData, setIsSemesterData] = useState([]);
   const [isSectionData, setIsSectionData] = useState([]);
   const [isStudentData, setIsStudentData] = useState([]);
-  const [selectedDegree, setSelectedDegree] = React.useState("");
-  const [selectedAcademicYear, setSelectedAcademicYear] = React.useState("");
-  const [selectedSemester, setSelectedSemester] = React.useState("");
+  const [selectedDegree, setSelectedDegree] = useState("");
+  const [selectedAcademicYear, setSelectedAcademicYear] = useState("");
+  const [selectedSemester, setSelectedSemester] = useState("");
+  const [openSnackbar, closeSnackbar] = useSnackbar();
 
   useEffect(() => {
     loadDegreeData();
   }, []);
 
   const loadDegreeData = async () => {
+    setIsAcademicYearData([]);
+    setIsSemesterData([]);
+    setIsSectionData([]);
+    setIsStudentData([]);
     const cData = await getDegreeData();
-    console.log(cData?.DegreeCodeandID);
     setIsDegreeData(cData?.DegreeCodeandID);
   };
   const loadAcademicYearData = async (degree) => {
-    alert(degree);
+    setIsSemesterData([]);
+    setIsSectionData([]);
+    setIsStudentData([]);
     const cData = await getAcadmicYearData(departmentId, degree);
     setSelectedDegree(degree);
     setIsAcademicYearData(cData?.AcademicNameAndId);
   };
   const loadSemesterData = async (academicYear) => {
+    setIsSectionData([]);
+    setIsStudentData([]);
     const cData = await getSemesterData(
       departmentId,
       selectedDegree,
@@ -49,6 +59,7 @@ const StudentDetailsModal = ({ openModal, employeeData }) => {
   };
 
   const loadSectionsData = async (semester) => {
+    setIsStudentData([]);
     const cData = await getSectionData(semester);
     setSelectedSemester(semester);
     setIsSectionData(cData?.SectionNameAndId);
@@ -61,13 +72,103 @@ const StudentDetailsModal = ({ openModal, employeeData }) => {
       section,
       departmentId
     );
-    console.log(cData);
-    setIsStudentData(cData);
+
+    if (cData?.studentsData) {
+      for (let i = 0; i < cData.studentsData.length; i += 1) {
+        cData.studentsData[i].allocation = false;
+      }
+    }
+    setIsStudentData(cData?.studentsData);
+  };
+
+  const thValues = [
+    "Student Roll No.",
+    "Student Name",
+    "Semester",
+    {
+      property: "Select All",
+      onChangeSelectAllfunction: (e) => {
+        checkSelectAllStudent(e);
+      },
+    },
+  ];
+  const tdValues = [
+    { valueProperty: "rollNumber" },
+    { valueProperty: "studentName" },
+    { valueProperty: "semesterCode" },
+    {
+      valueProperty: "allocation",
+      type: "checkbox",
+      onChangefunction: (e, e1) => {
+        checkStudent(e, e1);
+      },
+    },
+  ];
+
+  const checkStudent = (index, e) => {
+    const targetCheck = e.target.checked;
+    if (isStudentData) {
+      isStudentData[index].allocation = targetCheck;
+    }
+  };
+  const checkSelectAllStudent = async (e) => {
+    const targetCheck = e.target.checked;
+    // setIsStudentData((prev) => {
+    //   let d = [];
+    //   d = [...d, prev];
+    //   console.log(d);
+    //   for (let i = 0; i < d[0].length; i += 1) {
+    //     if (d[0][i].allocation) {
+    //       d[0][i].allocation = false;
+    //     } else {
+    //       d[0][i].allocation = true;
+    //     }
+    //   }
+    //   return d[0];
+    // });
+
+    // setIsStudentData(d[0]);
+
+    const filteredData = isStudentData.map((item, i) => {
+      if (item.allocation) {
+        item.allocation = false;
+      } else {
+        item.allocation = true;
+      }
+      return item;
+    });
+    console.log(filteredData);
+    setIsStudentData([]);
+    filteredData.sort((a, b) => {
+      return b.allocation - a.allocation;
+    });
+    setIsStudentData(filteredData);
+  };
+  // useEffect(() => {
+  //   console.log(isStudentData);
+  // }, isStudentData.join(","));
+
+  const insertStudentData = async () => {
+    const data = await insertStudentAttendance(employeeData[0], isStudentData);
+    if (data?.Response === "Success") {
+      openSnackbar("Students Assigned to Mentor Successfully");
+      getMentorList();
+      openModal();
+    } else {
+      openSnackbar("SomeThing Went Wrong");
+    }
   };
 
   return (
     <STYLES.PopupMask>
-      <STYLES.PopupWrapper>
+      <STYLES.PopupWrapper
+        css={css`
+          width: 90%;
+          height: 90%;
+          overflow: hidden;
+          overflow-y: scroll;
+        `}
+      >
         <STYLES.PopupTitle>Student Details</STYLES.PopupTitle>
         <div className="grid grid-cols-4">
           <div className=" w-screen">
@@ -84,6 +185,7 @@ const StudentDetailsModal = ({ openModal, employeeData }) => {
             >
               <b> Degree </b>
               <select
+                defaultValue=""
                 name="Degree"
                 onChange={(e) => loadAcademicYearData(e.target.value)}
                 css={css`
@@ -105,12 +207,14 @@ const StudentDetailsModal = ({ openModal, employeeData }) => {
                   }
                 `}
               >
-                <option value="" selected disabled>
+                <option value="" disabled>
                   Select Your option
                 </option>
                 {isDegreeData &&
                   isDegreeData.map((degree) => (
-                    <option value={degree[1]}>{degree[0]}</option>
+                    <option value={degree[1]} key={degree[0]}>
+                      {degree[0]}
+                    </option>
                   ))}
               </select>
             </label>
@@ -131,6 +235,7 @@ const StudentDetailsModal = ({ openModal, employeeData }) => {
               <b> Academic Year</b>
               <select
                 name="AcadYear"
+                defaultValue=""
                 onChange={(e) => loadSemesterData(e.target.value)}
                 css={css`
                   display: block;
@@ -151,12 +256,14 @@ const StudentDetailsModal = ({ openModal, employeeData }) => {
                   }
                 `}
               >
-                <option value="" selected disabled>
+                <option value="" disabled>
                   Select Your option
                 </option>
                 {isAcademicYearData &&
                   isAcademicYearData.map((acadYear) => (
-                    <option value={acadYear[1]}>{acadYear[0]}</option>
+                    <option value={acadYear[1]} key={acadYear[0]}>
+                      {acadYear[0]}
+                    </option>
                   ))}
               </select>
             </label>
@@ -178,6 +285,7 @@ const StudentDetailsModal = ({ openModal, employeeData }) => {
               <select
                 onChange={(e) => loadSectionsData(e.target.value)}
                 name="Semester"
+                defaultValue=""
                 css={css`
                   display: block;
                   width: 20%;
@@ -197,12 +305,14 @@ const StudentDetailsModal = ({ openModal, employeeData }) => {
                   }
                 `}
               >
-                <option value="" selected disabled>
+                <option value="" disabled>
                   Select Your option
                 </option>
                 {isSemesterData &&
                   isSemesterData.map((semester) => (
-                    <option value={semester[0]}>{semester[1]}</option>
+                    <option value={semester[0]} key={semester[1]}>
+                      {semester[1]}
+                    </option>
                   ))}
               </select>
             </label>
@@ -224,6 +334,7 @@ const StudentDetailsModal = ({ openModal, employeeData }) => {
               <select
                 onChange={(e) => loadStudentsData(e.target.value)}
                 name="Sections"
+                defaultValue=""
                 css={css`
                   display: block;
                   width: 20%;
@@ -243,16 +354,51 @@ const StudentDetailsModal = ({ openModal, employeeData }) => {
                   }
                 `}
               >
-                <option value="" selected disabled>
+                <option value="" disabled>
                   Select Your option
                 </option>
                 {isSectionData &&
                   isSectionData.map((section) => (
-                    <option value={section[1]}>{section[0]}</option>
+                    <option value={section[1]} key={section[0]}>
+                      {section[0]}
+                    </option>
                   ))}
               </select>
             </label>
           </div>
+        </div>
+
+        {isStudentData && isStudentData.length > 0 && (
+          <div>
+            <TableWrap
+              thValues={thValues}
+              tdValues={tdValues}
+              data={isStudentData}
+            />
+          </div>
+        )}
+        <div
+          className="float-right"
+          css={css`
+            margin-top: 20px;
+          `}
+        >
+          {isStudentData && isStudentData.length > 0 && (
+            <button
+              onClick={() => insertStudentData()}
+              type="button"
+              className="bg-green-400 px-3 py-2 rounded text-white"
+            >
+              Assign Mentor
+            </button>
+          )}
+          <button
+            type="button"
+            onClick={openModal}
+            className="bg-black px-3 py-2 ml-2 rounded text-white"
+          >
+            Close
+          </button>
         </div>
       </STYLES.PopupWrapper>
     </STYLES.PopupMask>
