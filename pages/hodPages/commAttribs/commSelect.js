@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from "react";
-import Layout from "../../../components/layout";
 import {
   getDegreeData,
   getAcademicDetailsData,
@@ -16,6 +15,10 @@ const CommSelect = ({ onSectionChange }) => {
   const [isSemesterData, setIsSemesterData] = useState([]);
   const [isSectionsData, setIsSectionsData] = useState([]);
 
+  const [isDegreeDataSelect, setIsDegreeDataSelect] = useState("");
+  const [isAcademicYearDataSelect, setIsAcademicYearDataSelect] = useState("");
+  const [isSemesterDataSelect, setIsSemesterDataSelect] = useState("");
+
   const loadDegreeData = async () => {
     const cData = await getDegreeData();
     setIsDegreeData(cData?.degreeArray);
@@ -23,6 +26,7 @@ const CommSelect = ({ onSectionChange }) => {
   };
 
   const loadAcademicDetailsData = async (degreeId) => {
+    setIsDegreeDataSelect(degreeId);
     console.log(Cookies.get("departId"));
     const cData = await getAcademicDetailsData(
       Cookies.get("departId"),
@@ -36,6 +40,7 @@ const CommSelect = ({ onSectionChange }) => {
   };
 
   const loadSemesterData = async (acadYear) => {
+    setIsAcademicYearDataSelect(acadYear);
     const cData = await getSemsterData(acadYear);
     setIsSemesterData(cData?.semesterArray);
     setIsSectionsData([]);
@@ -44,6 +49,7 @@ const CommSelect = ({ onSectionChange }) => {
   };
 
   const loadSectionsData = async (semester) => {
+    setIsSemesterDataSelect(semester);
     const cData = await getSectionsData(semester);
     setIsSectionsData(cData?.sectionArray);
     console.log(cData);
@@ -209,7 +215,14 @@ const CommSelect = ({ onSectionChange }) => {
           >
             <b> Sections </b>
             <select
-              onChange={(e) => onSectionChange(e.target.value)}
+              onChange={(e) =>
+                onSectionChange({
+                  degree: isDegreeDataSelect,
+                  acadYear: isAcademicYearDataSelect,
+                  semester: isSemesterDataSelect,
+                  section: e.target.value,
+                })
+              }
               name="Sections"
               css={css`
                 display: block;

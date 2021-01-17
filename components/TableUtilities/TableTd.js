@@ -31,7 +31,7 @@ const TableTd = ({ tdValue, property, tdIndex }) => {
             name={tdIndex}
             id={tdIndex}
             type="checkbox"
-            defaultChecked={tdValue[property.valueProperty]}
+            checked={tdValue[property.valueProperty]}
             onChange={(e) => property.onChangefunction(tdIndex, e)}
           />
         </TABLE.TableTdd>

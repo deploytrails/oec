@@ -88,7 +88,7 @@ const StudentDetailsModal = ({ openModal, employeeData, getMentorList }) => {
     {
       property: "Select All",
       onChangeSelectAllfunction: (e) => {
-        checkSelectAllStudent(e);
+        checkAll(e);
       },
     },
   ];
@@ -144,9 +144,15 @@ const StudentDetailsModal = ({ openModal, employeeData, getMentorList }) => {
     });
     setIsStudentData(filteredData);
   };
-  // useEffect(() => {
-  //   console.log(isStudentData);
-  // }, isStudentData.join(","));
+
+  const checkAll = (e) => {
+    setIsStudentData(
+      isStudentData.map((el, i) => ({
+        ...el,
+        allocation: !el.allocation,
+      }))
+    );
+  };
 
   const insertStudentData = async () => {
     const data = await insertStudentAttendance(employeeData[0], isStudentData);
