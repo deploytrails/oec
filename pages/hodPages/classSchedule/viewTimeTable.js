@@ -6,18 +6,12 @@ import PulseLoader from "react-spinners/PulseLoader";
 import css from "@emotion/css";
 
 const ViewTimeTable = () => {
-  const [isPeriodArray, setIsPeriodArray] = useState([]);
-  const [isScheduleArray, setIsScheduleArray] = useState([]);
-  const [isDayArray, setIsDayArray] = useState([]);
-  const [show, setShow] = useState(false);
+  const [isTimeTableData, setIsTimeTableData] = useState({});
+  const [showTable, setShowTable] = useState(false);
 
   const onChange = async (obj) => {
     const cData = await getTimeTables(obj.semester, obj.section);
-    setIsPeriodArray(cData?.periodArray);
-    setIsScheduleArray(cData?.scheduleArray);
-    setIsDayArray(cData?.uniqueDayArray);
-    console.log(cData);
-    setShow((prevShow) => !prevShow);
+    setIsTimeTableData(cData);
   };
 
   const calculateSpan = (periodName, nextPeriodName) => {
@@ -25,68 +19,108 @@ const ViewTimeTable = () => {
     var nextPeriodNumber = "0";
 
     if (nextPeriodName === undefined) {
-      nextPeriodNumber = isPeriodArray[
-        isPeriodArray.length - 1
+      nextPeriodNumber = isTimeTableData?.periodArray[
+        isTimeTableData?.periodArray.length - 1
       ].periodName.substring(
-        isPeriodArray[isPeriodArray.length - 1].periodName.length - 1
+        isTimeTableData?.periodArray[isTimeTableData?.periodArray.length - 1]
+          .periodName.length - 1
       );
     } else {
       nextPeriodNumber = nextPeriodName.substring(nextPeriodName.length - 1);
     }
-    return parseInt(periodNumber) - parseInt(nextPeriodNumber);
+    return parseInt(nextPeriodNumber) - parseInt(periodNumber);
   };
   return (
     <React.Fragment>
       <Layout>
         <CommSelect onSectionChange={onChange} />
-        {!show && (
-          <div
-            css={css`
-              display: flex;
-              justify-content: center;
-              align-items: center;
-            `}
-          >
-            <PulseLoader color="#3aafa9" />
-          </div>
-        )}
+        <br></br>
 
-        {show && (
+        {isTimeTableData?.scheduleArray?.length > 0 &&
+        isTimeTableData?.periodArray?.length > 0 &&
+        isTimeTableData?.uniqueDayArray?.length > 0 ? (
           <table>
             <thead>
               <tr>
-                <th>Day/Period</th>
-                {show &&
-                  isPeriodArray.map((period) => <th>{period.periodName}</th>)}
+                <th
+                  css={css`
+                    border: 1px solid #ccc;
+                    text-align: center;
+                    background: lightblue;
+                    border-color: #e5e7eb;
+                  `}
+                >
+                  Day/Period
+                </th>
+                {isTimeTableData?.periodArray?.map((period) => (
+                  <th
+                    css={css`
+                      border: 1px solid #ccc;
+                      text-align: center;
+                      background: lightblue;
+                      border-color: #e5e7eb;
+                    `}
+                  >
+                    {period.periodName}
+                  </th>
+                ))}
               </tr>
             </thead>
             <tbody>
-              {isScheduleArray.map((daySchedule, i) => (
+              {isTimeTableData?.scheduleArray?.map((daySchedule, i) => (
                 <tr key={i}>
-                  <td>{isDayArray[i]}</td>
-                  {isPeriodArray.map((period, p) => (
-                    <td>
-                      {daySchedule.map((obj, j) => (
+                  <td
+                    css={css`
+                      border: 1px solid #ccc;
+                      text-align: left;
+                      background: lightblue;
+                      border-color: #e5e7eb;
+                    `}
+                  >
+                    {isTimeTableData?.uniqueDayArray[i]}
+                  </td>
+                  {isTimeTableData?.periodArray?.map((period, p) => (
+                    <>
+                      {daySchedule?.map((obj, j) => (
                         <>
                           {obj.periodID === period.periodID && (
-                            <>
-                              {obj.courseCode}
-                              {obj.classType === "Lab" &&
-                                calculateSpan(
-                                  obj.periodName,
-                                  daySchedule[j + 1]?.periodName
-                                )}
-                            </>
+                            <td
+                              css={css`
+                                border: 1px solid #ccc;
+                                text-align: center;
+                                background: ${obj.bgColor};
+                                border-color: #e5e7eb;
+                              `}
+                              colSpan={
+                                obj.classType === "Lab"
+                                  ? calculateSpan(
+                                      obj.periodName,
+                                      daySchedule[j + 1]?.periodName
+                                    )
+                                  : ""
+                              }
+                            >
+                              <ul>
+                                <li> {obj.courseName}</li>
+                                <li>({obj.courseCode})</li>
+                                <li>{obj.employeeName}</li>
+                                <li>({obj.employeeNumber})</li>
+                                <li>({obj.semesterSection})</li>
+                                <li>({obj.roomNumber})</li>
+                              </ul>
+                            </td>
                           )}
                         </>
                       ))}
-                    </td>
+                    </>
                   ))}
                   <td></td>
                 </tr>
               ))}
             </tbody>
           </table>
+        ) : (
+          <div>No Schedule Available !</div>
         )}
       </Layout>
     </React.Fragment>

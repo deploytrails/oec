@@ -41,7 +41,7 @@ const CommSelect = ({ onSectionChange }) => {
 
   const loadSemesterData = async (acadYear) => {
     setIsAcademicYearDataSelect(acadYear);
-    const cData = await getSemsterData(acadYear);
+    const cData = await getSemsterData(isDegreeDataSelect, acadYear);
     setIsSemesterData(cData?.semesterArray);
     setIsSectionsData([]);
 
