@@ -106,10 +106,9 @@ const StudentDetailsModal = ({ openModal, employeeData, getMentorList }) => {
   ];
 
   const checkStudent = (index, e) => {
-    const targetCheck = e.target.checked;
-    if (isStudentData) {
-      isStudentData[index].allocation = targetCheck;
-    }
+    let newArray = [...isStudentData];
+    newArray[index].allocation = e.target.checked;
+    setIsStudentData(newArray);
   };
   const checkSelectAllStudent = async (e) => {
     const targetCheck = e.target.checked;
@@ -146,10 +145,11 @@ const StudentDetailsModal = ({ openModal, employeeData, getMentorList }) => {
   };
 
   const checkAll = (e) => {
+    const targetCheck = e.target.checked;
     setIsStudentData(
       isStudentData.map((el, i) => ({
         ...el,
-        allocation: !el.allocation,
+        allocation: targetCheck,
       }))
     );
   };
