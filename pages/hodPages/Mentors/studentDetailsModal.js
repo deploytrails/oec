@@ -15,7 +15,7 @@ import Cookies from "js-cookie";
 import TableWrap from "../../../components/TableUtilities/TableWrap";
 
 const StudentDetailsModal = ({ openModal, employeeData, getMentorList }) => {
-  const departmentId = "20196101013404918557388";
+  const departmentId = Cookies.get("departId");
   const [isAcademicYearData, setIsAcademicYearData] = useState([]);
   const [isDegreeData, setIsDegreeData] = useState([]);
   const [isSemesterData, setIsSemesterData] = useState([]);
