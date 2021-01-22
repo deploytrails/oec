@@ -21,6 +21,7 @@ const AssignGroup = () => {
   const [sectionsList, setSectionsList] = useState([]);
   const [filterIDs, setFilterIds] = useState([]);
   const [semesterId, setSemesterId] = useState();
+  const [isStudentData, setIsStudentData] = useState([]);
 
   const getSemesterInfo = async (employeeId) => {
     const data = await getSemesters(employeeId);
@@ -81,6 +82,26 @@ const AssignGroup = () => {
     }
 
   };
+
+  const checkAll = (e) => {
+    const targetCheck = e.target.checked;
+    setIsStudentData(
+      isStudentData.map((el, i) => ({
+        ...el,
+        allocation: targetCheck,
+      }))
+    );
+  };
+  const markAllStudents = (e) => {
+    const targetCheck = e.target.checked;
+    setIsStudentData(
+      isStudentData.map((el, i) => ({
+        ...el,
+        allocation: targetCheck,
+      }))
+    );
+    console.log("Singdara: "+isStudentData);
+  }
 
   return (
     <React.Fragment>
@@ -196,7 +217,7 @@ const AssignGroup = () => {
                       name="attendIds"
                       className="attendIds"
                       id="attendIds"
-                    //onChange={(e) => markAllStudents(e)}
+                   // onChange={(e) => markAllStudents(e)}
                     />
                   </lable>}
 
