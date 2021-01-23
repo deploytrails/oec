@@ -15,6 +15,7 @@ const AssignElectives = () => {
   const [electiveTypesList, setElectiveTypesList] = useState([]);
   const [electivesList, setElectivesList] = useState([]);
   const [studentList, setStudentList] = useState([]);
+  const [filteredData, setFilteredData] = useState([]);
   const [semesterId, setSemesterId] = useState();
 
   const getSemesterInfo = async (departmentId) => {
@@ -37,6 +38,7 @@ const AssignElectives = () => {
   const getStudentsInfo = async (semesterId,departmentId) => {
     const data = await getStudents(semesterId,departmentId);
     setStudentList(data?.studentDetails); 
+    setFilteredData(studentList);
   }
 
   useEffect(() => {
@@ -57,6 +59,22 @@ const AssignElectives = () => {
     setSemesterId(e.target.value);
     getStudentsInfo('201961010142249513362891','20196101013404918557388');
   }
+
+  const excludeColumns = ["0"];
+  const searchFilterFunction = (value) => {
+    const lowercasedValue = value.toLowerCase().trim();
+     if (lowercasedValue === "") setFilteredData(studentList);
+     else {
+      const filteredData = studentList.filter((item) => {
+        return Object.keys(item).some((key) =>
+          excludeColumns.includes(key)
+            ? false
+            : item[key].toString().toLowerCase().includes(lowercasedValue)
+        );
+      });
+      setFilteredData(filteredData);
+    }
+  };
 
   return (
     <React.Fragment>
@@ -210,7 +228,8 @@ const AssignElectives = () => {
               name="search"
               id="search"
               placeholder="Search"
-              className="block appearance-none w-full bg-white border border-gray-400 hover:border-gray-500 px-4 py-2 pr-8 rounded shadow leading-tight focus:outline-none "
+              className="block appearance-none bg-white border border-gray-400 hover:border-gray-500 px-4 py-2 pr-8 rounded shadow leading-tight focus:outline-none "
+              onChange={(e) => searchFilterFunction(e.target.value)}
             />
           </label>
         </div>
@@ -238,9 +257,9 @@ const AssignElectives = () => {
                 Select All</TABLE.TableTh>
               </TABLE.TableTR>
 
-              {studentList &&
-                studentList.length &&
-                studentList.map((student, index) => (
+              {filteredData &&
+                filteredData.length &&
+                filteredData.map((student, index) => (
                   <TABLE.TableTRR key={student.roll}>
                     <TABLE.TableTdd>{student.roll}</TABLE.TableTdd>
                     <TABLE.TableTdd>{student.firstName}</TABLE.TableTdd>
