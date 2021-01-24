@@ -5,7 +5,6 @@ import Cookies from "js-cookie";
 const App = ({ children }) => {
   const userAddress = Cookies.get("loggedUserStatus");
   const router = useRouter();
-  console.log("userAddress", userAddress);
   useEffect(() => {
     if (!userAddress) {
       router.push("/");
@@ -13,11 +12,7 @@ const App = ({ children }) => {
   });
   return (
     <React.Fragment>
-      {userAddress && (
-        <SnackbarProvider>
-        {children}
-        </SnackbarProvider>
-      )}
+      {userAddress && <SnackbarProvider>{children}</SnackbarProvider>}
     </React.Fragment>
   );
 };
