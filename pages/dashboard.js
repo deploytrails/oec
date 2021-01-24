@@ -145,7 +145,7 @@ const Dashboard = () => {
     },
     {
       name: "Swap Classes",
-      url: "/hodPages/swapClasses",
+      url: "/hodPages/swapClass/swapWrapper",
       icon: <img src="/dash-icon-9.png" width="100" />,
     },
     {

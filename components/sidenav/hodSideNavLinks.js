@@ -552,7 +552,7 @@ const HodSideNavLinks = () => {
 
         <li
           css={
-            router.pathname === "/hodPages/swapClasses"
+            router.pathname === "/hodPages/swapClass/swapWrapper"
               ? css`
                   color: ${COLORS.GREEN};
                 `
@@ -561,7 +561,7 @@ const HodSideNavLinks = () => {
                 `
           }
         >
-          <Link href="/hodPages/swapClasses">
+          <Link href="/hodPages/swapClass/swapWrapper">
             <a>
               <FontAwesomeIcon icon={faIdBadge} /> Swap Classes
             </a>
