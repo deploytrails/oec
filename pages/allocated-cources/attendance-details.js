@@ -6,6 +6,8 @@ import {
   updateStudentAttendance,
 } from "../../services/allocateServices";
 import Cookies from "js-cookie";
+import * as STYLES from "../../components/General/modalStyles";
+import * as TABLE from "../../components/dashboards/styles/table.styles";
 
 const AttendanceDetails = ({
   closeAttendDetails,
@@ -16,26 +18,32 @@ const AttendanceDetails = ({
   const [checkValues, setCheckValues] = useState([]);
   const [filterIDs, setFilterIds] = useState([]);
   const presentIds = [];
+  const [presentIdss, setPresentIdss] = useState([]);
   const absentIds = [];
   const ProfileId = Cookies.get("employeeID");
   const [openSnackbar, closeSnackbar] = useSnackbar();
 
-  if (classAttend?.EnrolledStudents) {
-    classAttend?.EnrolledStudents.map((item) => {
-      presentIds.push(item.roll);
-    });
-  } else {
-    classAttend?.EnrolledStudentsAttendance[0].map((item, i) => {
-      presentIds.push(item[2]);
-      if (item[4] === "Absent") {
-        filterIDs.push(item[2]);
-      }
-    });
-  }
+  const intitalTrigger = () => {
+    if (classAttend?.EnrolledStudents) {
+      classAttend?.EnrolledStudents.map((item) => {
+        presentIds.push(item.roll);
+      });
+    } else {
+      classAttend?.EnrolledStudentsAttendance[0].map((item, i) => {
+        presentIds.push(item[2]);
+        if (item[4] === "Absent") {
+          filterIDs.push(item[2]);
+        }
+      });
+
+      setFrmValue(filterIDs.join("\n"));
+    }
+    setPresentIdss(presentIds);
+  };
 
   const selectCheck = (selectedVal) => {
     const indexFound = filterIDs.indexOf(selectedVal);
-    alert(indexFound);
+    // alert(indexFound);
     // const checkSelect = checkValues;
     // checkSelect.push(selectedVal);
     // setCheckValues(checkSelect);
@@ -44,11 +52,11 @@ const AttendanceDetails = ({
       setFilterIds(filterIDs);
     }
 
-    console.log("absentIds", filterIDs);
+    // console.log("absentIds", filterIDs);
   };
 
   const unSelectCheck = (selectedVal) => {
-    console.log(filterIDs);
+    // console.log(filterIDs);
     // const indexFound = checkValues.indexOf(selectedVal);
     // if (indexFound > -1) {
     //   checkValues.splice(indexFound, 1);
@@ -59,7 +67,7 @@ const AttendanceDetails = ({
     // );
     filterIDs.push(selectedVal);
     setFilterIds(filterIDs);
-    console.log("absentIds", filterIDs);
+    // console.log("absentIds", filterIDs);
   };
 
   const insertAttendanceData = async () => {
@@ -143,147 +151,125 @@ const AttendanceDetails = ({
     //     x[i].checked = false;
     //   }
     // }
-  });
+    intitalTrigger();
+  }, []);
 
   return (
-    <React.Fragment>
-      <div className="w-screen fixed top-0 bottom-0 left-0 right-0 bg-black bg-opacity-75">
-        <div className="w-9/12 absolute right-0 bg-white p-4 h-screen overflow-y-scroll">
-          <button
-            type="button"
-            onClick={closeAttendDetails}
-            className=" bg-green-400 px-4 py-1 absolute rounded focus:outline-none font-bold text-sm text-white"
+    <STYLES.PopupMask>
+      <STYLES.PopupWrapper
+        css={css`
+          width: 90%;
+          height: 90%;
+          overflow: hidden;
+          overflow-y: scroll;
+        `}
+      >
+        <STYLES.PopupTitle>
+          {" "}
+          Attendance Details Page
+          <div
             css={css`
-              right: 20px;
+              cursor: pointer;
+              float: right;
             `}
+            onClick={() => closeAttendDetails()}
           >
-            CLOSE
-          </button>
-          <h2 className="font-sans text-lg font-bold">
-            Attendance Details Page
-          </h2>
-          <table
-            className="block w-full pr-0 mt-4"
-            css={css`
-              border: 1px solid #ddd;
-              & > tr > th {
-                border-bottom: 1px solid #ddd;
-                width: 200px;
-                padding: 6px 0px;
-              }
-              & > tr > td {
-                width: 195px;
-                padding: 6px 0px;
-                text-align: center;
-                font-size: 14px;
-              }
-              & > tr:nth-of-type(even) {
-                background-color: #f5f5f5;
-              }
-            `}
-          >
-            <React.Fragment>
-              <tr className="block w-full">
-                <th>S.No</th>
-                <th>Roll No</th>
-                <th>Name</th>
-                <th>
-                  {/* <lable htmlFor="attendIds">
+            X
+          </div>
+        </STYLES.PopupTitle>
+        <TABLE.TableWrapper>
+          <React.Fragment>
+            <TABLE.TableTR>
+              <TABLE.TableTh>S.No</TABLE.TableTh>
+              <TABLE.TableTh>Roll No</TABLE.TableTh>
+              <TABLE.TableTh>Name</TABLE.TableTh>
+              <TABLE.TableTh>Attendance</TABLE.TableTh>
+              <TABLE.TableTh>Remarks</TABLE.TableTh>
+            </TABLE.TableTR>
+            {classAttend?.EnrolledStudents &&
+              classAttend?.EnrolledStudents.map((item, i) => (
+                <TABLE.TableTRR key={item.enrollstudentId}>
+                  <TABLE.TableTdd>{i + 1}</TABLE.TableTdd>
+                  <TABLE.TableTdd>{item.roll}</TABLE.TableTdd>
+                  <TABLE.TableTdd>{item.firstName}</TABLE.TableTdd>
+                  <TABLE.TableTdd>
+                    <lable htmlFor={item.enrollstudentId}>
+                      <input
+                        type="checkbox"
+                        className="atend"
+                        name={item.enrollstudentId}
+                        id={item.enrollstudentId}
+                        defaultChecked={true}
+                        onChange={(e) => checkAttend(e, i, item.roll)}
+                        // checked={filterIDs.indexOf(item) !== -1}
+                        //checked={checkValues.indexOf(item) === -1}
+                      />
+                    </lable>
+                  </TABLE.TableTdd>
+                  <TABLE.TableTdd>
                     <input
-                      type="checkbox"
-                      name="attendIds"
-                      className="attendIds"
-                      id="attendIds"
-                      onChange={(e) => markAllStudents(e)}
+                      type="text"
+                      className="border py-1 rounded px-2 border-gray-400 focus:outline-none"
                     />
-                  </lable> */}
-                  Attendance
-                </th>
-                <th>Remarks</th>
-              </tr>
-              {classAttend?.EnrolledStudents &&
-                classAttend?.EnrolledStudents.map((item, i) => (
-                  <tr key={item.enrollstudentId}>
-                    <td>{i + 1}</td>
-                    <td>{item.roll}</td>
-                    <td>{item.firstName}</td>
-                    <td>
-                      <lable htmlFor={item.enrollstudentId}>
-                        <input
-                          type="checkbox"
-                          className="atend"
-                          name={item.enrollstudentId}
-                          id={item.enrollstudentId}
-                          defaultChecked={true}
-                          onChange={(e) => checkAttend(e, i, item.roll)}
-                          // checked={filterIDs.indexOf(item) !== -1}
-                          //checked={checkValues.indexOf(item) === -1}
-                        />
-                      </lable>
-                    </td>
-                    <td>
+                  </TABLE.TableTdd>
+                </TABLE.TableTRR>
+              ))}
+            {classAttend?.EnrolledStudentsAttendance &&
+              classAttend?.EnrolledStudentsAttendance[0].map((item, i) => (
+                <TABLE.TableTRR key={item[1]}>
+                  <TABLE.TableTdd>{i + 1}</TABLE.TableTdd>
+                  <TABLE.TableTdd>{item[2]}</TABLE.TableTdd>
+                  <TABLE.TableTdd>{item[5]}</TABLE.TableTdd>
+                  <TABLE.TableTdd>
+                    <lable htmlFor={item[1]}>
                       <input
-                        type="text"
-                        className="border py-1 rounded px-2 border-gray-400 focus:outline-none"
+                        type="checkbox"
+                        className="atend"
+                        name={item[1]}
+                        id={item[1]}
+                        //value={item.enrollStudentDetails.roll}
+                        onChange={(e) => checkAttend(e, i, item[2])}
+                        defaultChecked={
+                          item[4] === "Present" || item[4] === true
+                        }
+                        // checked={filterIDs.indexOf(item) !== -1}
+                        //checked={checkValues.indexOf(item) === -1}
                       />
-                    </td>
-                  </tr>
-                ))}
-              {classAttend?.EnrolledStudentsAttendance &&
-                classAttend?.EnrolledStudentsAttendance[0].map((item, i) => (
-                  <tr key={item[1]}>
-                    <td>{i + 1}</td>
-                    <td>{item[2]}</td>
-                    <td>{item[5]}</td>
-                    <td>
-                      <lable htmlFor={item[1]}>
-                        <input
-                          type="checkbox"
-                          className="atend"
-                          name={item[1]}
-                          id={item[1]}
-                          //value={item.enrollStudentDetails.roll}
-                          onChange={(e) => checkAttend(e, i, item[2])}
-                          defaultChecked={
-                            item[4] === "Present" || item[4] === true
-                          }
-                          // checked={filterIDs.indexOf(item) !== -1}
-                          //checked={checkValues.indexOf(item) === -1}
-                        />
-                      </lable>
-                    </td>
-                    <td>
-                      <input
-                        type="text"
-                        className="border py-1 rounded px-2 border-gray-400 focus:outline-none"
-                      />
-                    </td>
-                  </tr>
-                ))}
-            </React.Fragment>
-          </table>
+                    </lable>
+                  </TABLE.TableTdd>
+                  <TABLE.TableTdd>
+                    <input
+                      type="text"
+                      className="border py-1 rounded px-2 border-gray-400 focus:outline-none"
+                    />
+                  </TABLE.TableTdd>
+                </TABLE.TableTRR>
+              ))}
+          </React.Fragment>
+        </TABLE.TableWrapper>
 
-          <div className="clearfix my-4">
-            <div className="w-6/12 float-left">
-              <h3 className="font-sans font-bold text-red-600">Absentee</h3>
-              <label>
-                <textarea
-                  rows="3"
-                  cols="4"
-                  id="attendIds"
-                  value={frmValue.length > 0 ? frmValue : filterIDs.join("\n")}
-                  className="w-full border py-1 rounded px-2 border-gray-400 focus:outline-none resize-none"
-                ></textarea>
-              </label>
-            </div>
-            <div className="w-6/12 float-right">
-              <div className="pl-4 pt-5">
-                <p className="text-sm text-green-600">
-                  No of Present : {presentIds.length - filterIDs.length}
-                </p>
-                <p className="text-sm text-red-600">
-                  No of Absent : {filterIDs.length}
-                </p>
+        <div className="clearfix my-4">
+          <div className="w-6/12 float-left">
+            <h3 className="font-sans font-bold text-red-600">Absentee</h3>
+            <label>
+              <textarea
+                rows="3"
+                cols="4"
+                id="attendIds"
+                value={frmValue.length > 0 ? frmValue : filterIDs.join("\n")}
+                className="w-full border py-1 rounded px-2 border-gray-400 focus:outline-none resize-none"
+              ></textarea>
+            </label>
+          </div>
+          <div className="w-6/12 float-right">
+            <div className="pl-4 pt-5">
+              <p className="text-sm text-green-600">
+                No of Present : {presentIdss.length - filterIDs.length}
+              </p>
+              <p className="text-sm text-red-600">
+                No of Absent : {filterIDs.length}
+              </p>
+              <div>
                 <button
                   onClick={() =>
                     classAttend.EnrolledStudents
@@ -296,12 +282,22 @@ const AttendanceDetails = ({
                   {classAttend?.EnrolledStudents ? "Submit " : "Update "}
                   Attendance
                 </button>
+                <button
+                  type="button"
+                  onClick={closeAttendDetails}
+                  className="bg-black py-2 shadow-md px-2 rounded focus:outline-none mt-2 font-bold text-sm text-white"
+                  css={css`
+                    margin-left: 5px;
+                  `}
+                >
+                  Close
+                </button>
               </div>
             </div>
           </div>
         </div>
-      </div>
-    </React.Fragment>
+      </STYLES.PopupWrapper>
+    </STYLES.PopupMask>
   );
 };
 
