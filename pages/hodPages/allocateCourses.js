@@ -7,13 +7,11 @@ import {
   getCoursesData,
   getSubjExpData,
   getFacultyCoursesData,
+  insertAllocateCouse
 } from "../../services/hodServices/allocateCoursesService";
 import Cookies from "js-cookie";
 
-import css from "@emotion/css";
-import { COLORS } from "../../constants";
 import TableWrap from "../../components/TableUtilities/TableWrap";
-import FormInput from "../../components/General/formInput";
 import {Formik,Form} from 'formik';
 import FormikControl from "../../components/General/FormikControl";
 
@@ -66,9 +64,13 @@ const AllocateCourses = () => {
     console.log(facultyOptions);
   };
 
-  const loadSemesterData = async (department) => {
-    const cData = await getSemsterData('201961010429723213238372',department);
-
+  const loadSemesterData = async (departmentvalue,departmentindex) => {
+    const cData = await getSemsterData('201961010429723213238372',departmentvalue);
+    console.log("departmentkey",departmentindex);
+    
+    const departmentkey = isDepartmentData[departmentindex-1]?.key?.split("-")[0];
+    console.log("departmentval",departmentkey);
+    setIsFacultyCoursesData(isFacultyCoursesData && isFacultyCoursesData.filter (facCour =>facCour?.departmentCode?.includes(departmentkey) ));
     let semesterOptions = [];
     cData?.semesterDetailsArray.forEach(semester => {
       semesterOptions.push({
@@ -101,7 +103,8 @@ const AllocateCourses = () => {
     cData?.courseArray.forEach(course => {
       courseOptions.push({
         value:course.courseCode,
-        key:course.courseName
+        key:course.courseName,
+        courseID:course.courseID
       })
     })
     setIsCoursesData(courseOptions);
@@ -152,8 +155,17 @@ const AllocateCourses = () => {
 	  QuaternaryFaculty:''
   }
 
-  const onSubmit = (values) =>{
+  const onSubmit = async (values) =>{
     console.log("values ",values);
+    const course= isCoursesData.filter(course => course.value.includes(values.Course));
+    console.log("courseId",course);
+    values.courseId=course[0]?.courseID;
+    values.courseCode=values.Course.split("-")[1];
+    values.courseName=course[0]?.courseName;
+    console.log("values1 ",values);
+    const cData = await insertAllocateCouse(values);
+    console.log(cData);
+
   }
 
 
@@ -189,12 +201,10 @@ const AllocateCourses = () => {
         initialValues={initialValues}
         onSubmit={onSubmit}
         >
-        {(
-          {
+        {({
             values,
             handleChange
-          }         
-          ) =>( 
+          }) =>( 
         <Form>
         <div className="grid grid-cols-4">
           <div className=" w-screen">
@@ -208,7 +218,7 @@ const AllocateCourses = () => {
           <FormikControl control = 'select' label='Program' name='Program' 
             options ={isDepartmentData} onChange={(e) => {
               handleChange(e);
-              loadSemesterData(e.target.value);
+              loadSemesterData(e.target.value,e.target.selectedIndex);
              }}/>
             </div>
 

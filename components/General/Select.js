@@ -4,7 +4,7 @@ import css from "@emotion/css";
 import { COLORS } from "../../constants";
 
 function Select(props) {
-    const {label, name, options, onchange, ...rest} = props;
+    const {label, name, options, onChange, ...rest} = props;
     return (
         <div className='form-control'>
              <label
@@ -22,7 +22,7 @@ function Select(props) {
 
              <Field as='select'
                 name={name}
-                onChange={onchange}
+                onChange={onChange}
                 css={css`
                   display: block;
                   width: 20%;

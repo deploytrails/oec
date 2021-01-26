@@ -5,7 +5,7 @@ import {
   getAcademicDetailsData,
   getSemsterData,
   getSectionsData,
-  getStudentsData,
+  getStudentsData
 } from "../../services/hodServices/studentEnrollService";
 import Cookies from "js-cookie";
 
