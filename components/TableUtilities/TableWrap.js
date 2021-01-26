@@ -9,13 +9,45 @@ const TableWrap = ({ thValues, tdValues, data }) => {
   const [countPerPage] = useState(15);
   const [currentPage, setCurrentPage] = useState(1);
   const paginate = (pageNumber) => setCurrentPage(pageNumber);
+  const [filteredData, setFilteredData] = useState(data);
 
   const indexOfLastPost = currentPage * countPerPage;
   const indexOfFirstPost = indexOfLastPost - countPerPage;
-  const currentPosts = data?.slice(indexOfFirstPost, indexOfLastPost);
+  const currentPosts = filteredData?.slice(indexOfFirstPost, indexOfLastPost);
+
+  const searchFilterFunction = (value) => {
+    const lowercasedValue = value.toLowerCase().trim();
+    if (lowercasedValue === "") setFilteredData(data);
+    else {
+      const filterContent = data.filter((item) => {
+        return Object.keys(item).some((key) =>
+          item[key].toString().toLowerCase().includes(lowercasedValue)
+        );
+      });
+      setFilteredData(filterContent);
+    }
+  };
 
   return (
     <React.Fragment>
+      <div
+        className="float-left"
+        css={css`
+          margin-bottom: 5px;
+          margin-top: 10px;
+        `}
+      >
+        <label htmlFor="search">
+          <input
+            type="search"
+            name="search"
+            id="search"
+            placeholder="Search"
+            className="block appearance-none w-full bg-white border border-gray-400 hover:border-gray-500 px-4 py-2 pr-8 rounded shadow leading-tight focus:outline-none "
+            onChange={(e) => searchFilterFunction(e.target.value)}
+          />
+        </label>
+      </div>
       <TABLE.TableWrapper
         css={css`
           margin-top: 20px;
@@ -32,7 +64,7 @@ const TableWrap = ({ thValues, tdValues, data }) => {
       </TABLE.TableWrapper>
       <Pagination
         countPerPage={countPerPage}
-        totalRecs={data?.length}
+        totalRecs={filteredData?.length}
         paginate={paginate}
         currentPage={currentPage}
       />

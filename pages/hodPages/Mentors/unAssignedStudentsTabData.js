@@ -19,44 +19,11 @@ const UnAssignedStudentsTabData = ({ profileId }) => {
     { valueProperty: "semesterCode" },
   ];
 
-  const excludeColumns = ["departmentPrimaryId", "enrollstudentId"];
-  const searchFilterFunction = (value) => {
-    const lowercasedValue = value.toLowerCase().trim();
-    if (lowercasedValue === "") setFilteredData(isUnAssignedStudentsData);
-    else {
-      const filteredData = isUnAssignedStudentsData.filter((item) => {
-        return Object.keys(item).some((key) =>
-          excludeColumns.includes(key)
-            ? false
-            : item[key].toString().toLowerCase().includes(lowercasedValue)
-        );
-      });
-      setFilteredData(filteredData);
-    }
-  };
-
   useEffect(() => {
     getUnAssignedStudentsDetails();
   }, []);
   return (
     <React.Fragment>
-      <div
-        className="float-left"
-        css={css`
-          margin-bottom: 2%;
-        `}
-      >
-        <label htmlFor="search">
-          <input
-            type="search"
-            name="search"
-            id="search"
-            placeholder="Search"
-            className="block appearance-none w-full bg-white border border-gray-400 hover:border-gray-500 px-4 py-2 pr-8 rounded shadow leading-tight focus:outline-none "
-            onChange={(e) => searchFilterFunction(e.target.value)}
-          />
-        </label>
-      </div>
       <div>
         {filteredData && filteredData.length > 0 && (
           <TableWrap
