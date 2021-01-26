@@ -88,3 +88,35 @@ export const deteleAllocatedCourses = async (coordinatorID) => {
     console.log(error);
   }
 };
+
+export const allocateCourseToFaculty = async (
+  employeeID,
+  courseCode,
+  courseName,
+  semesterID,
+  academicID,
+  regulation
+) => {
+  try {
+    const response = await fetch(
+      `${process.env.APIBaseUrl}faculty/allocateCourseToCourseCoordinator`,
+      {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          employeeID,
+          courseCode,
+          courseName,
+          semesterID,
+          academicID,
+          regulation,
+        }),
+      }
+    );
+    return await response.json();
+  } catch (error) {
+    console.log(error);
+  }
+};

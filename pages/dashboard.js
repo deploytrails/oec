@@ -155,7 +155,7 @@ const Dashboard = () => {
     },
     {
       name: "Feedback Details",
-      url: "/hodPages/feedbackDetails",
+      url: "/hodPages/feedbackDetails/feedbackDetails",
       icon: <img src="/dash-icon-1.png" width="100" />,
     },
     {

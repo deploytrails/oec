@@ -588,7 +588,7 @@ const HodSideNavLinks = () => {
 
         <li
           css={
-            router.pathname === "/hodPages/feedbackDetails"
+            router.pathname === "/hodPages/feedbackDetails/feedbackDetails"
               ? css`
                   color: ${COLORS.GREEN};
                 `
@@ -597,7 +597,7 @@ const HodSideNavLinks = () => {
                 `
           }
         >
-          <Link href="/hodPages/feedbackDetails">
+          <Link href="/hodPages/feedbackDetails/feedbackDetails">
             <a>
               <FontAwesomeIcon icon={faPhone} /> Feedback Details
             </a>

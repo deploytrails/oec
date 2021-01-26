@@ -1,14 +1,15 @@
-import React, { useState } from "react";
-import Layout from "../../components/layout";
-import CommSelect from "./commAttribs/commSelect";
+import React, { useState, useEffect } from "react";
+import Layout from "../../../components/layout";
+import CommSelect from "../commAttribs/commSelect";
 import {
   getHodFeedBackDetails,
   getFeedRecDetails,
-} from "../../services/hodServices/feedBackDetService";
-import TableTh from "../../components/TableUtilities/TableTh";
-import * as TABLE from "../../components/dashboards/styles/table.styles";
+} from "../../../services/hodServices/feedBackDetService";
+import TableTh from "../../../components/TableUtilities/TableTh";
+import * as TABLE from "../../../components/dashboards/styles/table.styles";
 import css from "@emotion/css";
 import Cookies from "js-cookie";
+import FeedbackModal from "./feedbackModal";
 
 const FeedbackDetails = () => {
   const [isFeedbackArr, setIsFeedbackArr] = useState([]);
@@ -17,28 +18,32 @@ const FeedbackDetails = () => {
     sectionID: "",
   });
   const hodID = Cookies.get("employeeID");
-  const [isModalData, setIModalData] = useState([]);
+  const [isModalData, setIsModalData] = useState({});
+  const [show, setShow] = useState(false);
 
   const onChange = async (obj) => {
     const cData = await getHodFeedBackDetails(obj.semester, obj.section);
 
     setSecChangeObj({ semesterID: obj.semester, sectionID: obj.section });
 
-    console.log(cData);
     setIsFeedbackArr(cData?.feedbackdetails);
   };
 
   const onTdClick = async (selectedEmployeeID, courseID) => {
-    console.log(obj);
-    // const cData = await getFeedRecDetails(
-    //   hodID,
-    //   selectedEmployeeID,
-    //   courseID,
-    //   isSecChangeObj.semesterID,
-    //   isSecChangeObj.sectionID
-    // );
-    // console.log(cData);
-    //setIModalData(cData?.feedbackdetails);
+    const cData = await getFeedRecDetails(
+      hodID,
+      selectedEmployeeID,
+      courseID,
+      isSecChangeObj.semesterID,
+      isSecChangeObj.sectionID
+    );
+    console.log(cData);
+    setIsModalData(cData);
+    setShow(true);
+  };
+
+  const closeModal = () => {
+    setShow(false);
   };
 
   const starPropertiesArray = ["star1", "star2", "star3", "star4", "star5"];
@@ -96,6 +101,7 @@ const FeedbackDetails = () => {
                       onClick={() =>
                         onTdClick(value.employeeid, value.courseid)
                       }
+                      aria-describedby="tooltip"
                     >
                       {ratingStars(value)}
                     </TABLE.TableTdd>
@@ -106,6 +112,7 @@ const FeedbackDetails = () => {
           </TABLE.TableWrapper>
         </div>
       </Layout>
+      {show && <FeedbackModal closeModal={closeModal} data={isModalData} />}
     </React.Fragment>
   );
 };

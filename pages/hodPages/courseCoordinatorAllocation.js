@@ -6,6 +6,7 @@ import {
   getListOfFaculties,
   getAllocatedCourses,
   deteleAllocatedCourses,
+  allocateCourseToFaculty,
 } from "../../services/hodServices/courseCordAllocationService";
 import css from "@emotion/css";
 import { COLORS } from "../../constants";
@@ -33,11 +34,14 @@ const CourseCoordinatorAllocation = () => {
   const [isDegreeDataSelect, setIsDegreeDataSelect] = useState("");
   const [isDesignation, setDesignation] = useState("");
   const [isselectedFac, setIsselectedFac] = useState("");
+  const [isselectedCourse, setIsselectedCourse] = useState({});
+  const [isSelectedAcadYear, setIselectedAcadYear] = useState("");
+  const [isDuplicateRec, setIsDuplicateRec] = useState(-1);
 
   const loadDegreeData = async () => {
     const cData = await getDegreeData();
     setIsDegreeData(cData?.degreeArray);
-    console.log(cData);
+    // console.log(cData);
   };
 
   const loadAcademicDetailsData = async (degreeId) => {
@@ -50,6 +54,7 @@ const CourseCoordinatorAllocation = () => {
   };
 
   const loadSemesterData = async (acadYear) => {
+    setIselectedAcadYear(acadYear);
     const cData = await getSemsterData(isDegreeDataSelect, acadYear);
     setIsSemesterData(cData?.semesterArray);
   };
@@ -61,16 +66,56 @@ const CourseCoordinatorAllocation = () => {
         hodEmployeeId,
         isStateRegl
       );
-      setIsCourseArray(cData?.courseArray);
+      // console.log(cData);
+      if (cData?.courseArray.length > 0) {
+        setIsCourseArray((prev) => unique(cData?.courseArray));
+      } else {
+        setIsCourseArray([]);
+      }
     }
   };
+
+  const unique = (array) => {
+    const result = [];
+    var arrayLength = array.length;
+    for (var i = 0; i < arrayLength; i++) {
+      const courseCodeRef = array[i].courseCode;
+
+      var index = result
+        .map(function (code) {
+          return code.courseCode;
+        })
+        .indexOf(courseCodeRef.substring(0, courseCodeRef.length - 2));
+
+      if (index == -1) {
+        var tempobj = {};
+        tempobj.courseCode = courseCodeRef.substring(
+          0,
+          courseCodeRef.length - 2
+        );
+        tempobj.courseName = array[i].courseName;
+        result.push(tempobj);
+      }
+    }
+    // console.log(result);
+    return result;
+  };
+
+  const facCoursesFilter = () => {
+    setIsDuplicateRec(
+      isFacultyCourseArray.findIndex(
+        (x) => x.courseCode === isselectedCourse?.courseCode
+      )
+    );
+  };
+
   const getRegulationsinfo = async () => {
     const data = await getRegulations();
     setRegulation(data?.RegulationArray);
   };
   const getListOfFacultiesData = async () => {
     const cData = await getListOfFaculties(hodEmployeeId);
-    console.log(cData);
+    //console.log(cData);
     setIsFacultiesArray(cData?.facultyDetailsArray);
   };
 
@@ -79,15 +124,42 @@ const CourseCoordinatorAllocation = () => {
     setIsselectedFac(isFacultiesArray[index].employeeId);
   };
 
+  const onCourseChange = async (index) => {
+    setIsselectedCourse(isCourseArray[index]);
+  };
+
+  const allocateCourseToFac = async () => {
+    const cData = await allocateCourseToFaculty(
+      isselectedFac,
+      isselectedCourse.courseCode,
+      isselectedCourse.courseName,
+      isStateSemeter,
+      isSelectedAcadYear,
+      isStateRegl
+    );
+    getFacultyAllocatedCourses();
+    if (cData?.status) {
+      alert(cData?.status);
+      getFacultyAllocatedCourses();
+    } else {
+      alert("SomeThing Went Wrong");
+    }
+  };
   useEffect(() => {
     if (isselectedFac !== "") {
       getFacultyAllocatedCourses();
     }
   }, [isselectedFac]);
 
+  useEffect(() => {
+    if (isselectedCourse?.courseCode !== "" && isselectedFac !== "") {
+      facCoursesFilter();
+    }
+  }, [isselectedCourse, isFacultyCourseArray]);
+
   const getFacultyAllocatedCourses = async () => {
     const cData = await getAllocatedCourses(isselectedFac);
-    console.log(cData);
+    // console.log(cData);
     setIsFacultyCourseArray(cData?.courseDetailsArray);
   };
 
@@ -339,7 +411,7 @@ const CourseCoordinatorAllocation = () => {
               <select
                 // onChange={handleChange}
                 name="Course"
-                //  onChange={(e) => loadAcademicDetailsData(e.target.value)}
+                onChange={(e) => onCourseChange(e.target.value)}
                 css={css`
                   display: block;
                   width: 75%;
@@ -370,8 +442,8 @@ const CourseCoordinatorAllocation = () => {
                 )}
                 {isCourseArray &&
                   isCourseArray.length > 0 &&
-                  isCourseArray?.map((course) => (
-                    <option value={course.courseId}>
+                  isCourseArray?.map((course, i) => (
+                    <option value={i}>
                       {course.courseCode} - {course.courseName}
                     </option>
                   ))}
@@ -468,6 +540,31 @@ const CourseCoordinatorAllocation = () => {
                 />
               </label>
             )}
+          </div>
+          <div className=" w-auto">
+            <br />
+            <button
+              type="button"
+              className={
+                "py-2 px-4 rounded mr-2 text-center text-white mb-4 focus:outline-none " +
+                (isselectedFac === "" ||
+                !isselectedCourse?.courseCode ||
+                isDuplicateRec >= 0
+                  ? "bg-gray-400"
+                  : "bg-blue-400 hover:bg-blue-500")
+              }
+              css={css`
+                float: left;
+              `}
+              onClick={() => allocateCourseToFac()}
+              disabled={
+                isselectedFac === "" ||
+                !isselectedCourse?.courseCode ||
+                isDuplicateRec >= 0
+              }
+            >
+              Allocate Course To Faculty
+            </button>
           </div>
         </div>
         {isFacultyCourseArray && isFacultyCourseArray?.length > 0 && (
