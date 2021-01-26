@@ -23,7 +23,7 @@ const SwapClasses = () => {
 
   const loadSwapData = async () => {
     const cData = await getSwapData(ProfileId);
-    setIsSwapData(cData.swaps);
+    setIsSwapData(cData?.swaps);
   };
   const showDetails = (swapdata) => {
     setIsSelectedData(swapdata);
@@ -190,7 +190,7 @@ const SwapClasses = () => {
       {isSelectedData && showSelected && (
         <div>
           <button
-            className=" float-right bg-red-400 block  mx-auto px-2 py-1 rounded"
+            className=" float-right bg-red-400  mx-auto px-2 py-1 rounded"
             onClick={() =>
               updateHODSwapRecords(
                 isSelectedData.swapPrimaryId,
@@ -200,8 +200,12 @@ const SwapClasses = () => {
           >
             Reject
           </button>
+
           <button
-            className=" float-right bg-green-400 block  mx-auto px-2 py-1 rounded"
+            className=" float-right  bg-green-400   mx-auto px-2 py-1 rounded"
+            css={css`
+              margin-right: 5px;
+            `}
             onClick={() =>
               updateHODSwapRecords(
                 isSelectedData.swapPrimaryId,

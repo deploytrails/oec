@@ -175,7 +175,18 @@ const StudentDetailsModal = ({ openModal, employeeData, getMentorList }) => {
           overflow-y: scroll;
         `}
       >
-        <STYLES.PopupTitle>Student Details</STYLES.PopupTitle>
+        <STYLES.PopupTitle>
+          Student Details
+          <div
+            css={css`
+              cursor: pointer;
+              float: right;
+            `}
+            onClick={() => openModal()}
+          >
+            X
+          </div>
+        </STYLES.PopupTitle>
         <div className="grid grid-cols-4">
           <div className=" w-screen">
             <label
