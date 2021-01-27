@@ -29,10 +29,26 @@ const POPSOs = () => {
       setIsDepartmentData(departOptions);
     }
 
-  const loadPoPSoData = async (event) => {
+  const loadPoPSoData = async (event,setFieldValue) => {
     const cData = await getPoPsoData(event.target.value);
     console.log(cData);
     setIsPoPsoData(cData);
+    setFieldValue('po1', cData?.po1);
+    setFieldValue('po2', cData?.po2);
+    setFieldValue('po3', cData?.po3);
+    setFieldValue('po4', cData?.po4);
+    setFieldValue('po5', cData?.po5);
+    setFieldValue('po6', cData?.po6);
+    setFieldValue('po7', cData?.po7);
+    setFieldValue('po8', cData?.po8);
+    setFieldValue('po9', cData?.po9);
+    setFieldValue('po10', cData?.po10);
+    setFieldValue('po11', cData?.po11);
+    setFieldValue('po12', cData?.po12);
+    setFieldValue('pso1', cData?.pSo1);
+    setFieldValue('pso2', cData?.pSo2);
+    setFieldValue('pso3', cData?.pSo3);  
+
   }
 
     const initialValues={
@@ -58,21 +74,6 @@ const POPSOs = () => {
       const onSubmit = async (values) =>{
         console.log("values ",values);
         values.popsoID=isPoPsoData.popsoDataID;
-        values.po1=isPoPsoData.po1;
-        values.po2=isPoPsoData.po2;
-        values.po3=isPoPsoData.po3;
-        values.po4=isPoPsoData.po4;
-        values.po5=isPoPsoData.po5;
-        values.po6=isPoPsoData.po5;
-        values.po7=isPoPsoData.po7;
-        values.po8=isPoPsoData.po8;
-        values.po9=isPoPsoData.po9;
-        values.po10=isPoPsoData.po10;
-        values.po11=isPoPsoData.po11;
-        values.po12=isPoPsoData.po12;
-        values.pso1=isPoPsoData.pSo1;
-        values.pso2=isPoPsoData.pSo2;
-        values.pso3=isPoPsoData.pSo3;
         insertPoPsoData(values);
       }
 
@@ -99,7 +100,8 @@ const POPSOs = () => {
       {({
           values,
           handleChange,
-          handleBlur
+          handleBlur,
+          setFieldValue
         }) =>( 
       <Form>
       <div className="grid grid-cols-4">
@@ -108,7 +110,7 @@ const POPSOs = () => {
           options ={isDepartmentData} 
            onChange={(e) => {
             handleChange(e);
-            loadPoPSoData(e);
+            loadPoPSoData(e,setFieldValue);
            }}
            />
         </div>
@@ -117,14 +119,14 @@ const POPSOs = () => {
         <br></br>  
       <div className="w-screen">
       <FormikControl control = 'textarea' label='PO 1' id='po1' name='po1' 
-        value={isPoPsoData?.po1} onChange={handleChange} onBlur={handleBlur}
+        value={values.po1} onChange={handleChange} onBlur={handleBlur}
          />
       </div> 
 
        <br></br>  
       <div className="w-screen">
       <FormikControl control = 'textarea' label='PO 2' id='po2' name='po2' 
-        value={isPoPsoData?.po2} onChange={handleChange} onBlur={handleBlur}
+        value={values.po2} onChange={handleChange} onBlur={handleBlur}
          />
       </div> 
 
@@ -132,56 +134,56 @@ const POPSOs = () => {
        <br></br>  
       <div className="w-screen">
       <FormikControl control = 'textarea' label='PO 3' id='po3' name='po3' 
-        value={isPoPsoData?.po3} onChange={handleChange} onBlur={handleBlur}
+        value={values.po3} onChange={handleChange} onBlur={handleBlur}
          />
       </div> 
 
        <br></br>  
       <div className="w-screen">
       <FormikControl control = 'textarea' label='PO 4' id='po4' name='po4' 
-        value={isPoPsoData?.po4} onChange={handleChange} onBlur={handleBlur}
+        value={values.po4} onChange={handleChange} onBlur={handleBlur}
          />
       </div> 
 
        <br></br>  
       <div className="w-screen">
       <FormikControl control = 'textarea' label='PO 5' id='po5' name='po5' 
-      value={isPoPsoData?.po5}   onChange={handleChange} onBlur={handleBlur}
+      value={values.po5}   onChange={handleChange} onBlur={handleBlur}
          />
       </div> 
 
        <br></br>  
       <div className="w-screen">
       <FormikControl control = 'textarea' label='PO 6' id='po6' name='po6' 
-      value={isPoPsoData?.po6}   onChange={handleChange} onBlur={handleBlur}
+      value={values.po6}   onChange={handleChange} onBlur={handleBlur}
          />
       </div> 
 
        <br></br>  
       <div className="w-screen">
       <FormikControl control = 'textarea' label='PO 7' id='po7' name='po7' 
-       value={isPoPsoData?.po7}  onChange={handleChange} onBlur={handleBlur}
+       value={values.po7}  onChange={handleChange} onBlur={handleBlur}
          />
       </div> 
 
        <br></br>  
       <div className="w-screen">
       <FormikControl control = 'textarea' label='PO 8' id='po8' name='po8' 
-       value={isPoPsoData?.po8}  onChange={handleChange} onBlur={handleBlur}
+       value={values.po8}  onChange={handleChange} onBlur={handleBlur}
          />
       </div> 
 
        <br></br>  
       <div className="w-screen">
       <FormikControl control = 'textarea' label='PO 9' id='po9' name='po9' 
-        value={isPoPsoData?.po9} onChange={handleChange} onBlur={handleBlur}
+        value={values.po9} onChange={handleChange} onBlur={handleBlur}
          />
       </div> 
 
        <br></br>  
       <div className="w-screen">
       <FormikControl control = 'textarea' label='PO 10' id='po10' name='po10' 
-        value={isPoPsoData?.po10} onChange={handleChange} onBlur={handleBlur}
+        value={values.po10} onChange={handleChange} onBlur={handleBlur}
          />
       </div> 
 
@@ -189,35 +191,35 @@ const POPSOs = () => {
       <br></br>  
       <div className="w-screen">
       <FormikControl control = 'textarea' label='PO 11' id='po11' name='po11' 
-        value={isPoPsoData?.po11} onChange={handleChange} onBlur={handleBlur}
+        value={values.po11} onChange={handleChange} onBlur={handleBlur}
          />
       </div> 
 
       <br></br>  
       <div className="w-screen">
       <FormikControl control = 'textarea' label='PO 12' id='po12' name='po12' 
-        value={isPoPsoData?.po12} onChange={handleChange} onBlur={handleBlur}
+        value={values.po12} onChange={handleChange} onBlur={handleBlur}
          />
       </div> 
 
       <br></br>  
       <div className="w-screen">
       <FormikControl control = 'textarea' label='PSO 1' id='pso1' name='pso1' 
-       value={isPoPsoData?.pSo1}  onChange={handleChange} onBlur={handleBlur}
+       value={values.pso1}  onChange={handleChange} onBlur={handleBlur}
          />
       </div> 
 
       <br></br>  
       <div className="w-screen">
       <FormikControl control = 'textarea' label='PSO 2' id='pso2' name='pso2' 
-        value={isPoPsoData?.pSo2} onChange={handleChange} onBlur={handleBlur}
+        value={values.pso2} onChange={handleChange} onBlur={handleBlur}
          />
       </div> 
 
       <br></br>  
       <div className="w-screen">
       <FormikControl control = 'textarea' label='PSO 3' id='pso3' name='pso3' 
-        value={isPoPsoData?.pSo3} onChange={handleChange} onBlur={handleBlur}
+        value={values.pso3} onChange={handleChange} onBlur={handleBlur}
          />
       </div> 
 

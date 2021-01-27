@@ -36,20 +36,20 @@ const ProgEduObjectives = () => {
       peo4:'',
       peo5:''
       }
-    const loadPeoData = async (event) => {
+    const loadPeoData = async (event,setFieldValue) => {
       const cData = await getPEOData(event.target.value);
       console.log(cData);
-      setIsPeoData(cData);     
+      setIsPeoData(cData);
+      setFieldValue('peo1', cData?.peo1);
+      setFieldValue('peo2', cData?.peo2);
+      setFieldValue('peo3', cData?.peo3);
+      setFieldValue('peo4', cData?.peo4);
+      setFieldValue('peo5', cData?.peo5);     
 
     }
       const onSubmit = async (values) =>{
         console.log("values ",values);
         values.peoID=isPeoData.ID;
-        values.peo1=isPeoData.peo1;
-        values.peo2=isPeoData.peo2;
-        values.peo3=isPeoData.peo3;
-        values.peo4=isPeoData.peo4;
-        values.peo5=isPeoData.peo5;
         insertPeoData(values);
         
       }
@@ -78,7 +78,8 @@ const ProgEduObjectives = () => {
       {({
           values,
           handleChange,
-          handleBlur
+          handleBlur,
+          setFieldValue
         }) =>( 
       <Form>
       <div className="grid grid-cols-4">
@@ -86,7 +87,7 @@ const ProgEduObjectives = () => {
         <FormikControl control = 'select' label='Program' name='Program' 
           options ={isDepartmentData}   onChange={(e) => {
             handleChange(e);
-            loadPeoData(e);
+            loadPeoData(e,setFieldValue);
            }}
            />
         </div>
@@ -95,14 +96,14 @@ const ProgEduObjectives = () => {
        <br></br>  
       <div className="w-screen">
       <FormikControl control = 'textarea' label='PEO 1' id='peo1' name='peo1' 
-        value={isPeoData?.peo1} onChange={handleChange} onBlur={handleBlur}
+        value={values.peo1} onChange={handleChange} onBlur={handleBlur}
          />
       </div> 
 
        <br></br>  
       <div className="w-screen">
       <FormikControl control = 'textarea' label='PEO 2' id='peo2' name='peo2' 
-        value={isPeoData?.peo2} onChange={handleChange} onBlur={handleBlur}
+        value={values.peo2} onChange={handleChange} onBlur={handleBlur}
          />
       </div> 
 
@@ -110,21 +111,21 @@ const ProgEduObjectives = () => {
        <br></br>  
       <div className="w-screen">
       <FormikControl control = 'textarea' label='PEO 3' id='peo3' name='peo3' 
-        value={isPeoData?.peo3} onChange={handleChange} onBlur={handleBlur}
+        value={values.peo3} onChange={handleChange} onBlur={handleBlur}
          />
       </div> 
 
        <br></br>  
       <div className="w-screen">
       <FormikControl control = 'textarea' label='PEO 4' id='peo4' name='peo4' 
-        value={isPeoData?.peo4} onChange={handleChange} onBlur={handleBlur}
+        value={values.peo4} onChange={handleChange} onBlur={handleBlur}
          />
       </div> 
 
        <br></br>  
       <div className="w-screen">
       <FormikControl control = 'textarea' label='PEO 5' id='peo5' name='peo5' 
-      value={isPeoData?.peo5}   onChange={handleChange} onBlur={handleBlur}
+      value={values.peo5}   onChange={handleChange} onBlur={handleBlur}
          />
       </div> 
       

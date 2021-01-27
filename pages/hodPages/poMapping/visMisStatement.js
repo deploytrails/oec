@@ -9,10 +9,13 @@ import {Formik,Form} from 'formik';
 import FormikControl from "../../../components/General/FormikControl";
 import Cookies from "js-cookie";
 import css from "@emotion/css";
+import { useSnackbar } from "react-simple-snackbar";
 
-const VisMisStatement = () => { const ProfileId = Cookies.get("employeeID");
+const VisMisStatement = () => { 
+const ProfileId = Cookies.get("employeeID");
 const [isDepartmentData, setIsDepartmentData] = useState([]);
 const [isVisionMissionData, setIsVisionMissionData] = useState([]);
+const [openSnackbar, closeSnackbar] = useSnackbar();
 
 const loadDepartmentData = async () => {
   const cData = await getProgrmPOData('30243CDEFA3641D092CD40B388D78065');
@@ -27,10 +30,12 @@ const loadDepartmentData = async () => {
     setIsDepartmentData(departOptions);
   }
 
-const loadVisionMissionData = async (event) => {
+const loadVisionMissionData = async (event,setFieldValue) => {
   const cData = await getVisionMissionPOData(event.target.value);
   setIsVisionMissionData(cData);
-   }
+  setFieldValue('vision', cData?.vision);
+  setFieldValue('mission', cData?.mission);
+  }
 
 
   const initialValues={
@@ -43,15 +48,19 @@ const loadVisionMissionData = async (event) => {
     const onSubmit = async (values) =>{
       console.log("values ",values);
       values.vmID=isVisionMissionData?.vmDataID;
-      values.vision=isVisionMissionData?.vision;
-      values.mission=isVisionMissionData?.mission;
       insertPOVisMisData(values);
+      
     }
 
     const insertPOVisMisData =  async(values) => {
       console.log("values",values)
       const cData = await insertPOVission(values);
       console.log("output",cData);
+      console.log(cData?.Status);
+      if(cData?.Status === "Success"){
+        alert("Vision data updated successfully");
+        openSnackbar("Vision data updated successfully");
+      }
     }
   
 
@@ -72,16 +81,17 @@ return (
         values,
         handleChange,
         handleBlur,
-        touched
+        touched,
+        setFieldValue
       }
       ) =>( 
     <Form>
     <div className="grid grid-cols-4">
       <div className=" w-screen">
       <FormikControl control = 'select' label='Program' name='Program' 
-        options ={isDepartmentData}  onChange={(e) => {
+        options ={isDepartmentData}  onChange={ (e) => {
           handleChange(e);
-          loadVisionMissionData(e);
+          loadVisionMissionData(e,setFieldValue);
          }}
          />
       </div>
@@ -97,7 +107,7 @@ return (
       <br></br>  
       <div className="w-screen">
       <FormikControl control = 'textarea' label='Mission Statement' id='misison' name='mission' 
-         value={isVisionMissionData?.mission} onChange={handleChange} onBlur={handleBlur}
+         value={values.mission} onChange={handleChange} onBlur={handleBlur} 
          />
       </div>
       <br></br>

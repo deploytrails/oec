@@ -56,3 +56,41 @@ export const uploadSubjectExpFile = async (fil) => {
     console.log(error);
   }
 };
+
+export const uploadPeoFile = async (fil) => {
+  try {
+    var data1 = new FormData();
+    data1.append("file", fil);
+
+    const response = await fetch(
+      `${process.env.APIBaseUrl}faculty/uploadPEOImportFile`,
+      {
+        method: "POST",
+        body: data1,
+      }
+    );
+    const data = await response.json();
+    return data;
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+export const uploadPopsoFile = async (fil) => {
+  try {
+    var data1 = new FormData();
+    data1.append("file", fil);
+
+    const response = await fetch(
+      `${process.env.APIBaseUrl}faculty/uploadPOPSOImportFile`,
+      {
+        method: "POST",
+        body: data1,
+      }
+    );
+    const data = await response.json();
+    return data;
+  } catch (error) {
+    console.log(error);
+  }
+};
