@@ -101,3 +101,21 @@ export const getFacultyData= async (facultyNo) => {
         console.log(error);
     }
 };
+export const getDeptFacultyDataForTimeTable= async (deptID) => {
+    try {
+        const response = await fetch(
+            `${process.env.APIBaseUrl}faculty/getAllFacultiesForHODTT/?departmentID=${deptID}`,
+            {
+                method: "GET",
+                headers: {
+                    "Content-Type": "application/json",
+                    'Accept': 'application/json'
+                },
+            }
+        );
+        const data = await response.json();
+        return data;
+    } catch (error) {
+        console.log(error);
+    }
+};
