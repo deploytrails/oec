@@ -9,7 +9,7 @@ const TableWrap = ({ thValues, tdValues, data }) => {
   const [countPerPage] = useState(15);
   const [currentPage, setCurrentPage] = useState(1);
   const paginate = (pageNumber) => setCurrentPage(pageNumber);
-  const [filteredData, setFilteredData] = useState(data);
+  const [filteredData, setFilteredData] = useState([]);
 
   const indexOfLastPost = currentPage * countPerPage;
   const indexOfFirstPost = indexOfLastPost - countPerPage;
@@ -28,6 +28,9 @@ const TableWrap = ({ thValues, tdValues, data }) => {
     }
   };
 
+  useEffect(() => {
+    setFilteredData(data);
+  }, [data]);
   return (
     <React.Fragment>
       <div
