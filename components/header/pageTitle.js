@@ -8,7 +8,8 @@ import { COLORS } from "../../constants";
 
 const PageTitle = () => {
   const routerpath = useRouter();
-  const pageName = routerpath.pathname.replace("/", "");
+  // const pageName = routerpath.pathname.replace("/", "");
+  const pageName = Cookies.get("routeName");
   const roleCheck = Cookies.get("roleFinder");
   return (
     <React.Fragment>
@@ -27,16 +28,34 @@ const PageTitle = () => {
               font-weight: bold;
             `}
           >
-          <span className="mr-2">{roleCheck === 'Faculty' ? "Faculty" : roleCheck === 'Admin' ? "Admin" : roleCheck==='HOD' ? "HOD" : roleCheck === 'Student' ? "Student" : ""}</span>
+            <span className="mr-2">
+              {roleCheck === "Faculty"
+                ? "Faculty"
+                : roleCheck === "Admin"
+                ? "Admin"
+                : roleCheck === "HOD"
+                ? "HOD"
+                : roleCheck === "Student"
+                ? "Student"
+                : ""}
+            </span>
             {pageName}
           </h2>
         </div>
         <div className="float-right text-gray-600">
-        
           <span className="ml-2 capitalize">
-          
             <FontAwesomeIcon icon={faHome} className="mr-1" />
-            <span className="mr-2">{roleCheck === 'Faculty' ? "Faculty" : roleCheck === 'Admin' ? "Admin" : roleCheck==='HOD' ? "HOD" : roleCheck === 'Student' ? "Student" : ""}</span>
+            {/* <span className="mr-2">
+              {roleCheck === "Faculty"
+                ? "Faculty"
+                : roleCheck === "Admin"
+                ? "Admin"
+                : roleCheck === "HOD"
+                ? "HOD"
+                : roleCheck === "Student"
+                ? "Student"
+                : ""}
+            </span> */}
             {pageName}
           </span>
         </div>

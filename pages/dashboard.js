@@ -20,10 +20,12 @@ const DynStuDashboard = dynamic({
   loader: () => import("./student-dashboard"),
   ssr: false,
 });
+
 const Dashboard = () => {
   const [nonAttenData, setNonAttenData] = useState([]);
   const facultyId = Cookies.get("employeeID");
   const roleCheck = Cookies.get("roleFinder");
+  Cookies.set("routeName", "Dashboard");
 
   const getNonPostAtten = async () => {
     const data = await getNonPostedAttendance(facultyId);
@@ -31,9 +33,12 @@ const Dashboard = () => {
   };
 
   useEffect(() => {
-    getNonPostAtten();
+    //  getNonPostAtten();
   }, []);
 
+  const storeRouteName = (routeName) => {
+    Cookies.set("routeName", routeName);
+  };
   const dashBoardLinks = [
     {
       name: "Dashboard",
@@ -253,7 +258,10 @@ const Dashboard = () => {
             <div className="clearfix">
               {dashBoardLinks &&
                 dashBoardLinks.map((item) => (
-                  <div className="w-4/12 float-left text-center relative">
+                  <div
+                    className="w-4/12 float-left text-center relative"
+                    onClick={() => storeRouteName(item.name)}
+                  >
                     <Link href={item.url} key={item.name}>
                       <a className=" p-4 bg-white shadow  box-border block m-1 font-bold hover:shadow-2xl hover:text-green-400">
                         <span
@@ -283,14 +291,20 @@ const Dashboard = () => {
           roleCheck !== "Faculty" &&
           roleCheck !== "Hod" &&
           roleCheck === "Admin" && (
-            <DynAdminDashboard dashBoardLinks={admindashBoardLinks} />
+            <DynAdminDashboard
+              dashBoardLinks={admindashBoardLinks}
+              storeRoute={storeRouteName}
+            />
           )}
 
         {roleCheck !== "Student" &&
           roleCheck !== "Faculty" &&
           roleCheck !== "Admin" &&
           roleCheck === "HOD" && (
-            <DynHodDashboard dashBoardLinks={hoddashBoardLinks} />
+            <DynHodDashboard
+              dashBoardLinks={hoddashBoardLinks}
+              storeRoute={storeRouteName}
+            />
           )}
 
         {roleCheck === "Student" &&

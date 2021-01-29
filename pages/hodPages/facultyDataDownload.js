@@ -307,11 +307,13 @@ const FacultyDataDownload = () => {
                     type={"text/excel"}
                   />
                 </div>
-                <TableWrap
-                  thValues={thValues}
-                  tdValues={tdValues}
-                  data={isPublicationData}
-                />
+                <div>
+                  <TableWrap
+                    thValues={thValues}
+                    tdValues={tdValues}
+                    data={isPublicationData}
+                  />
+                </div>
               </>
             ) : (
               <>

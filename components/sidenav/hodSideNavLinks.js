@@ -34,6 +34,11 @@ import {
   faObjectGroup,
   faLayerGroup,
   faAddressCard,
+  faDownload,
+  faArrowsAltH,
+  faListAlt,
+  faCalendarAlt,
+  faChild,
 } from "@fortawesome/free-solid-svg-icons";
 
 const HodSideNavLinks = () => {
@@ -389,7 +394,7 @@ const HodSideNavLinks = () => {
           }
         >
           <a className="clearfix cursor-pointer" onClick={toggleAlloCourceMenu}>
-            <FontAwesomeIcon icon={faList} /> Class Schedule
+            <FontAwesomeIcon icon={faCalendarAlt} /> Class Schedule
             <span className="float-right">
               <FontAwesomeIcon
                 icon={faChevronRight}
@@ -563,7 +568,7 @@ const HodSideNavLinks = () => {
         >
           <Link href="/hodPages/swapClass/swapWrapper">
             <a>
-              <FontAwesomeIcon icon={faIdBadge} /> Swap Classes
+              <FontAwesomeIcon icon={faArrowsAltH} /> Swap Classes
             </a>
           </Link>
         </li>
@@ -581,7 +586,7 @@ const HodSideNavLinks = () => {
         >
           <Link href="/hodPages/Mentors/mentor">
             <a>
-              <FontAwesomeIcon icon={faCalendar} /> Mentor
+              <FontAwesomeIcon icon={faGraduationCap} /> Mentor
             </a>
           </Link>
         </li>
@@ -617,7 +622,7 @@ const HodSideNavLinks = () => {
         >
           <Link href="/hodPages/assignGroup">
             <a>
-              <FontAwesomeIcon icon={faTint} /> Assign Group
+              <FontAwesomeIcon icon={faChild} /> Assign Group
             </a>
           </Link>
         </li>
@@ -634,8 +639,7 @@ const HodSideNavLinks = () => {
         >
           <Link href="/hodPages/facultyCoursesList">
             <a>
-              <FontAwesomeIcon icon={faTint} />
-              List of Faculty Courses
+              <FontAwesomeIcon icon={faListAlt} /> List of Faculty Courses
             </a>
           </Link>
         </li>
@@ -652,7 +656,7 @@ const HodSideNavLinks = () => {
         >
           <Link href="/hodPages/facultyDataDownload">
             <a>
-              <FontAwesomeIcon icon={faTint} /> Faculty Data Download
+              <FontAwesomeIcon icon={faDownload} /> Faculty Data Download
             </a>
           </Link>
         </li>

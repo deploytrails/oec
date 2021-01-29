@@ -55,6 +55,7 @@ const TopHeader = () => {
   const logMeOut = () => {
     Cookies.remove("loggedUserStatus");
     Cookies.remove("employeeID");
+    Cookies.remove("routeName");
     router.push("/");
   };
   //dipslay profile dropdown

@@ -2,13 +2,16 @@ import React from "react";
 import Link from "next/link";
 import { css } from "@emotion/core";
 
-const AdminDashboard = ({ dashBoardLinks }) => {
+const AdminDashboard = ({ dashBoardLinks, storeRoute }) => {
   return (
     <React.Fragment>
       <div className="clearfix">
         {dashBoardLinks &&
           dashBoardLinks.map((item) => (
-            <div className="w-4/12 float-left text-center relative">
+            <div
+              className="w-4/12 float-left text-center relative"
+              onClick={() => storeRoute(item.name)}
+            >
               <Link href={item.url} key={item.name}>
                 <a className=" p-4 bg-white shadow  box-border block m-1 font-bold hover:shadow-2xl hover:text-green-400">
                   <span
