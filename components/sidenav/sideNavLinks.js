@@ -10,6 +10,10 @@ const HodSideNavLinks = dynamic({
   loader: () => import("./hodSideNavLinks"),
   ssr: false,
 });
+const AdminSideNavLinks = dynamic({
+  loader: () => import("./adminSideNavLinks"),
+  ssr: false,
+});
 import {
   faColumns,
   faFileImport,
@@ -482,11 +486,11 @@ const SideNavLinks = () => {
                     css={
                       router.pathname === "/reports/courseRegister"
                         ? css`
-                              color: ${COLORS.GREEN};
-                            `
+                            color: ${COLORS.GREEN};
+                          `
                         : css`
-                              color: ${COLORS.TEXTGRAY};
-                            `
+                            color: ${COLORS.TEXTGRAY};
+                          `
                     }
                   >
                     <Link href="/reports/courseRegister">
@@ -499,16 +503,17 @@ const SideNavLinks = () => {
                     css={
                       router.pathname === "/reports/courseWiseAttendance"
                         ? css`
-                              color: ${COLORS.GREEN};
-                            `
+                            color: ${COLORS.GREEN};
+                          `
                         : css`
-                              color: ${COLORS.TEXTGRAY};
-                            `
+                            color: ${COLORS.TEXTGRAY};
+                          `
                     }
                   >
                     <Link href="/reports/courseWiseAttendance">
                       <a>
-                        <FontAwesomeIcon icon={faLayerGroup} /> Cource Wise Attendance
+                        <FontAwesomeIcon icon={faLayerGroup} /> Cource Wise
+                        Attendance
                       </a>
                     </Link>
                   </li>
@@ -516,19 +521,19 @@ const SideNavLinks = () => {
                     css={
                       router.pathname === "/reports/dayWiseAttendance"
                         ? css`
-                              color: ${COLORS.GREEN};
-                            `
+                            color: ${COLORS.GREEN};
+                          `
                         : css`
-                              color: ${COLORS.TEXTGRAY};
-                            `
+                            color: ${COLORS.TEXTGRAY};
+                          `
                     }
                   >
                     <Link href="/reports/dayWiseAttendance">
                       <a>
-                        <FontAwesomeIcon icon={faAddressCard} /> Day Wise Attendance
+                        <FontAwesomeIcon icon={faAddressCard} /> Day Wise
+                        Attendance
                       </a>
                     </Link>
-
                   </li>
                 </ul>
               )}
@@ -575,7 +580,7 @@ const SideNavLinks = () => {
       {roleCheck !== "Student" &&
         roleCheck !== "Faculty" &&
         roleCheck !== "Hod" &&
-        roleCheck === "Admin" && <p className="text-white">Admin Navigation</p>}
+        roleCheck === "Admin" && <AdminSideNavLinks />}
 
       {roleCheck !== "Student" &&
         roleCheck !== "Faculty" &&

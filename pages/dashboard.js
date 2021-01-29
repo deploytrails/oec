@@ -181,6 +181,66 @@ const Dashboard = () => {
     },
   ];
 
+  const admindashBoardLinks = [
+    {
+      name: "Dashboard",
+      url: "/dashboard",
+      icon: <img src="/dash-icon-1.png" width="100" />,
+    },
+    {
+      name: "Imports",
+      url: "/adminPages/imports",
+      icon: <img src="/dash-icon-2.png" width="100" />,
+    },
+    {
+      name: "Attendance",
+      url: "/adminPages/attendance",
+      icon: <img src="/dash-icon-3.png" width="100" />,
+    },
+
+    {
+      name: "Setup",
+      url: "/",
+      icon: <img src="/dash-icon-2.png" width="100" />,
+    },
+    {
+      name: "Students",
+      url: "/adminPages/students",
+      icon: <img src="/dash-icon-8.png" width="100" />,
+    },
+    {
+      name: "Faculty",
+      url: "/adminPages/Faculty",
+      icon: <img src="/dash-icon-9.png" width="100" />,
+    },
+    {
+      name: "TimeTable",
+      url: "/adminPages/timeTable",
+      icon: <img src="/dash-icon-10.png" width="100" />,
+    },
+    {
+      name: "Semester Sections",
+      url: "/adminPages/semSections",
+      icon: <img src="/dash-icon-1.png" width="100" />,
+    },
+    {
+      name: "Faculty Subject Experience",
+      url: "/adminPages/FacSubExp",
+      icon: <img src="/dash-icon-1.png" width="100" />,
+    },
+    {
+      name: "Reports",
+      url: "/",
+      icon: <img src="/dash-icon-1.png" width="100" />,
+    },
+
+    {
+      name: "Graphs",
+      url: "/",
+      icon: <img src="/dash-icon-1.png" width="100" />,
+    },
+  ];
+
   return (
     <React.Fragment>
       <Layout>
@@ -222,7 +282,9 @@ const Dashboard = () => {
         {roleCheck !== "Student" &&
           roleCheck !== "Faculty" &&
           roleCheck !== "Hod" &&
-          roleCheck === "Admin" && <DynAdminDashboard />}
+          roleCheck === "Admin" && (
+            <DynAdminDashboard dashBoardLinks={admindashBoardLinks} />
+          )}
 
         {roleCheck !== "Student" &&
           roleCheck !== "Faculty" &&
