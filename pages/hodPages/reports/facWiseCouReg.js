@@ -16,24 +16,39 @@ const FacWiseCouReg = () => {
   const [courseName, setCourseName] = useState([]);
   const [facName, setFacName] = useState([]);
   const [endDate, setEndDate] = useState(new Date());
+  const [submitting, setSubmitting] = useState(true);
   const deptName = Cookies.get("departId");
   const loadCourseData = async (facultyNo) => {
     const courseData = await getCoursesData(facultyNo);
     if (courseData != undefined) {
       setCourseListData1(courseData.courseArray);
     }
-
   };
   const handleCourseChange = (e) => {
+    console.log(courseListData1[e.target.value]);
+    if (
+      courseListData1[e.target.value] != undefined ||
+      courseListData1[e.target.value] != ""
+    ) {
+      setStartDate(courseListData1[e.target.value].semesterStartDate);
+      setCourseCode(courseListData1[e.target.value].courseCode);
+      setCourseId(courseListData1[e.target.value].courseId);
+      setCourseName(courseListData1[e.target.value].courseName);
+      setFacName(courseListData1[e.target.value].facultyName);
+      if (
+        startDate != "" &&
+        courseCode != "" &&
+        courseId != "" &&
+        courseName != "" &&
+        facName != "" &&
+        ProfileId != "" &&
+        (deptName != "") & (endDate != "")
+      ) {
+        setSubmitting(false);
+      }
+    }
 
-    console.log(courseListData1[e.target.value])
-
-
-    setStartDate(courseListData1[e.target.value].semesterStartDate);
-    setCourseCode(courseListData1[e.target.value].courseCode);
-    setCourseId(courseListData1[e.target.value].courseId);
-    setCourseName(courseListData1[e.target.value].courseName)
-    setFacName(courseListData1[e.target.value].facultyName)
+    
     //     setStudentId(studentData.enrollstudentId);
 
     // setStartDate(courseCodeList[e.target.value].startDate);
@@ -41,23 +56,52 @@ const FacWiseCouReg = () => {
     // setCourseId(courseCodeList[e.target.value].courseId);
     // setCourseCode(courseCodeList[e.target.value].courseCode);
     // setCourseName(courseCodeList[e.target.value].courseName);
-  }
+  };
   const handleEndate = (e) => {
-    setEndDate(e.target.value)
-  }
+    if (
+      startDate != "" &&
+      courseCode != "" &&
+      courseId != "" &&
+      courseName != "" &&
+      facName != "" &&
+      ProfileId != "" &&
+      deptName != ""
+    ) {
+      setEndDate(e.target.value);
+      setSubmitting(false);
+    }
+  };
   const handleDownloadFacwiseCourseRegisterReport = (e) => {
     let stddate = moment(startDate).format("DD-MM-yyyy");
     let edate = moment(endDate).format("DD-MM-yyyy");
-    window.open("http://15.206.189.30:8081/faculty/DownloadAttendenceServlet?name=courseregister&operation=downloadreport&empName="+facName+"&courseparam=" + courseId + "&param2=" + stddate + "&param3=" + edate + "&empID=" + ProfileId + "&coursecode=" + courseCode + "&coursename=" + courseName + "&deptname=" + deptName)
-  }
+    
+    window.open(
+      "http://15.206.189.30:8081/faculty/DownloadAttendenceServlet?name=courseregister&operation=downloadreport&empName=" +
+        facName +
+        "&courseparam=" +
+        courseId +
+        "&param2=" +
+        stddate +
+        "&param3=" +
+        edate +
+        "&empID=" +
+        ProfileId +
+        "&coursecode=" +
+        courseCode +
+        "&coursename=" +
+        courseName +
+        "&deptname=" +
+        deptName
+    );
+  };
   const handleChange = (e) => {
     try {
+      
       loadCourseData(e.target.value);
 
-    } catch (error) {
-    }
-
-  }
+      //"+facName+"&courseparam=" + courseId + "&param2=" + stddate + "&param3=" + edate + "&empID=" + ProfileId + "&coursecode=" + courseCode + "&coursename=" + courseName + "&deptname=" + deptName
+    } catch (error) {}
+  };
   useEffect((facNo) => {
     loadCourseData(facNo);
   }, []);
@@ -78,7 +122,8 @@ const FacWiseCouReg = () => {
             `}
           >
             <b> Faculty Number</b>
-            <input css={css`
+            <input
+              css={css`
                 display: block;
                 width: 20%;
                 height: 42px;
@@ -95,7 +140,19 @@ const FacWiseCouReg = () => {
                 &:focus {
                   outline: none;
                 }
-              `} required type="text" minLength="10" maxLength="10" name="facultyNo" placeholder="Faculty Number" onChange={(e) => handleChange(e)} />
+              `}
+              required
+              type="text"
+              minLength="10"
+              maxLength="10"
+              name="facultyNo"
+              placeholder="Faculty Number"
+              onChange={(e) => {
+                if (e.target.value.length == 10) {
+                  handleChange(e);
+                }
+              }}
+            />
           </label>
         </div>
         <div>
@@ -136,11 +193,10 @@ const FacWiseCouReg = () => {
               <option value="" selected disabled>
                 Select Your option
               </option>
-              {courseListData1 && courseListData1.map((course, i) => (
-                <option value={i}>
-                  {course.courseName}
-                </option>
-              ))}
+              {courseListData1 &&
+                courseListData1.map((course, i) => (
+                  <option value={i}>{course.courseName}</option>
+                ))}
             </select>
           </label>
         </div>
@@ -151,6 +207,7 @@ const FacWiseCouReg = () => {
             name="startDate"
             value={moment(startDate).format("YYYY-MM-DD")}
             placeholder="Start Date"
+            readOnly
             className="block w-5/12 text-black py-2 px-4 box-border  float-right mt-4 rounded shadow focus: outline-none"
           />
           <b>End Date</b>
@@ -162,14 +219,16 @@ const FacWiseCouReg = () => {
             className="block w-5/12 text-black py-2 px-4 box-border  float-right mt-4 rounded shadow focus: outline-none"
           />
 
-
           <button
             type="button"
             className="bg-green-400 block  mx-auto px-2 py-1 rounded mb-2"
-            onClick={(event) => handleDownloadFacwiseCourseRegisterReport(event)}
+            disabled={submitting}
+            onClick={(event) =>
+              handleDownloadFacwiseCourseRegisterReport(event)
+            }
           >
             Download
-                                  </button>
+          </button>
         </React.Fragment>
       </Layout>
     </React.Fragment>

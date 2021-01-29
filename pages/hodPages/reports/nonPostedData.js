@@ -3,24 +3,30 @@ import Layout from "../../../components/layout";
 import moment from "moment";
 import Cookies from "js-cookie";
 
-
-
 const NonPostedData = () => {
   const [startDate, setStartDate] = useState(new Date());
   const [endDate, setEndDate] = useState(new Date());
+  const [submitting, setSubmitting] = useState(true);
   const deptId = Cookies.get("departId");
   const handleEndate = (e) => {
-    setEndDate(e.target.value)
-  }
+    setEndDate(e.target.value);
+    setSubmitting(false);
+  };
   const handleStartDate = (e) => {
-    setStartDate(e.target.value)
-  }
+    setStartDate(e.target.value);
+  };
   const handleDepartmentNonPostedData = (e) => {
     // let stddate=moment(startDate).format("DD-MM-yyyy");
     // let edate=moment(endDate).format("DD-MM-yyyy");
-    window.open("http://15.206.189.30:8081/faculty/getNonPosteddata?fromDate=" + startDate + "&departmentID=" + deptId + "&toDate=" + endDate);
-
-  }
+    window.open(
+      "http://15.206.189.30:8081/faculty/getNonPosteddata?fromDate=" +
+        startDate +
+        "&departmentID=" +
+        deptId +
+        "&toDate=" +
+        endDate
+    );
+  };
   return (
     <React.Fragment>
       <Layout>
@@ -40,19 +46,22 @@ const NonPostedData = () => {
             type="date"
             name="endDate"
             placeholder="End Date"
-            onChange={(event) => handleEndate(event)}
+            onChange={(event) => {
+              if (startDate != "") {
+                handleEndate(event);
+              }
+            }}
             className="block w-5/12 text-black py-2 px-4 box-border  float-right mt-4 rounded shadow focus: outline-none"
           />
 
-          {startDate!=undefined && endDate!=undefined &&
-            <button
-              type="button"
-              className="bg-green-400 block  mx-auto px-2 py-1 rounded mb-2"
-              onClick={(event) => handleDepartmentNonPostedData(event)}
-            >
-              Download
-                                    </button>
-          }
+          <button
+            type="button"
+            className="bg-green-400 block  mx-auto px-2 py-1 rounded mb-2"
+            disabled={submitting}
+            onClick={(event) => handleDepartmentNonPostedData(event)}
+          >
+            Download
+          </button>
         </React.Fragment>
       </Layout>
     </React.Fragment>

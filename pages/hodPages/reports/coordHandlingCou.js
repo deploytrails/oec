@@ -1,4 +1,4 @@
-import React, { useState,useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import Layout from "../../../components/layout";
 import css from "@emotion/css";
 import Cookies from "js-cookie";
@@ -9,26 +9,35 @@ const CoordHandlingCou = () => {
   const [facId, setFacId] = useState();
   const [facultyNo, setFacultyNo] = useState([]);
   const [deptId, setDeptId] = useState([]);
-  const dept=Cookies.get("departId");
+  const dept = Cookies.get("departId");
   const [endDate, setEndDate] = useState(new Date());
+  const [submitting, setSubmitting] = useState(true);
   const loadFacultyData = async (facNo) => {
     const data = await getFacultyData(facNo);
-    setFacId(data.facdata)
+    setFacId(data.facdata);
     setDeptId(dept);
-  }
+  };
   const handleChange = (e) => {
     setFacultyNo(e.target.value);
-    loadFacultyData(e.target.value);
-  }
+    loadFacultyData(e.target.value).then(setSubmitting(false));
+  };
   useEffect((facNo) => {
     loadFacultyData(facNo);
   }, []);
-  const handleDownloadFacHandlingCourseReport=(e)=>{
-    window.open("http://15.206.189.30:8081/faculty/getCoordinatorHandlingCoursesReport?employeeID=" + facId + "&departmentID=" + deptId);
-  }
-  const handleDownloadAllFacHandlingCourseReport=()=>{
-    window.open("http://15.206.189.30:8081/faculty/getAllCoordinatorHandlingCoursesReport?departmentID=" + deptId);     
-  }
+  const handleDownloadFacHandlingCourseReport = (e) => {
+    window.open(
+      "http://15.206.189.30:8081/faculty/getCoordinatorHandlingCoursesReport?employeeID=" +
+        facId +
+        "&departmentID=" +
+        deptId
+    );
+  };
+  const handleDownloadAllFacHandlingCourseReport = () => {
+    window.open(
+      "http://15.206.189.30:8081/faculty/getAllCoordinatorHandlingCoursesReport?departmentID=" +
+        deptId
+    );
+  };
   return (
     <React.Fragment>
       <Layout>
@@ -46,7 +55,8 @@ const CoordHandlingCou = () => {
             `}
           >
             <b> Faculty Number</b>
-            <input css={css`
+            <input
+              css={css`
                 display: block;
                 width: 20%;
                 height: 42px;
@@ -63,23 +73,32 @@ const CoordHandlingCou = () => {
                 &:focus {
                   outline: none;
                 }
-              `} required type="text" minLength="10" maxLength="10" name="facultyNo" placeholder="Faculty Number" onChange={(e) => handleChange(e)} />
+              `}
+              required
+              type="text"
+              minLength="10"
+              maxLength="10"
+              name="facultyNo"
+              placeholder="Faculty Number"
+              onChange={(e) => handleChange(e)}
+            />
           </label>
         </div>
         <button
-              type="button"
-              className="bg-green-400 block  mx-auto px-2 py-1 rounded mb-2"
-              onClick={(event) => handleDownloadFacHandlingCourseReport(event)}
-            >
-              Download For Faculty Report
-                                  </button>
-                                  <button
-              type="button"
-              className="bg-green-400 block  mx-auto px-2 py-1 rounded mb-2"
-              onClick={(event) => handleDownloadAllFacHandlingCourseReport(event)}
-            >
-              Download For All Faculty Report
-                                  </button>
+          type="button"
+          className="bg-green-400 block  mx-auto px-2 py-1 rounded mb-2"
+          disabled={submitting}
+          onClick={(event) => handleDownloadFacHandlingCourseReport(event)}
+        >
+          Download For Faculty Report
+        </button>
+        <button
+          type="button"
+          className="bg-green-400 block  mx-auto px-2 py-1 rounded mb-2"
+          onClick={(event) => handleDownloadAllFacHandlingCourseReport(event)}
+        >
+          Download For All Faculty Report
+        </button>
       </Layout>
     </React.Fragment>
   );
