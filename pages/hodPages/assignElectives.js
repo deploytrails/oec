@@ -8,6 +8,7 @@ import {
   getElectiveTypes,
   getElectives,
   getStudents,
+  allocateElectives,
 } from "../../services/hodServices/assignElectiveService";
 
 const AssignElectives = () => {
@@ -59,21 +60,14 @@ const AssignElectives = () => {
     getStudentsInfo("201961010142249513362891", "20196101013404918557388");
   };
 
-  // const excludeColumns = ["0"];
-  // const searchFilterFunction = (value) => {
-  //   const lowercasedValue = value.toLowerCase().trim();
-  //   if (lowercasedValue === "") setFilteredData(studentList);
-  //   else {
-  //     const filteredData = studentList.filter((item) => {
-  //       return Object.keys(item).some((key) =>
-  //         excludeColumns.includes(key)
-  //           ? false
-  //           : item[key].toString().toLowerCase().includes(lowercasedValue)
-  //       );
-  //     });
-  //     setFilteredData(filteredData);
-  //   }
-  // };
+  const allocateElectivesData = async (groupName) => {
+
+    const data = await allocateElectives(
+      semesterId,
+      studentList
+    );
+  };
+
   const thValues = [
     "Student Roll No.",
     "Student Name",
@@ -267,62 +261,11 @@ const AssignElectives = () => {
             />
           </div>
         )}
-        {/* {!studentList || studentList?.length <= 0 ? (
-          <div> {"No Data Available"}</div>
-        ) : (
-          <TABLE.TableWrapper>
-            <TABLE.TableTR>
-              <TABLE.TableTh>R NO</TABLE.TableTh>
-              <TABLE.TableTh>Nme</TABLE.TableTh>
-              <TABLE.TableTh>Semester</TABLE.TableTh>
-              <TABLE.TableTh>Electives</TABLE.TableTh>
-              <TABLE.TableTh>
-                {
-                  <lable htmlFor="attendIds">
-                    <input
-                      type="checkbox"
-                      name="attendIds"
-                      className="attendIds"
-                      id="attendIds"
-                      // onChange={(e) => markAllStudents(e)}
-                    />
-                  </lable>
-                }
-                Select All
-              </TABLE.TableTh>
-            </TABLE.TableTR>
-
-            {filteredData &&
-              filteredData.length &&
-              filteredData.map((student, index) => (
-                <TABLE.TableTRR key={student.roll}>
-                  <TABLE.TableTdd>{student.roll}</TABLE.TableTdd>
-                  <TABLE.TableTdd>{student.firstName}</TABLE.TableTdd>
-                  <TABLE.TableTdd>{student.semesterCode}</TABLE.TableTdd>
-                  <TABLE.TableTdd>{student.studentGroup}</TABLE.TableTdd>
-                  <TABLE.TableTdd>{student.studentSelect}</TABLE.TableTdd>
-                  <TABLE.TableTdd>
-                    <lable htmlFor={student.id}>
-                      <input
-                        type="checkbox"
-                        className="atend"
-                        name={student.id}
-                        id={student.id}
-                        defaultChecked={false}
-                        onChange={(e) =>
-                          checkAssignGroup(e, index, student.studentID)
-                        }
-                      />
-                    </lable>
-                    {student.studentSelect}
-                  </TABLE.TableTdd>
-                </TABLE.TableTRR>
-              ))}
-          </TABLE.TableWrapper>
-        )} */}
 
         <button
-          onClick={() => insertAttendanceData("Allocate Electives")}
+          onClick={() =>
+            allocateElectivesData('AssignElectives')
+          }
           type="button"
           className="bg-yellow-400 block  mx-auto px-2 py-1 rounded"
         >
