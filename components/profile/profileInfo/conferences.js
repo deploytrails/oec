@@ -76,9 +76,9 @@ const Conferences = ({ isConfData, loadConfInfo }) => {
 
         <TABLE.TableWrapper>
           <TABLE.TableTR>
-            <TABLE.TableTh>Name of The Faculty</TABLE.TableTh>
+            <TABLE.TableTh>Faculty Name</TABLE.TableTh>
             <TABLE.TableTh>Conference / Seminar</TABLE.TableTh>
-            <TABLE.TableTh>Title Of The Conference</TABLE.TableTh>
+            <TABLE.TableTh>Conference Title</TABLE.TableTh>
             <TABLE.TableTh>National / International</TABLE.TableTh>
             <TABLE.TableTh>Month & Year</TABLE.TableTh>
             <TABLE.TableTh>Action</TABLE.TableTh>

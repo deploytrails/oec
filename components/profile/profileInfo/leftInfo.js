@@ -68,19 +68,23 @@ const LeftInfo = ({ isProfileData, loadProfileData }) => {
               <React.Fragment>
                 <p key={item} className="clearfix">
                   <span>
-                    <FontAwesomeIcon icon={faUser} /> Name
+                    <FontAwesomeIcon icon={faUser} />
+                    Name
                   </span>
                   <span>{item.firstName}</span>
                   <span>
-                    <FontAwesomeIcon icon={faUserCircle} /> First Name
+                    <FontAwesomeIcon icon={faUserCircle} />
+                    First Name
                   </span>
                   <span>-</span>
                   <span>
-                    <FontAwesomeIcon icon={faPen} /> Last Name
+                    <FontAwesomeIcon icon={faPen} />
+                    Last Name
                   </span>
                   <span>{item.lastName}</span>
                   <span>
-                    <FontAwesomeIcon icon={faMarsDouble} /> Gender
+                    <FontAwesomeIcon icon={faMarsDouble} />
+                    Gender
                   </span>
                   <span>{item.gender}</span>
                   <span>
@@ -89,28 +93,33 @@ const LeftInfo = ({ isProfileData, loadProfileData }) => {
                   </span>
                   <span>{moment(item.dateOfBirth).format("DD/MM/YYYY")}</span>
                   <span>
-                    <FontAwesomeIcon icon={faUserLock} /> Father Name
+                    <FontAwesomeIcon icon={faUserLock} />
+                    Father Name
                   </span>
                   <span>{item.fatherName}</span>
                   <span>
-                    <FontAwesomeIcon icon={faTv} /> Employee Type
+                    <FontAwesomeIcon icon={faTv} />
+                    Employee Type
                   </span>
                   <span>{item.employeeType}</span>
                   <span>
-                    <FontAwesomeIcon icon={faBuilding} /> Association Type
+                    <FontAwesomeIcon icon={faBuilding} />
+                    Association Type
                   </span>
                   <span>{item.associationType}</span>
                   <span>
-                    <FontAwesomeIcon icon={faSuitcase} /> Designation
+                    <FontAwesomeIcon icon={faSuitcase} />
+                    Designation
                   </span>
                   <span>{item.designation}</span>
                   <span>
                     <FontAwesomeIcon icon={faCalendar} />
-                    Date of Joining
+                    Joining Date
                   </span>
                   <span>{moment(item.dateOfJoining).format("DD/MM/YYYY")}</span>
                   <span>
-                    <FontAwesomeIcon icon={faCalendarCheck} /> Date of Leaving
+                    <FontAwesomeIcon icon={faCalendarCheck} />
+                    Leaving Date
                   </span>
                   <span>-</span>
                   <span>
@@ -129,7 +138,8 @@ const LeftInfo = ({ isProfileData, loadProfileData }) => {
                   </span>
                   <span>{item.jntuhID}</span>
                   <span>
-                    <FontAwesomeIcon icon={faHashtag} /> AICTE No.
+                    <FontAwesomeIcon icon={faHashtag} />
+                    AICTE No.
                   </span>
                   <span>{item.aicteId}</span>
                   <span>
@@ -138,7 +148,8 @@ const LeftInfo = ({ isProfileData, loadProfileData }) => {
                   </span>
                   <span>{item.achievements}</span>
                   <span>
-                    <FontAwesomeIcon icon={faSearch} /> Research Activities
+                    <FontAwesomeIcon icon={faSearch} />
+                    Research Activities
                   </span>
                   <span>{item.researchActivities}</span>
                 </p>

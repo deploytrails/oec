@@ -109,15 +109,17 @@ const RightInfo = ({ pInfo }) => {
                     <span>-</span>
                     <span>
                       <FontAwesomeIcon icon={faShieldAlt} />
-                      Years of experience :
+                      Years of Experience :
                     </span>
                     <span>-</span>
                     <span>
-                      <FontAwesomeIcon icon={faAward} /> Achievements :
+                      <FontAwesomeIcon icon={faAward} />
+                      Achievements :
                     </span>
                     <span>-</span>
                     <span>
-                      <FontAwesomeIcon icon={faSearch} /> Research Activities :
+                      <FontAwesomeIcon icon={faSearch} />
+                      Research Activities :
                     </span>
                     <span>-</span>
                   </p>

@@ -48,7 +48,7 @@ const ContactInfo = ({ isProfileData, loadProfileData }) => {
               `}
             >
               <p className="clearfix font-sans text-sm">
-                <FontAwesomeIcon icon={faEnvelope} /> email:
+                <FontAwesomeIcon icon={faEnvelope} /> Email:
                 <span className="float-right">{contactDets.email}</span>
               </p>
               <p className="clearfix font-sans text-sm">

@@ -7,19 +7,14 @@ import Syllabus from "../../components/course-coordinator/syllabus";
 import Questions from "../../components/course-coordinator/questions";
 import COPOMapping from "../../components/course-coordinator/COPOMapping";
 
-const CourseTabsWrap = ({
-  getExpandedRowData,
-  courseData
-}) => {
+const CourseTabsWrap = ({ getExpandedRowData, courseData }) => {
   const [active, setActive] = useState(0);
-  const handleClick = e => {
+  const handleClick = (e) => {
     const index = parseInt(e.target.id, 0);
     if (index !== active) {
       setActive(index);
     }
   };
-
-
 
   return (
     <React.Fragment>
@@ -27,48 +22,47 @@ const CourseTabsWrap = ({
         <Tabs>
           <Tab onClick={handleClick} active={active === 0} id={0}>
             Syllabus
-    </Tab>
+          </Tab>
 
           <Tab onClick={handleClick} active={active === 1} id={1}>
             CO-PO Mapping
-    </Tab>
+          </Tab>
 
           <Tab onClick={handleClick} active={active === 2} id={2}>
             Question Paper Entry
-    </Tab>
+          </Tab>
 
           <Tab onClick={handleClick} active={active === 3} id={3}>
             Reports
-    </Tab>
-          <span className="absolute cursor-pointer bg-gray-200 w-6 h-6 rounded-full block shadow hover:bg-green-400" css={css` top:4px; right:4px; text-center`}>
+          </Tab>
+          <span
+            className="absolute cursor-pointer bg-gray-200 w-6 h-6 rounded-full block shadow hover:bg-green-400"
+            css={css` top:4px; right:4px; text-center`}
+          >
             <FontAwesomeIcon
-              css={css` position:relative; left:6px; top:2px;`}
+              css={css`
+                position: relative;
+                left: 6px;
+                top: 2px;
+              `}
               icon={faTimes}
               onClick={() => getExpandedRowData()}
             />
-      &nbsp;&nbsp;
-    </span>
+            &nbsp;&nbsp;
+          </span>
         </Tabs>
 
         <Content active={active === 0}>
-          <Syllabus
-            courseData={courseData}
-          ></Syllabus>
+          <Syllabus courseData={courseData}></Syllabus>
         </Content>
         <Content active={active === 1}>
-          <COPOMapping
-            courseData={courseData}
-          >
-          </COPOMapping>
+          <COPOMapping courseData={courseData}></COPOMapping>
         </Content>
         <Content active={active === 2}>
           <Questions courseData={courseData} />
         </Content>
-        <Content active={active === 3}>Reports data</Content>
-
-
+        <Content active={active === 3}>Reports Data</Content>
       </div>
-   
     </React.Fragment>
   );
 };

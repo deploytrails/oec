@@ -72,8 +72,8 @@ const BookPublications = ({ isBookPubInfo, loadBookPubInfo }) => {
 
         <TABLE.TableWrapper>
           <TABLE.TableTR>
-            <TABLE.TableTh>Title of the book</TABLE.TableTh>
-            <TABLE.TableTh>Name of the Publishers</TABLE.TableTh>
+            <TABLE.TableTh>Book Title</TABLE.TableTh>
+            <TABLE.TableTh>Publisher Name</TABLE.TableTh>
             <TABLE.TableTh>National / International</TABLE.TableTh>
             <TABLE.TableTh>ISBN</TABLE.TableTh>
             <TABLE.TableTh>Year</TABLE.TableTh>

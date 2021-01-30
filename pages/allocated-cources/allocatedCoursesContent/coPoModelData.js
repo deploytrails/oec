@@ -55,6 +55,7 @@ const CoPoModelData = ({ activeTabData, FacultyId }) => {
               {allocatedCoursesPos.pso1 && <TABLE.TableTh>PSO1</TABLE.TableTh>}
               {allocatedCoursesPos.pso2 && <TABLE.TableTh>PSO2</TABLE.TableTh>}
               {allocatedCoursesPos.pso3 && <TABLE.TableTh>PSO3</TABLE.TableTh>}
+              <TABLE.TableTh>Action</TABLE.TableTh>
             </TABLE.TableTR>
             <TABLE.TableTRR>
               <TABLE.TableTdd></TABLE.TableTdd>

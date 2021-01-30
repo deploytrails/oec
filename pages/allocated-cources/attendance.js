@@ -45,8 +45,6 @@ const Attendance = () => {
     setClassId(classId === id ? "" : id);
   };
 
-  //const classData = [{CourceName : }];
-
   useEffect(() => {
     getAllAttendance();
   }, []);
@@ -70,7 +68,7 @@ const Attendance = () => {
   };
 
   const tableHeaders = [
-    "Cource Code",
+    "Course Code",
     "	Course Name",
     "Start Time",
     "Room No",

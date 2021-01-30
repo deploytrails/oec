@@ -11,7 +11,7 @@ import {
   faSearch,
   faEdit,
   faTrashAlt,
-  faPlus
+  faPlus,
 } from "@fortawesome/free-solid-svg-icons";
 
 const WorkExp = ({ isExpeInfo, loadExpInfo }) => {
@@ -19,7 +19,7 @@ const WorkExp = ({ isExpeInfo, loadExpInfo }) => {
   const [expList, setExpList] = useState({});
   const [isAlert, setIsAlert] = useState(false);
   const [openSnackbar, closeSnackbar] = useSnackbar();
-  const openModal = data => {
+  const openModal = (data) => {
     setShow(!show);
     setExpList(data);
     if (!data || data === {} || data === null || data === undefined) {
@@ -29,7 +29,7 @@ const WorkExp = ({ isExpeInfo, loadExpInfo }) => {
   const openAlertModal = () => {
     setIsAlert(!isAlert);
   };
-  const deleteExperienceRecord = async id => {
+  const deleteExperienceRecord = async (id) => {
     const expData = await deleteWorkExpDetails(id);
     loadExpInfo();
     openSnackbar("Successfully deleted Work Experience record");
@@ -47,7 +47,7 @@ const WorkExp = ({ isExpeInfo, loadExpInfo }) => {
         </button>
         <TABLE.TableWrapper>
           <TABLE.TableTR>
-            <TABLE.TableTh>Name of the College</TABLE.TableTh>
+            <TABLE.TableTh>College Name</TABLE.TableTh>
             <TABLE.TableTh>Designation</TABLE.TableTh>
             <TABLE.TableTh>Roles & Responsibilities</TABLE.TableTh>
             <TABLE.TableTh>From</TABLE.TableTh>
@@ -59,7 +59,7 @@ const WorkExp = ({ isExpeInfo, loadExpInfo }) => {
 
           {isExpeInfo &&
             isExpeInfo.length &&
-            isExpeInfo.map(expInfo => (
+            isExpeInfo.map((expInfo) => (
               <TABLE.TableTRR key={expInfo.workExperienceId}>
                 <TABLE.TableTdd>{expInfo.collegename}</TABLE.TableTdd>
                 <TABLE.TableTdd>{expInfo.designation}</TABLE.TableTdd>

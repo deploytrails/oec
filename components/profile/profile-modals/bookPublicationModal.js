@@ -66,13 +66,13 @@ const BookPublicationModal = ({ openModal, bookList, loadBookPubInfo }) => {
               <div className="clearfix mb-3">
                 <div className="w-6/12 float-left pr-2">
                   <FormInput
-                    label="Title Of Book"
+                    label="Book Title"
                     type="text"
                     name="bookTitlePublication"
                     onChange={handleChange}
                     onBlur={handleBlur}
                     value={values.bookTitlePublication}
-                    placeholder="Title Of Book"
+                    placeholder="Book Title"
                     css={
                       errors.bookTitlePublication &&
                       touched.bookTitlePublication &&
@@ -85,13 +85,13 @@ const BookPublicationModal = ({ openModal, bookList, loadBookPubInfo }) => {
                 </div>
                 <div className="w-6/12 float-left">
                   <FormInput
-                    label="Name of The Publishers"
+                    label="Publisher Name"
                     type="text"
                     name="bookPublisherName"
                     onChange={handleChange}
                     onBlur={handleBlur}
                     value={values.bookPublisherName}
-                    placeholder="Name of The Publishers"
+                    placeholder="Publisher Name"
                     css={
                       errors.bookPublisherName &&
                       touched.bookPublisherName &&
@@ -107,7 +107,7 @@ const BookPublicationModal = ({ openModal, bookList, loadBookPubInfo }) => {
               <div className="clearfix mb-3">
                 <div className="w-6/12 float-left pr-2">
                   <label
-                    htmlFor="Type Of Publication"
+                    htmlFor="Publication Type"
                     css={css`
                       font-size: 14px;
                       display: block;
@@ -117,7 +117,7 @@ const BookPublicationModal = ({ openModal, bookList, loadBookPubInfo }) => {
                       }
                     `}
                   >
-                    Type Of Publication
+                    Publication Type
                     <select
                       onChange={handleChange}
                       onBlur={handleBlur}

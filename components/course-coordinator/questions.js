@@ -89,8 +89,8 @@ const Questions = ({ courseData }) => {
           <Form onSubmit={handleSubmit}>
             <TABLE.TableWrapper>
               <TABLE.TableTR>
-                <TABLE.TableTh>Question No</TABLE.TableTh>
-                <TABLE.TableTh>Question sub</TABLE.TableTh>
+                <TABLE.TableTh>Question No.</TABLE.TableTh>
+                <TABLE.TableTh>Question Sub</TABLE.TableTh>
                 <TABLE.TableTh>Questions</TABLE.TableTh>
                 <TABLE.TableTh>Marks</TABLE.TableTh>
                 <TABLE.TableTh>CO</TABLE.TableTh>

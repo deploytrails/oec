@@ -79,7 +79,7 @@ const WorkshopModal = ({ openModal, workshopList, loadWorkshopInfo }) => {
                       }
                     `}
                   >
-                    Work Shop
+                    Workshop Name
                     <select
                       name="typeOfWorkshopname"
                       onChange={handleChange}
@@ -218,7 +218,7 @@ const WorkshopModal = ({ openModal, workshopList, loadWorkshopInfo }) => {
                       }
                     `}
                   >
-                    Type Of Workshop
+                    Workshop Type
                     <select
                       onChange={handleChange}
                       onBlur={handleBlur}

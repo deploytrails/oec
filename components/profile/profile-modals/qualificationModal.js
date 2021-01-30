@@ -13,7 +13,7 @@ const QualificationModal = ({
   openModal,
   qualificationList,
   loadQualificationInfo,
-  isProfileData
+  isProfileData,
 }) => {
   const listTypes = [
     "Choose your option",
@@ -22,7 +22,7 @@ const QualificationModal = ({
     "Post Graduation",
     "Graduation/UnderGraduation",
     "Intermediate/Diploma",
-    "SSC"
+    "SSC",
   ];
   const ProfileId = Cookies.get("employeeID");
   const [openSnackbar, closeSnackbar] = useSnackbar();
@@ -30,7 +30,7 @@ const QualificationModal = ({
     collegeName: Yup.string().required(),
     branchName: Yup.string().required(),
     qualificationType: Yup.string().required(),
-    yearOfPass: Yup.string().required()
+    yearOfPass: Yup.string().required(),
   });
   return (
     <STYLES.PopupMask>
@@ -44,12 +44,12 @@ const QualificationModal = ({
             collegeName: qualificationList?.collegeName,
             branchName: qualificationList?.branchName,
             qualificationType: qualificationList?.qualificationType,
-            yearOfPass: qualificationList?.yearOfPass
+            yearOfPass: qualificationList?.yearOfPass,
           }}
           validationSchema={qualificationCreateSchema}
-          onSubmit={values => {
+          onSubmit={(values) => {
             console.log(values);
-            updateQualificationDetails(ProfileId, values).then(data => {
+            updateQualificationDetails(ProfileId, values).then((data) => {
               if (data === true) {
                 openSnackbar(
                   qualificationList?.qualificationID
@@ -68,7 +68,7 @@ const QualificationModal = ({
             touched,
             handleChange,
             handleBlur,
-            handleSubmit
+            handleSubmit,
           }) => (
             <form onSubmit={handleSubmit}>
               <div className="clearfix mb-3">
@@ -110,7 +110,7 @@ const QualificationModal = ({
                       `}
                     >
                       {listTypes &&
-                        listTypes.map(opt => (
+                        listTypes.map((opt) => (
                           <option
                             key={opt}
                             value={
@@ -170,13 +170,13 @@ const QualificationModal = ({
 
                 <div className="w-6/12 float-left">
                   <FormInput
-                    label="Year of Completion"
+                    label="Completion Year"
                     type="text"
                     name="yearOfPass"
                     onChange={handleChange}
                     onBlur={handleBlur}
                     value={values.yearOfPass}
-                    placeholder="Year of Completion"
+                    placeholder="Completion Year"
                     css={
                       errors.yearOfPass &&
                       touched.yearOfPass &&

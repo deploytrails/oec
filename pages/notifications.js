@@ -26,9 +26,9 @@ const Notifications = () => {
   return (
     <React.Fragment>
       <Layout>
-        <div className="clearfix px-2 pb-2">
+        {/* <div className="clearfix px-2 pb-2">
           <ToggleBox />
-        </div>
+        </div> */}
         <div className="clearfix px-6 pb-6" id="senderArray">
           <TABLE.TableWrapper>
             <TABLE.TableTR>

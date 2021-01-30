@@ -29,7 +29,7 @@ const ExternalResourceTabData = ({ forLinkTable }) => {
             ))}
         </TABLE.TableWrapper>
       ) : (
-        <div>Exteranl Reference Links/Notes Not Defined!</div>
+        <div>External Reference Links/Notes Not Defined!</div>
       )}
     </React.Fragment>
   );

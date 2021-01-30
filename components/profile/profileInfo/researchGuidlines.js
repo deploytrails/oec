@@ -71,9 +71,9 @@ const ResearchGuidlines = ({ isResearchGuidData, loadResearchGuidInfo }) => {
 
         <TABLE.TableWrapper>
           <TABLE.TableTR>
-            <TABLE.TableTh>Name of the Scholar</TABLE.TableTh>
-            <TABLE.TableTh>Year of Admission</TABLE.TableTh>
-            <TABLE.TableTh>Name of the University</TABLE.TableTh>
+            <TABLE.TableTh>Scholar Name</TABLE.TableTh>
+            <TABLE.TableTh>Admission Year</TABLE.TableTh>
+            <TABLE.TableTh>University Name</TABLE.TableTh>
             <TABLE.TableTh>Status</TABLE.TableTh>
             <TABLE.TableTh>Action</TABLE.TableTh>
           </TABLE.TableTR>

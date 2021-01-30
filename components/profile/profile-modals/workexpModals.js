@@ -19,7 +19,7 @@ const WorkExpModal = ({ openModal, expList, loadExpInfo }) => {
     designation: Yup.string().required(),
     responsibilites: Yup.string().required(),
     expFrom: Yup.date().required(),
-    expTo: Yup.date().required()
+    expTo: Yup.date().required(),
   });
   const listTypes = [
     "Choose your option",
@@ -38,7 +38,7 @@ const WorkExpModal = ({ openModal, expList, loadExpInfo }) => {
     "Administrator",
     "Librarian",
     "TPO",
-    "Finance"
+    "Finance",
   ];
   return (
     <STYLES.PopupMask>
@@ -51,11 +51,11 @@ const WorkExpModal = ({ openModal, expList, loadExpInfo }) => {
             designation: expList?.designation,
             responsibilites: expList?.responsibilites,
             expFrom: expList?.expFrom,
-            expTo: expList?.expTo
+            expTo: expList?.expTo,
           }}
           validationSchema={expCreateSchema}
-          onSubmit={values => {
-            updateWorkExpDetails(ProfileId, values, state).then(data => {
+          onSubmit={(values) => {
+            updateWorkExpDetails(ProfileId, values, state).then((data) => {
               if (data === true) {
                 openSnackbar(
                   expList?.workExperienceId
@@ -74,19 +74,19 @@ const WorkExpModal = ({ openModal, expList, loadExpInfo }) => {
             touched,
             handleChange,
             handleBlur,
-            handleSubmit
+            handleSubmit,
           }) => (
             <form onSubmit={handleSubmit}>
               <div className="clearfix mb-3">
                 <div className="w-6/12 float-left pr-2">
                   <FormInput
-                    label="Name of The College*"
+                    label="College Name*"
                     type="text"
                     name="collegename"
                     onChange={handleChange}
                     onBlur={handleBlur}
                     value={values.collegename}
-                    placeholder="Name of The College*"
+                    placeholder="College Name*"
                     css={
                       errors.collegename &&
                       touched.collegename &&
@@ -135,7 +135,7 @@ const WorkExpModal = ({ openModal, expList, loadExpInfo }) => {
                       `}
                     >
                       {listTypes &&
-                        listTypes.map(opt => (
+                        listTypes.map((opt) => (
                           <option
                             key={opt}
                             value={

@@ -19,7 +19,7 @@ const ReferenceModelData = ({ activeTabData, FacultyId }) => {
   const tabDetailName = [
     "Text Books & Authors",
     "Reference Books",
-    "Exteranl Reference Links & Faculty Notes",
+    "External Reference Links & Faculty Notes",
   ];
   const newRecordText = [
     "Text Book",
@@ -83,7 +83,7 @@ const ReferenceModelData = ({ activeTabData, FacultyId }) => {
             </Tab>
 
             <Tab onClick={handleClick} active={active === 2} id={2}>
-              Exteranl Resource Links & Notes
+              External Resource Links & Notes
             </Tab>
           </Tabs>
 

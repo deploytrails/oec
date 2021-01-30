@@ -75,7 +75,7 @@ const WorkshopDetails = ({ isWorkShopData, loadWorkshopInfo }) => {
 
         <TABLE.TableWrapper>
           <TABLE.TableTR>
-            <TABLE.TableTh>Name of the Workshop</TABLE.TableTh>
+            <TABLE.TableTh>Workshop Name</TABLE.TableTh>
             <TABLE.TableTh>Organized By</TABLE.TableTh>
             <TABLE.TableTh>Month & Year</TABLE.TableTh>
             <TABLE.TableTh>National / International</TABLE.TableTh>

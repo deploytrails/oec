@@ -61,12 +61,12 @@ const Dashboard = () => {
       icon: <img src="/dash-icon-4.png" width="100" />,
     },
     {
-      name: "Allocated Cources",
+      name: "Allocated Courses", //TBD path change
       url: "/allocated-cources/attendance",
       icon: <img src="/dash-icon-5.png" width="100" />,
     },
     {
-      name: "Cource Coordinator Allocation",
+      name: "Course Coordinator Allocation",
       url: "/courseCoordinatorAllocation",
       icon: <img src="/dash-icon-6.png" width="100" />,
     },

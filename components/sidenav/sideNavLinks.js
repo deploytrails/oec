@@ -276,7 +276,7 @@ const SideNavLinks = () => {
             >
               <Link href="/courseCoordinatorAllocation">
                 <a>
-                  <FontAwesomeIcon icon={faIdBadge} /> Cource Coordinator
+                  <FontAwesomeIcon icon={faIdBadge} /> Course Coordinator
                   Allocation
                 </a>
               </Link>
@@ -495,7 +495,7 @@ const SideNavLinks = () => {
                   >
                     <Link href="/reports/courseRegister">
                       <a>
-                        <FontAwesomeIcon icon={faRegistered} /> Cource Register
+                        <FontAwesomeIcon icon={faRegistered} /> Course Register
                       </a>
                     </Link>
                   </li>
@@ -512,7 +512,7 @@ const SideNavLinks = () => {
                   >
                     <Link href="/reports/courseWiseAttendance">
                       <a>
-                        <FontAwesomeIcon icon={faLayerGroup} /> Cource Wise
+                        <FontAwesomeIcon icon={faLayerGroup} /> Course Wise
                         Attendance
                       </a>
                     </Link>

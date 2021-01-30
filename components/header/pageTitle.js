@@ -25,7 +25,6 @@ const PageTitle = () => {
           <h2
             css={css`
               font-size: 18px;
-              font-weight: bold;
             `}
           >
             <span className="mr-2">
@@ -56,7 +55,7 @@ const PageTitle = () => {
                 ? "Student"
                 : ""}
             </span> */}
-            {pageName}
+            Dashboard / {pageName}
           </span>
         </div>
       </div>

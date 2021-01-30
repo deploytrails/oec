@@ -86,7 +86,7 @@ const ConferenceModal = ({ confData, closeModal, loadConfInfo }) => {
               <div className="clearfix mb-3">
                 <div className="w-6/12 float-left pr-2">
                   <label
-                    htmlFor="Name of the Conference/Seminars"
+                    htmlFor="Conference / Seminar Name"
                     css={css`
                       font-size: 14px;
                       display: block;
@@ -96,7 +96,7 @@ const ConferenceModal = ({ confData, closeModal, loadConfInfo }) => {
                       }
                     `}
                   >
-                    Name of the Conference/Seminars
+                    Conference / Seminar Name
                     <select
                       id="typeOfconferencename"
                       name="typeOfconferencename"
@@ -154,15 +154,14 @@ const ConferenceModal = ({ confData, closeModal, loadConfInfo }) => {
                 </div>
                 <div className="w-6/12 float-left">
                   <FormInput
-                    label="Title Of The Paper"
+                    label="Paper Title"
                     type="text"
                     id="titleConference"
                     name="titleConference"
                     onChange={handleChange}
                     onBlur={handleBlur}
                     value={values.titleConference}
-                    placeholder="Title Of The Paper"
-                    placeholder="Title Of The Paper"
+                    placeholder="Paper Title"
                     css={
                       errors.titleConference &&
                       touched.titleConference &&
@@ -178,7 +177,7 @@ const ConferenceModal = ({ confData, closeModal, loadConfInfo }) => {
               <div className="clearfix mb-3">
                 <div className="w-6/12 float-left pr-2">
                   <label
-                    htmlFor=" Category Of Conference"
+                    htmlFor="Conference Category"
                     css={css`
                       font-size: 14px;
                       display: block;
@@ -188,7 +187,7 @@ const ConferenceModal = ({ confData, closeModal, loadConfInfo }) => {
                       }
                     `}
                   >
-                    Category Of Conference
+                    Conference Category
                     <select
                       name="internationalNational"
                       id="internationalNational"
@@ -289,7 +288,7 @@ const ConferenceModal = ({ confData, closeModal, loadConfInfo }) => {
 
                 <div className="w-6/12 float-left">
                   <label
-                    htmlFor="ISSN/ISBN Number"
+                    htmlFor="ID Type"
                     css={css`
                       font-size: 14px;
                       display: block;
@@ -299,7 +298,7 @@ const ConferenceModal = ({ confData, closeModal, loadConfInfo }) => {
                       }
                     `}
                   >
-                    ISSN/ISBN Number
+                    ID Type
                     <select
                       name="typeOfIssn"
                       id="typeOfIssn"
@@ -360,13 +359,13 @@ const ConferenceModal = ({ confData, closeModal, loadConfInfo }) => {
               <div className="clearfix mb-3">
                 <div className="w-6/12 float-left pr-2">
                   <FormInput
-                    label="Issn Is bnNo"
+                    label="ID Number"
                     type="text"
                     name="issnIsbnNo"
                     onChange={handleChange}
                     onBlur={handleBlur}
                     value={values.issnIsbnNo}
-                    placeholder="Type of ISSN"
+                    placeholder="ID Number"
                     css={
                       errors.issnIsbnNo &&
                       touched.issnIsbnNo &&
@@ -380,7 +379,7 @@ const ConferenceModal = ({ confData, closeModal, loadConfInfo }) => {
 
                 <div className="w-6/12 float-left">
                   <label
-                    htmlFor="Type Of issue"
+                    htmlFor="Issue Type"
                     css={css`
                       font-size: 14px;
                       display: block;
@@ -390,7 +389,7 @@ const ConferenceModal = ({ confData, closeModal, loadConfInfo }) => {
                       }
                     `}
                   >
-                    type Of issue
+                    Issue Type
                     <select
                       name="typeOfissue"
                       id="typeOfissue"
@@ -451,13 +450,13 @@ const ConferenceModal = ({ confData, closeModal, loadConfInfo }) => {
               <div className="clearfix mb-3">
                 <div className="w-6/12">
                   <FormInput
-                    label="Issue No"
+                    label="Issue No."
                     type="text"
                     name="issueNo"
                     onChange={handleChange}
                     onBlur={handleBlur}
                     value={values.issueNo}
-                    placeholder=" Issue No"
+                    placeholder=" Issue No."
                     css={
                       errors.issueNo &&
                       touched.issueNo &&

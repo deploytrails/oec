@@ -11,7 +11,7 @@ const ReferenceBooksTabData = ({ refBookData }) => {
             <TABLE.TableTh>Sl. No.</TABLE.TableTh>
             <TABLE.TableTh>Book Name</TABLE.TableTh>
             <TABLE.TableTh>Author</TABLE.TableTh>
-            <TABLE.TableTh> Preffered Units</TABLE.TableTh>
+            <TABLE.TableTh> Preferred Units</TABLE.TableTh>
           </TABLE.TableTR>
           {refBookData &&
             refBookData.length &&

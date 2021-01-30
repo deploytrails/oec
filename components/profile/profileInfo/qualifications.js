@@ -10,19 +10,19 @@ import {
   faSearch,
   faEdit,
   faTrashAlt,
-  faPlus
+  faPlus,
 } from "@fortawesome/free-solid-svg-icons";
 
 const QualificationInfo = ({
   isQualificData,
   loadQualificationInfo,
-  isProfileData
+  isProfileData,
 }) => {
   const [show, setShow] = useState(false);
   const [qualificationList, setQualificationList] = useState({});
   const [isAlert, setIsAlert] = useState(false);
   const [openSnackbar, closeSnackbar] = useSnackbar();
-  const openModal = data => {
+  const openModal = (data) => {
     setShow(!show);
     setQualificationList(data);
     if (!data || data === {} || data === null || data === undefined) {
@@ -32,7 +32,7 @@ const QualificationInfo = ({
   const openAlertModal = () => {
     setIsAlert(!isAlert);
   };
-  const deleteQualificationRecord = async id => {
+  const deleteQualificationRecord = async (id) => {
     const qualificationData = await deleteQualificationDetails(id);
     loadQualificationInfo();
     openSnackbar("Successfully deleted Qualification record");
@@ -51,9 +51,9 @@ const QualificationInfo = ({
         <TABLE.TableWrapper>
           <TABLE.TableTR>
             <TABLE.TableTh>Qualification Type</TABLE.TableTh>
-            <TABLE.TableTh>Name of the College</TABLE.TableTh>
+            <TABLE.TableTh>College Name</TABLE.TableTh>
             <TABLE.TableTh>Branch</TABLE.TableTh>
-            <TABLE.TableTh>Year of Completion</TABLE.TableTh>
+            <TABLE.TableTh>Completion Year</TABLE.TableTh>
             <TABLE.TableTh>Action</TABLE.TableTh>
           </TABLE.TableTR>
 
@@ -61,7 +61,7 @@ const QualificationInfo = ({
 
           {isQualificData &&
             isQualificData.length &&
-            isQualificData.map(qualInfo => (
+            isQualificData.map((qualInfo) => (
               <TABLE.TableTRR key={qualInfo.branchName}>
                 <TABLE.TableTdd>{qualInfo.qualificationType}</TABLE.TableTdd>
                 <TABLE.TableTdd>{qualInfo.collegeName}</TABLE.TableTdd>

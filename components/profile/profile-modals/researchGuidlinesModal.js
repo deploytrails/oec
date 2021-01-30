@@ -78,13 +78,13 @@ const ResearchGuidlinesModal = ({
               <div className="clearfix mb-3">
                 <div className="w-6/12 float-left pr-2">
                   <FormInput
-                    label="Name of the Scholar"
+                    label="Scholar Name"
                     type="text"
                     name="scholarName"
                     onChange={handleChange}
                     onBlur={handleBlur}
                     value={values.scholarName}
-                    placeholder="Name of the Scholar"
+                    placeholder="Scholar Name"
                     css={
                       errors.scholarName &&
                       touched.scholarName &&
@@ -97,13 +97,13 @@ const ResearchGuidlinesModal = ({
                 </div>
                 <div className="w-6/12 float-left">
                   <FormInput
-                    label="Year of admission"
+                    label="Admission Year"
                     type="text"
                     name="yearOfAdmission"
                     onChange={handleChange}
                     onBlur={handleBlur}
                     value={values.yearOfAdmission}
-                    placeholder="Year of admission"
+                    placeholder="Admission Year"
                     css={
                       errors.yearOfAdmission &&
                       touched.yearOfAdmission &&
@@ -119,7 +119,7 @@ const ResearchGuidlinesModal = ({
               <div className="clearfix mb-3">
                 <div className="w-6/12 float-left pr-2">
                   <label
-                    htmlFor="Ph.D/M. Phil"
+                    htmlFor="Ph.D/M.Phil"
                     css={css`
                       font-size: 14px;
                       display: block;
@@ -129,7 +129,7 @@ const ResearchGuidlinesModal = ({
                       }
                     `}
                   >
-                    Ph.D/M. Phil
+                    Ph.D/M.Phil
                     <select
                       onChange={handleChange}
                       onBlur={handleBlur}
@@ -199,13 +199,13 @@ const ResearchGuidlinesModal = ({
               <div className="clearfix mb-3">
                 <div className="w-6/12 float-left pr-2">
                   <FormInput
-                    label="Name of the University"
+                    label="University Name"
                     type="text"
                     name="universityName"
                     onChange={handleChange}
                     onBlur={handleBlur}
                     value={values.universityName}
-                    placeholder="Name of the University"
+                    placeholder="University Name"
                     css={
                       errors.universityName &&
                       touched.universityName &&
@@ -276,8 +276,8 @@ const ResearchGuidlinesModal = ({
                   className="bg-green-400 px-3 py-2 rounded text-white"
                 >
                   {guidList?.researchGuidanceID
-                    ? "Update Research Guidence "
-                    : "Save Research Guidence"}
+                    ? "Update Research Guidance "
+                    : "Save Research Guidance"}
                 </button>
                 <button
                   type="button"
