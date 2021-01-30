@@ -92,15 +92,8 @@ const Imports = () => {
                 {importName} Import Result
               </h3>
               <label>
-                Total Records Present : {result?.status?.length}
-                <br></br>
-                Total Records Inserted :{" "}
-                {
-                  (result?.status.filter(
-                    (stat) => stat === " Saved successfully"
-                  )).length
-                }
-              </label>
+                Result : {result?.statusMessage}
+                </label>
             </div>
           </div>
         )}

@@ -35,13 +35,14 @@ const ClassSchedule = () => {
         timedat[0][5].includes(classday)
       ) {
         return (
-          timedat[0][2] +
-          "-" +
-          timedat[0][4] +
-          "-" +
-          timedat[0][6] +
-          "-" +
-          timedat[0][22]
+          <ul>
+            <li>{timedat[0][4]}</li>
+            <li>{timedat[0][9]}</li>
+            <li>{timedat[0][2]}</li>
+            <li>{timedat[0][8]}</li>
+            <li>{timedat[0][20]}</li>
+            <li>{timedat[0][7]}</li>
+          </ul>
         );
       }
     }
@@ -129,35 +130,77 @@ const ClassSchedule = () => {
         </div>
         <div className="clearfix px-2 pb-2"></div>
         <div className="clearfix pb-6">
-          <TABLE.TableWrapper>
-            <TABLE.TableTR>
-              <TABLE.TableTh>Day</TABLE.TableTh>
-              {classScheduleData &&
+        {classScheduleData &&
+                classScheduleData?.facTimeTableDetails?.totalperiods.length > 0 ? (               
+
+          <table
+          css={css`
+          width: 100%;
+          table-layout: fixed;
+          `}
+          >
+            <thead>
+            <tr>
+           
+            <th
+                  css={css`
+                    border: 1px solid #ccc;
+                    text-align: center;
+                    background: lightblue;
+                    border-color: #e5e7eb;
+                  `}
+                >Day</th>
+               {classScheduleData &&
                 classScheduleData?.facTimeTableDetails?.totalperiods.map(
                   (period, index) => (
-                    <TABLE.TableTh key={index}>
-                      {period[3]}--{timeconvert(period[1])} --{" "}
-                      {timeconvert(period[2])}
-                    </TABLE.TableTh>
+                    <th
+                    css={css`
+                      border: 1px solid #ccc;
+                      text-align: center;
+                      background: lightblue;
+                      border-color: #e5e7eb;
+                    `}
+                  >
+                      <ul>
+                        <li>{period[3]}</li>
+                        <li>{timeconvert(period[1])}{' '}{timeconvert(period[2])}</li>
+                      </ul>
+                    </th>
                   )
                 )}
-            </TABLE.TableTR>
-
+            </tr>
+          </thead>
+          <tbody>
+                     
             {classScheduleData?.facTimeTableDetails?.dayDate.map(
               (classday, index) => (
-                <TABLE.TableTRR key={index}>
-                  <TABLE.TableTdd>{classday}</TABLE.TableTdd>
+                <tr key={index}>
+                  <td
+                   css={css`
+                   border: 1px solid #ccc;
+                   text-align: left;
+                   background: lightblue;
+                   border-color: #e5e7eb;
+                 `}
+                  >{classday}</td>
                   {classScheduleData?.facTimeTableDetails?.totalperiods.map(
                     (period, index) => (
-                      <TABLE.TableTdd key={index}>
+                      <td 
+                      css={css`
+                      border: 1px solid #ccc;
+                      text-align: center;
+                      border-color: #e5e7eb;
+                    `}
+                      key={index}>
                         {periodList(period[3], classday)}
-                      </TABLE.TableTdd>
+                      </td>
                     )
                   )}
-                </TABLE.TableTRR>
+                </tr>
               )
             )}
-          </TABLE.TableWrapper>
+            </tbody>
+          </table> ):("No Schedule Available")}
         </div>
       </Layout>
     </React.Fragment>

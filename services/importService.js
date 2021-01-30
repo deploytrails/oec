@@ -60,6 +60,7 @@ export const uploadSubjectExpFile = async (fil) => {
 export const uploadPeoFile = async (fil) => {
   try {
     var data1 = new FormData();
+    data1.append("employeeID","64D1E79A8B6B11E98B0957863D7CDB1C");
     data1.append("file", fil);
 
     const response = await fetch(
@@ -79,6 +80,7 @@ export const uploadPeoFile = async (fil) => {
 export const uploadPopsoFile = async (fil) => {
   try {
     var data1 = new FormData();
+    data1.append("employeeID","64D1E79A8B6B11E98B0957863D7CDB1C");
     data1.append("file", fil);
 
     const response = await fetch(

@@ -58,6 +58,10 @@ const ProgEduObjectives = () => {
         console.log(values);
         const cData = await insertPEOData(values);
         console.log(cData);
+        if(cData?.Save === "Success"){
+          alert("Program Educational Objectives data updated successfully");
+          //openSnackbar("Vision data updated successfully");
+        }
         
       }
     

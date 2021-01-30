@@ -81,6 +81,10 @@ const POPSOs = () => {
         console.log("values",values)
         const cData = await insertPoPSoData(values);
         console.log("output",cData);
+        if(cData?.Save === "Success"){
+          alert("Program Outcomes & program Specific Outcomes data updated successfully");
+          //openSnackbar("Vision data updated successfully");
+        }
       }
     
 

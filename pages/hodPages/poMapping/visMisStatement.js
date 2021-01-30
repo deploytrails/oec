@@ -9,13 +9,11 @@ import {Formik,Form} from 'formik';
 import FormikControl from "../../../components/General/FormikControl";
 import Cookies from "js-cookie";
 import css from "@emotion/css";
-import { useSnackbar } from "react-simple-snackbar";
 
 const VisMisStatement = () => { 
 const ProfileId = Cookies.get("employeeID");
 const [isDepartmentData, setIsDepartmentData] = useState([]);
 const [isVisionMissionData, setIsVisionMissionData] = useState([]);
-const [openSnackbar, closeSnackbar] = useSnackbar();
 
 const loadDepartmentData = async () => {
   const cData = await getProgrmPOData('30243CDEFA3641D092CD40B388D78065');
@@ -59,7 +57,7 @@ const loadVisionMissionData = async (event,setFieldValue) => {
       console.log(cData?.Status);
       if(cData?.Status === "Success"){
         alert("Vision data updated successfully");
-        openSnackbar("Vision data updated successfully");
+        //openSnackbar("Vision data updated successfully");
       }
     }
   
