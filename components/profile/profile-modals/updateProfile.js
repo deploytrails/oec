@@ -68,13 +68,13 @@ const Modal = ({ openModal, userData, loadProfileData }) => {
             employeePrimaryId: userData?.employeePrimaryId,
             quaternaryprogram: userData?.quaternaryprogram,
             associationType: userData?.associationType,
-            dateOfBirth: userData?.dateOfBirth,
+            dateOfBirth: userData?.dateOfBirth?.substr(0,10),
             aadharNo: userData?.aadharNo,
             tertiaryprogram: userData?.tertiaryprogram,
             firstName: userData?.firstName,
             secondaryprogram: userData?.secondaryprogram,
-            dateOfJoining: userData?.dateOfJoining,
-            dateOfLeaving: userData?.dateOfLeaving,
+            dateOfJoining: userData?.dateOfJoining?.substr(0,10),
+            dateOfLeaving: userData?.dateOfLeaving?.substr(0,10),
             employeeType: userData?.employeeType,
             aicteId: userData?.aicteId,
             senaryprogram: userData?.senaryprogram,
@@ -173,7 +173,7 @@ const Modal = ({ openModal, userData, loadProfileData }) => {
                     onChange={handleChange}
                     onBlur={handleBlur}
                     value={values.firstName}
-                    placeholder="Name of The Publishers"
+                    placeholder="Name"
                     css={
                       errors.firstName &&
                       touched.firstName &&
@@ -187,13 +187,13 @@ const Modal = ({ openModal, userData, loadProfileData }) => {
 
                 <div className="w-4/12 float-left">
                   <FormInput
-                    label="LastName"
+                    label="Last Name"
                     type="text"
                     name="lastName"
                     onChange={handleChange}
                     onBlur={handleBlur}
                     value={values.lastName}
-                    placeholder="Name of The Publishers"
+                    placeholder="Last Name"
                     css={
                       errors.lastName &&
                       touched.lastName &&
@@ -209,13 +209,13 @@ const Modal = ({ openModal, userData, loadProfileData }) => {
               <div className="clearfix  mb-3">
                 <div className="w-4/12 float-left">
                   <FormInput
-                    label="SurName"
+                    label="Sur Name"
                     type="text"
                     name="surName"
                     onChange={handleChange}
                     onBlur={handleBlur}
                     value={values.surName}
-                    placeholder="SurName"
+                    placeholder="Sur Name"
                     css={
                       errors.surName &&
                       touched.surName &&
@@ -304,13 +304,13 @@ const Modal = ({ openModal, userData, loadProfileData }) => {
               <div className="clearfix  mb-3">
                 <div className="w-4/12 float-left">
                   <FormInput
-                    label="FatherName"
+                    label="Father Name"
                     type="text"
                     name="fatherName"
                     onChange={handleChange}
                     onBlur={handleBlur}
                     value={values.fatherName}
-                    placeholder="FatherName"
+                    placeholder="Father Name"
                     css={
                       errors.fatherName &&
                       touched.fatherName &&
@@ -423,14 +423,14 @@ const Modal = ({ openModal, userData, loadProfileData }) => {
                 </div>
                 <div className="w-4/12 float-left px-1">
                   <FormInput
-                    label="Date Of Joining"
+                    label="Joining Date"
                     type="date"
                     name="dateOfJoining"
                     id="dateOfJoining"
                     onChange={handleChange}
                     onBlur={handleBlur}
                     value={values.dateOfJoining}
-                    placeholder="Date Of Joining"
+                    placeholder="Joining Date"
                     css={
                       errors.dateOfJoining &&
                       touched.dateOfJoining &&
@@ -477,7 +477,7 @@ const Modal = ({ openModal, userData, loadProfileData }) => {
                 </div>
                 <div className="w-4/12 float-left px-1">
                   <FormInput
-                    label="PAN Card No"
+                    label="PAN Card No."
                     type="text"
                     name="panCardNo"
                     onChange={handleChange}
@@ -497,7 +497,7 @@ const Modal = ({ openModal, userData, loadProfileData }) => {
 
                 <div className="w-4/12 float-left">
                   <FormInput
-                    label="JNTUA No"
+                    label="JNTUA No."
                     type="text"
                     name="jntuhID"
                     onChange={handleChange}
@@ -519,7 +519,7 @@ const Modal = ({ openModal, userData, loadProfileData }) => {
               <div className="clearfix  mb-3">
                 <div className="w-4/12 float-left">
                   <FormInput
-                    label="AICTE No"
+                    label="AICTE No."
                     type="text"
                     name="aicteId"
                     onChange={handleChange}

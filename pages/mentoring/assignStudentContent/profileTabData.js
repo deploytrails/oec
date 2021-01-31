@@ -50,7 +50,7 @@ const ProfileTabData = ({ studentProfileId }) => {
               <p className="clearfix">
                 <span>Email ID</span>
                 <span>
-                  : {isProfileData?.email ? isProfileData?.email : "N/A"}
+                  : {isProfileData?.email ? isProfileData?.email : "N/  "}
                 </span>
               </p>
               <p className="clearfix">

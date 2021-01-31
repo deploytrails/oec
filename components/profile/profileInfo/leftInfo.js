@@ -71,87 +71,87 @@ const LeftInfo = ({ isProfileData, loadProfileData }) => {
                     <FontAwesomeIcon icon={faUser} />
                     Name
                   </span>
-                  <span>{item.firstName}</span>
+                  <span>{item?.firstName ? item?.firstName : "-"}</span>
                   <span>
                     <FontAwesomeIcon icon={faUserCircle} />
                     First Name
                   </span>
-                  <span>-</span>
+                  <span>{item?.surName ? item?.surName : "-"}</span>
                   <span>
                     <FontAwesomeIcon icon={faPen} />
                     Last Name
                   </span>
-                  <span>{item.lastName}</span>
+                  <span>{item?.lastName ? item?.lastName : "-"}</span>
                   <span>
                     <FontAwesomeIcon icon={faMarsDouble} />
                     Gender
                   </span>
-                  <span>{item.gender}</span>
+                  <span>{item?.gender ? item?.gender : "-"}</span>
                   <span>
                     <FontAwesomeIcon icon={faBirthdayCake} />
                     Date of Birth
                   </span>
-                  <span>{moment(item.dateOfBirth).format("DD/MM/YYYY")}</span>
+                  <span>{item?.dateOfBirth ? moment(item?.dateOfBirth).format("DD/MM/YYYY") :"-" }</span>
                   <span>
                     <FontAwesomeIcon icon={faUserLock} />
                     Father Name
                   </span>
-                  <span>{item.fatherName}</span>
+                  <span>{item?.fatherName ? item?.fatherName :"-"}</span>
                   <span>
                     <FontAwesomeIcon icon={faTv} />
                     Employee Type
                   </span>
-                  <span>{item.employeeType}</span>
+                  <span>{item?.employeeType ? item?.employeeType : "-"}</span>
                   <span>
                     <FontAwesomeIcon icon={faBuilding} />
                     Association Type
                   </span>
-                  <span>{item.associationType}</span>
+                  <span>{item?.associationType ? item?.associationType : "-"}</span>
                   <span>
                     <FontAwesomeIcon icon={faSuitcase} />
                     Designation
                   </span>
-                  <span>{item.designation}</span>
+                  <span>{item?.designation ? item.designation :"-"}</span>
                   <span>
                     <FontAwesomeIcon icon={faCalendar} />
                     Joining Date
                   </span>
-                  <span>{moment(item.dateOfJoining).format("DD/MM/YYYY")}</span>
+                  <span>{item?.dateOfJoining ? moment(item?.dateOfJoining).format("DD/MM/YYYY") :"-"}</span>
                   <span>
                     <FontAwesomeIcon icon={faCalendarCheck} />
                     Leaving Date
                   </span>
-                  <span>-</span>
+                  <span>{item?.dateOfLeaving ? moment(item?.dateOfLeaving).format("DD/MM/YYYY") : "-"}</span>
                   <span>
                     <FontAwesomeIcon icon={faPassport} />
                     Aadhar Card No.
                   </span>
-                  <span>{item.aadharNo}</span>
+                  <span>{item?.aadharNo ? item?.aadharNo :"-"}</span>
                   <span>
                     <FontAwesomeIcon icon={faPassport} />
                     PAN Card No.
                   </span>
-                  <span>{item.panCardNo}</span>
+                  <span>{item?.panCardNo ? item?.panCardNo :"-"}</span>
                   <span>
                     <FontAwesomeIcon icon={faHashtag} />
                     JNTUA No.
                   </span>
-                  <span>{item.jntuhID}</span>
+                  <span>{item?.jntuhID ? item?.jntuhID :"-"}</span>
                   <span>
                     <FontAwesomeIcon icon={faHashtag} />
                     AICTE No.
                   </span>
-                  <span>{item.aicteId}</span>
+                  <span>{item?.aicteId ? item?.aicteId :"-"}</span>
                   <span>
                     <FontAwesomeIcon icon={faAward} />
                     Achievements
                   </span>
-                  <span>{item.achievements}</span>
+                  <span>{item?.achievements ? item?.achievements :"-"}</span>
                   <span>
                     <FontAwesomeIcon icon={faSearch} />
                     Research Activities
                   </span>
-                  <span>{item.researchActivities}</span>
+                  <span>{item?.researchActivities ? item?.researchActivities: "-"}</span>
                 </p>
                 <button
                   onClick={() => openModal(item)}

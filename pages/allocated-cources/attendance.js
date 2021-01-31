@@ -8,6 +8,7 @@ import {
   getAttendanceList,
   getAttendanceListById,
 } from "../../services/allocateServices";
+import AdjustPeriodsModal from "./adjustPeriodsModal";
 
 const Attendance = () => {
   const [attendance, setIsAttendance] = useState({});
@@ -21,6 +22,9 @@ const Attendance = () => {
   const [classAttend, setClassAttend] = useState({});
   const [attendDetails, setAttendDetails] = useState(false);
   const [periodProps, setPeriodProps] = useState({});
+  const [showAdjust, setShowAdjust] = useState(false);
+  const [periodAdjust, setPeriodAdjust] = useState([]);
+  const [statusArray, setStatusArray] = useState([]);
 
   const getAllAttendance = async () => {
     const data = await getAttendanceList(
@@ -30,6 +34,7 @@ const Attendance = () => {
     );
     setDates(data?.weeklyDates);
     setAttend(data?.weeklyAttendance?.classSchedule1);
+    setStatusArray(data?.statusArray);
     console.log("data", data);
     return data;
   };
@@ -65,6 +70,10 @@ const Attendance = () => {
       toggleAttendDetails();
     }
     console.log("xos", classAttend);
+  };
+  const openAdjustPeriods = (periodsObj) => {
+    setShowAdjust(!showAdjust);
+    setPeriodAdjust(periodsObj);
   };
 
   const tableHeaders = [
@@ -191,7 +200,9 @@ const Attendance = () => {
                                   {x?.course?.courseName}
                                 </td>
                                 <td className="border w-2/12 px-2 py-2 text-sm">
-                                  {moment(x?.classStartTime).format("hh:mm A")}
+                                  {moment(x?.classRoster.classStartTime).format(
+                                    "hh:mm A"
+                                  )}
                                 </td>
                                 <td className="border w-1/12 px-2 py-2 text-sm">
                                   {x?.room?.roomNO}
@@ -239,9 +250,18 @@ const Attendance = () => {
                                   <button
                                     type="button"
                                     className="bg-yellow-400 block  mx-auto px-2 py-1 rounded"
+                                    onClick={() => openAdjustPeriods(x)}
                                   >
                                     Adjust Periods
                                   </button>
+                                  {/* <button class="btn btn-warning"
+											ng-repeat="x in statusArray | filter : {'classPrimaryID' :class.currclassdateid }"
+											ng-show="enableSwapButton1(class.semester.startdate,class.semester.enddate)"
+											ng-click='openSwapModel(class,"adjust",x)'
+											ng-disabled=" x.attendanceStatus=='Available'">
+											{{x.Status === "Adjustment Request Sent" ? "Adjustment
+											Request Accepted": (x.Status==="Adjustment Request Accepted"
+											?"Adjustment Request Accepted":"Adjust Periods")}}</button> */}
                                 </td>
                               </React.Fragment>
                             ))}
@@ -252,6 +272,12 @@ const Attendance = () => {
                             closeAttendDetails={closeAttendDetails}
                             classAttend={classAttend}
                             periodProps={periodProps}
+                          />
+                        )}
+                        {showAdjust && (
+                          <AdjustPeriodsModal
+                            openAdjustPeriods={openAdjustPeriods}
+                            periodAdjust={periodAdjust}
                           />
                         )}
                       </React.Fragment>
