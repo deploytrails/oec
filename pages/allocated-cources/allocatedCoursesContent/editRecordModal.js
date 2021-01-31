@@ -3,24 +3,24 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faTimes } from "@fortawesome/free-solid-svg-icons";
 import * as STYLES from "../../../components/General/modalStyles";
 import css from "@emotion/css";
+import CoPoModelData from "./coPoModelData";
 import { Formik } from "formik";
 import * as Yup from "yup";
 import FormInput from "../../../components/General/formInput";
 import {
-  insertTextBook,
-  insertRefBook,
-  insertRefLink,
+  updateTextBook,
+  updateRefTextBook,
+  updateRefLink,
 } from "../../../services/allocateServices";
 import { useSnackbar } from "react-simple-snackbar";
 import { COLORS } from "../../../constants";
 
-const NewRecordModal = ({
-  toggleModal,
+const EditRecordModal = ({
+  toggleEditModal,
   activeTab,
   activeTabData,
-  facultyId,
-  courseId,
   loadReferenceData,
+  unitsData,
 }) => {
   const [openSnackbar, closeSnackbar] = useSnackbar();
 
@@ -30,9 +30,9 @@ const NewRecordModal = ({
     "Reference Link Details",
   ];
   const newRecordButtonText = [
-    "Add Book",
-    "Add Reference Book",
-    "Add Reference Link",
+    "Update Book",
+    "Update Reference Book",
+    "Update Reference Link",
   ];
   const bookDetailsSchema = Yup.object().shape({
     bookName: Yup.string().required("Required"),
@@ -45,52 +45,50 @@ const NewRecordModal = ({
   });
   const externalLinkSchema = Yup.object().shape({
     refPriorityNo: Yup.number().required("Required"),
-    //prefUnit: Yup.string().required("Required"),
+    // prefUnit: Yup.string().required("Required"),
     refType: Yup.string().required("Required"),
     refLink: Yup.string().required("Required"),
     linkDesc: Yup.string().required("Required"),
   });
   useEffect(() => {
     console.log(activeTabData);
+    // console.log(courseId);
   }, []);
-  const insertNewTextBook = (values) => {
-    insertTextBook(
-      facultyId,
-      courseId,
+  const updateTextBookDetails = (values) => {
+    updateTextBook(
+      activeTabData?.courseBookId,
       values.bookName,
       values.bookAuthor
     ).then((data) => {
       if (data) {
         // console.log(data);
-        openSnackbar("Book details added successfully.");
-        toggleModal();
+        openSnackbar("Book details updated successfully.");
+        toggleEditModal();
         loadReferenceData();
       }
     });
   };
-  const insertNewRefBook = (values) => {
-    console.log(values);
-    insertRefBook(
-      facultyId,
-      courseId,
+
+  const updateRefBookDetails = (values) => {
+    updateRefTextBook(
+      activeTabData?.courseRefBookId,
       values.bookName,
       values.bookAuthor,
       values.prefUnits
     ).then((data) => {
       if (data) {
         // console.log(data);
-        openSnackbar("Reference Book details added successfully.");
-        toggleModal();
+        openSnackbar("Reference book details updated successfully.");
+        toggleEditModal();
         loadReferenceData();
       }
     });
   };
 
-  const insertNewRefLink = (values) => {
+  const updateRefLinkData = (values) => {
     console.log(values);
-    insertRefLink(
-      facultyId,
-      courseId,
+    updateRefLink(
+      activeTabData?.courseResourcesId,
       values.refPriorityNo,
       values.refLink,
       values.linkDesc,
@@ -99,12 +97,13 @@ const NewRecordModal = ({
     ).then((data) => {
       if (data) {
         // console.log(data);
-        openSnackbar("Reference link details added successfully.");
-        toggleModal();
+        openSnackbar("Reference link details updated successfully.");
+        toggleEditModal();
         loadReferenceData();
       }
     });
   };
+
   return (
     <STYLES.PopupMask>
       <STYLES.PopupWrapper>
@@ -112,19 +111,19 @@ const NewRecordModal = ({
           {modalDetailName[activeTab]}
           <FontAwesomeIcon
             icon={faTimes}
-            onClick={() => toggleModal()}
+            onClick={() => toggleEditModal()}
             style={{ float: "right" }}
           />
         </STYLES.PopupTitle>
         {activeTab === 0 && (
           <Formik
             initialValues={{
-              bookName: "",
-              bookAuthor: "",
+              bookName: activeTabData?.bookName,
+              bookAuthor: activeTabData?.author,
             }}
             validationSchema={bookDetailsSchema}
             onSubmit={(values) => {
-              insertNewTextBook(values);
+              updateTextBookDetails(values);
             }}
           >
             {({
@@ -192,13 +191,13 @@ const NewRecordModal = ({
         {activeTab === 1 && (
           <Formik
             initialValues={{
-              bookName: "",
-              bookAuthor: "",
-              prefUnits: "",
+              bookName: activeTabData?.bookName,
+              bookAuthor: activeTabData?.author,
+              prefUnits: activeTabData?.unitsSelected,
             }}
             validationSchema={referenceDetailsSchema}
             onSubmit={(values) => {
-              insertNewRefBook(values);
+              updateRefBookDetails(values);
             }}
           >
             {({
@@ -301,8 +300,8 @@ const NewRecordModal = ({
                         <option key="Select Your Option" value="">
                           Select Your Option
                         </option>
-                        {activeTabData &&
-                          activeTabData.map((opt) => (
+                        {unitsData &&
+                          unitsData.map((opt) => (
                             <option key={opt.courseunitID} value={opt.cunit}>
                               {opt.cunit}
                             </option>
@@ -310,24 +309,6 @@ const NewRecordModal = ({
                       </select>
                     </label>
                   </div>
-                  {/* <FormInput
-                      label="Preferred Units"
-                      type="text"
-                      name="prefUnits"
-                      onChange={handleChange}
-                      onBlur={handleBlur}
-                      value={values.prefUnits}
-                      placeholder="Preferred Units"
-                      css={
-                        errors.prefUnits &&
-                        touched.prefUnits &&
-                        errors.prefUnits &&
-                        css`
-                          border: 1px solid red;
-                        `
-                      }
-                    />
-                  </div> */}
                 </div>
 
                 <div className="float-right">
@@ -345,14 +326,14 @@ const NewRecordModal = ({
         {activeTab === 2 && (
           <Formik
             initialValues={{
-              refPriorityNo: "",
-              refType: "",
-              refLink: "",
-              linkDesc: "",
+              refPriorityNo: activeTabData?.priorityNo,
+              refType: activeTabData?.linkType,
+              refLink: activeTabData?.link,
+              linkDesc: activeTabData?.linkDescription,
             }}
             validationSchema={externalLinkSchema}
             onSubmit={(values) => {
-              insertNewRefLink(values);
+              updateRefLinkData(values);
             }}
           >
             {({
@@ -386,6 +367,27 @@ const NewRecordModal = ({
                   </div>
                   <div className="w-6/12 float-left ">
                     <FormInput
+                      label="Unit"
+                      type="text"
+                      name="prefUnit"
+                      onChange={handleChange}
+                      onBlur={handleBlur}
+                      value={values.prefUnit}
+                      placeholder="Unit"
+                      css={
+                        errors.prefUnit &&
+                        touched.prefUnit &&
+                        errors.prefUnit &&
+                        css`
+                          border: 1px solid red;
+                        `
+                      }
+                    />
+                  </div>
+                </div>
+                <div className="clearfix mb-3">
+                  <div className="w-6/12 float-left pr-2">
+                    <FormInput
                       label="Reference Type"
                       type="text"
                       name="refType"
@@ -403,9 +405,7 @@ const NewRecordModal = ({
                       }
                     />
                   </div>
-                </div>
-                <div className="clearfix mb-3">
-                  <div className="w-6/12 float-left pr-2">
+                  <div className="w-6/12 float-left ">
                     <FormInput
                       label="Reference Link"
                       type="text"
@@ -424,7 +424,9 @@ const NewRecordModal = ({
                       }
                     />
                   </div>
-                  <div className="w-6/12 float-left ">
+                </div>
+                <div className="clearfix mb-3">
+                  <div className="w-6/12 float-left pr-2">
                     <FormInput
                       label="Link Description"
                       type="text"
@@ -444,65 +446,6 @@ const NewRecordModal = ({
                     />
                   </div>
                 </div>
-                {/* <div className="clearfix mb-3">
-                  <div className="w-6/12 float-left pr-2">
-                    <label
-                      htmlFor="Preferred Units"
-                      css={css`
-                        font-size: 14px;
-                        display: block;
-                        color: ${COLORS.BLACK};
-                        .errorBorder {
-                          border-color: ${COLORS.RED};
-                        }
-                      `}
-                    >
-                      Preferred Units
-                      <select
-                        name="prefUnit"
-                        id="prefUnit"
-                        onChange={handleChange}
-                        onBlur={handleBlur}
-                        value={values.prefUnit}
-                        className="border border-2 border-solid p-2 rounded w-full focus:outline-none"
-                        css={
-                          errors.prefUnit && touched.prefUnit && errors.prefUnit
-                            ? css`
-                                border: 1px solid red;
-                              `
-                            : css`
-                                display: block;
-                                width: 100%;
-                                height: 42px;
-                                padding: 0px 10px;
-                                margin-bottom: 0px;
-                                box-sizing: border-box;
-                                font-family: "Open Sans", sans-serif;
-                                border: 1px solid ${COLORS.GRAY_DARK};
-                                -webkit-border-radius: 4px;
-                                -moz-border-radius: 4px;
-                                -ms-border-radius: 4px;
-                                border-radius: 4px;
-                                font-size: 14px;
-                                &:focus {
-                                  outline: none;
-                                }
-                              `
-                        }
-                      >
-                        <option key="Select Your Option" value="">
-                          Select Your Option
-                        </option>
-                        {activeTabData &&
-                          activeTabData.map((opt) => (
-                            <option key={opt.courseunitID} value={opt.cunit}>
-                              {opt.cunit}
-                            </option>
-                          ))}
-                      </select>
-                    </label>
-                  </div>
-                </div> */}
 
                 <div className="float-right">
                   <button
@@ -520,4 +463,4 @@ const NewRecordModal = ({
     </STYLES.PopupMask>
   );
 };
-export default NewRecordModal;
+export default EditRecordModal;

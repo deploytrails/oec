@@ -152,7 +152,7 @@ const TopHeader = () => {
             ) : (
               <span className="ml-2 capitalize">
                 <Link href="/dashboard" key="Dashboard">
-                  <a class="hover:underline">
+                  <a className="hover:underline">
                     <FontAwesomeIcon icon={faHome} className="mr-1" />
                     Dashboard
                   </a>

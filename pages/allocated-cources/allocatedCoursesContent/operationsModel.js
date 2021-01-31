@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faTimes } from "@fortawesome/free-solid-svg-icons";
 import * as STYLES from "../../../components/General/modalStyles";
@@ -19,6 +19,11 @@ const OperationsModal = ({
     "CO-PO Mapping",
     "Add Extra Class",
   ];
+
+  // useEffect(() => {
+  //   console.log("test");
+  //   console.log(activeTabData);
+  // }, []);
   return (
     <STYLES.PopupMask>
       <STYLES.PopupWrapper

@@ -33,6 +33,7 @@ const ReferenceModelData = ({ activeTabData, FacultyId }) => {
   const [refBookData, setRefBookData] = useState([]);
   const [show, setShow] = useState(false);
   const [showLoader, setShowLoader] = useState(true);
+  const selectedCourseID = activeTabData[1].coursePrimaryId;
 
   const toggleModal = async () => {
     setShow(!show);
@@ -46,11 +47,8 @@ const ReferenceModelData = ({ activeTabData, FacultyId }) => {
   };
 
   const loadReferenceData = async () => {
-    const data = await getReferenceData(
-      FacultyId,
-      activeTabData[1].coursePrimaryId
-    );
-    //  console.log(data);
+    const data = await getReferenceData(FacultyId, selectedCourseID);
+    console.log(data);
     setForBookTable(data?.courseBooks);
     setForLinkTable(data?.courseResources);
     SetUnitsData(data?.courseUnits);
@@ -88,13 +86,23 @@ const ReferenceModelData = ({ activeTabData, FacultyId }) => {
           </Tabs>
 
           <Content active={active === 0}>
-            <TextBooksTabData forBookTable={forBookTable} />
+            <TextBooksTabData
+              forBookTable={forBookTable}
+              loadReferenceData={loadReferenceData}
+            />
           </Content>
           <Content active={active === 1}>
-            <ReferenceBooksTabData refBookData={refBookData} />
+            <ReferenceBooksTabData
+              refBookData={refBookData}
+              loadReferenceData={loadReferenceData}
+              unitsData={unitsData}
+            />
           </Content>
           <Content active={active === 2}>
-            <ExternalResourceTabData forLinkTable={forLinkTable} />
+            <ExternalResourceTabData
+              forLinkTable={forLinkTable}
+              loadReferenceData={loadReferenceData}
+            />
           </Content>
           <button
             onClick={() => toggleModal()}
@@ -107,7 +115,9 @@ const ReferenceModelData = ({ activeTabData, FacultyId }) => {
               toggleModal={toggleModal}
               activeTab={active}
               activeTabData={unitsData}
-              FacultyId={FacultyId}
+              facultyId={FacultyId}
+              courseId={selectedCourseID}
+              loadReferenceData={loadReferenceData}
             />
           )}
         </div>

@@ -178,3 +178,196 @@ export const updateStudentAttendance = async (
     console.log(error);
   }
 };
+
+export const insertTextBook = async (
+  facultyID,
+  courseID,
+  bookName,
+  authorName
+) => {
+  try {
+    const response = await fetch(
+      `${process.env.APIBaseUrl}faculty/insertRefBook?courseID=${courseID}&facultyID=${facultyID}&bookName=${bookName}&authorName=${authorName}`,
+      {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+      }
+    );
+    const data = await response.json();
+    return data;
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+export const updateTextBook = async (courseBookID, bookName, authorName) => {
+  try {
+    const response = await fetch(
+      `${process.env.APIBaseUrl}faculty/updateCourseBook?courseBookID=${courseBookID}&bookName=${bookName}&authorName=${authorName}`,
+      {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+      }
+    );
+    const data = await response.json();
+    return data;
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+export const removeTextBook = async (refBookID) => {
+  try {
+    const response = await fetch(
+      `${process.env.APIBaseUrl}faculty/deleteRefBook?refBookID=${refBookID}`,
+      {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+      }
+    );
+    const data = await response.json();
+    return data;
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+export const insertRefBook = async (
+  facultyID,
+  courseID,
+  bookName,
+  authorName,
+  units
+) => {
+  try {
+    const response = await fetch(
+      `${process.env.APIBaseUrl}faculty/insertRefBook2?courseID=${courseID}&facultyID=${facultyID}&bookName=${bookName}&authorName=${authorName}&units=${units}`,
+      {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+      }
+    );
+    const data = await response.json();
+    return data;
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+export const updateRefTextBook = async (
+  courseRefBookID,
+  bookName,
+  authorName,
+  units
+) => {
+  try {
+    const response = await fetch(
+      `${process.env.APIBaseUrl}faculty/updateRefBook2?courseRefBookID=${courseRefBookID}&bookName=${bookName}&authorName=${authorName}&units=${units}`,
+      {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+      }
+    );
+    const data = await response.json();
+    return data;
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+export const removeRefBook = async (courseRefBookID) => {
+  try {
+    const response = await fetch(
+      `${process.env.APIBaseUrl}faculty/deleteRefBook2?courseRefBookID=${courseRefBookID}`,
+      {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+      }
+    );
+    const data = await response.json();
+    return data;
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+export const insertRefLink = async (
+  facultyID,
+  courseID,
+  priorityNo,
+  refLink,
+  refDesc,
+  unitSelect,
+  typeSelect
+) => {
+  try {
+    const response = await fetch(
+      `${process.env.APIBaseUrl}faculty/insertRefLink?facultyID=${facultyID}&courseID=${courseID}&priorityNo=${priorityNo}&refLink=${refLink}&refDesc=${refDesc}&unitSelect=${unitSelect}&typeSelect=${typeSelect}`,
+      {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+      }
+    );
+    const data = await response.json();
+    return data;
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+export const removeRefLink = async (courseResourceID) => {
+  try {
+    const response = await fetch(
+      `${process.env.APIBaseUrl}faculty/deleteRefLink?courseResourceID=${courseResourceID}`,
+      {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+      }
+    );
+    const data = await response.json();
+    return data;
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+export const updateRefLink = async (
+  courseResourceID,
+  priorityNo,
+  refLink,
+  refDesc,
+  unitSelect,
+  typeSelect
+) => {
+  try {
+    const response = await fetch(
+      `${process.env.APIBaseUrl}faculty/updateRefLink?courseResourceID=${courseResourceID}&priorityNo=${priorityNo}&refLink=${refLink}&refDesc=${refDesc}&unitSelect=${unitSelect}&typeSelect=${typeSelect}`,
+      {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+      }
+    );
+    const data = await response.json();
+    return data;
+  } catch (error) {
+    console.log(error);
+  }
+};

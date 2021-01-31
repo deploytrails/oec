@@ -390,8 +390,11 @@ const SideNavLinks = () => {
                     }
                   >
                     <Link href="/mentoring/discrepancy">
-                      onClick={() => storeRouteName("Mentoring / Discrepancy")}
-                      <a>
+                      <a
+                        onClick={() =>
+                          storeRouteName("Mentoring / Discrepancy")
+                        }
+                      >
                         <FontAwesomeIcon icon={faCompressArrowsAlt} />{" "}
                         Discrepancy
                       </a>
