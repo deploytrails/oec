@@ -689,6 +689,7 @@ export const updateProfileDetails = async (
   },
   state
 ) => {
+  console.log("dataObj",dataObj);
   const enc = encodeURIComponent(JSON.stringify(dataObj));
   try {
     const response = await fetch(
