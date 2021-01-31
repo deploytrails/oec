@@ -178,3 +178,94 @@ export const updateStudentAttendance = async (
     console.log(error);
   }
 };
+
+export const getFacultyData = async (
+  semesterId,
+  employeeId,
+  swapdate,
+  getstartTime,
+  getendTime,
+  courseID,
+  semsecID,
+  dept
+) => {
+  try {
+    const response = await fetch(
+      `${process.env.APIBaseUrl}faculty/AttendanceServletforSwapFaculties`,
+      {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          semesterId: semesterId,
+          employeeId: employeeId,
+          swapdate: swapdate,
+          getstartTime: getstartTime,
+          getendTime: getendTime,
+          courseID: courseID,
+          semsecID: semsecID,
+          dept: dept,
+        }),
+      }
+    );
+    const data = await response.json();
+    return data;
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+export const getCoursesData = async (semesterId, employeeId) => {
+  try {
+    const response = await fetch(
+      `${process.env.APIBaseUrl}faculty/AttendanceServletforAdjustPeriods?semID=${semesterId}&facID=${employeeId}`,
+
+      {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+      }
+    );
+    const data = await response.json();
+    return data;
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+export const insertAdjustPeriodtData = async (
+  adjustFromObject,
+  adjustFacultyID,
+  adjustCourseID,
+  facultyId,
+  requestStatus,
+  rquestClassDatePrimaryID
+) => {
+  try {
+    const enc = encodeURIComponent(JSON.stringify(adjustFromObject));
+    const response = await fetch(
+      `${process.env.APIBaseUrl}faculty/AttendanceServletforAdjustRequest`,
+
+      {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          adjustFromObject: enc,
+          adjustFacultyID: adjustFacultyID,
+          adjustCourseID: adjustCourseID,
+          facultyId: facultyId,
+          requestStatus: requestStatus,
+          rquestClassDatePrimaryID: rquestClassDatePrimaryID,
+        }),
+      }
+    );
+    const data = await response.json();
+    return data;
+  } catch (error) {
+    console.log(error);
+  }
+};
