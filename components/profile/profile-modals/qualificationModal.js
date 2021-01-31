@@ -29,9 +29,32 @@ const QualificationModal = ({
   const qualificationCreateSchema = Yup.object().shape({
     collegeName: Yup.string().required(),
     branchName: Yup.string().required(),
-    qualificationType: Yup.string().required(),
     yearOfPass: Yup.string().required(),
+    qualificationType: Yup.string().required()
   });
+  const submitQualification = async (values) => {
+    console.log("values",values);
+    console.log("profileid",ProfileId);
+    saveQualificationDetails(values);
+  }
+
+  const saveQualificationDetails = async(values) => {
+    const cData = await updateQualificationDetails(ProfileId,values);
+    console.log(cData);
+    if (cData) {
+      openSnackbar(
+        qualificationList?.qualificationID
+          ? "Qualification updated successfully"
+          : "Qualification created successfully"
+      );
+      loadQualificationInfo();
+      openModal();
+  }
+    }
+
+
+
+
   return (
     <STYLES.PopupMask>
       <STYLES.PopupWrapper>
@@ -47,20 +70,7 @@ const QualificationModal = ({
             yearOfPass: qualificationList?.yearOfPass,
           }}
           validationSchema={qualificationCreateSchema}
-          onSubmit={(values) => {
-            console.log(values);
-            updateQualificationDetails(ProfileId, values).then((data) => {
-              if (data === true) {
-                openSnackbar(
-                  qualificationList?.qualificationID
-                    ? "Qualification updated successfully"
-                    : "Qualification created successfully"
-                );
-                loadQualificationInfo();
-                openModal();
-              }
-            });
-          }}
+          onSubmit={submitQualification}
         >
           {({
             values,
@@ -89,7 +99,7 @@ const QualificationModal = ({
                       value={values.qualificationType}
                       onChange={handleChange}
                       onBlur={handleBlur}
-                      name="qualificationList"
+                      name="qualificationType"
                       css={css`
                         display: block;
                         width: 100%;

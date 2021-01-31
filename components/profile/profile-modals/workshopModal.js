@@ -44,6 +44,7 @@ const WorkshopModal = ({ openModal, workshopList, loadWorkshopInfo }) => {
           }}
           validationSchema={workCreateSchema}
           onSubmit={(values) => {
+            console.log("values",values);
             updateWorkshopDetails(ProfileId, values, state).then((data) => {
               if (data === true) {
                 openSnackbar(
@@ -84,6 +85,7 @@ const WorkshopModal = ({ openModal, workshopList, loadWorkshopInfo }) => {
                       name="typeOfWorkshopname"
                       onChange={handleChange}
                       onBlur={handleBlur}
+                      value={values.typeOfWorkshopname}
                       css={css`
                         display: block;
                         width: 100%;
@@ -223,6 +225,7 @@ const WorkshopModal = ({ openModal, workshopList, loadWorkshopInfo }) => {
                       onChange={handleChange}
                       onBlur={handleBlur}
                       name="typeOfworkshop"
+                      value={values.typeOfworkshop}
                       css={css`
                         display: block;
                         width: 100%;

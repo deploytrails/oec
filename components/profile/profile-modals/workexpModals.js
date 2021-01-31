@@ -21,6 +21,27 @@ const WorkExpModal = ({ openModal, expList, loadExpInfo }) => {
     expFrom: Yup.date().required(),
     expTo: Yup.date().required(),
   });
+
+  const submitWorkExp = async (values) => {
+    console.log("values",values);
+    console.log("profileid",ProfileId);
+    saveWorkExpDetails(values);
+  }
+
+  const saveWorkExpDetails = async(values) => {
+    const cData = await updateWorkExpDetails(ProfileId,values,state);
+    console.log(cData);
+    if (cData) {
+      openSnackbar(
+        expList?.workExperienceId
+          ? "Work Experience updated successfully"
+          : "Work Experience created successfully"
+      );
+      loadExpInfo();
+      openModal();
+  }
+    }
+
   const listTypes = [
     "Choose your option",
     "Dean",
@@ -54,19 +75,7 @@ const WorkExpModal = ({ openModal, expList, loadExpInfo }) => {
             expTo: expList?.expTo,
           }}
           validationSchema={expCreateSchema}
-          onSubmit={(values) => {
-            updateWorkExpDetails(ProfileId, values, state).then((data) => {
-              if (data === true) {
-                openSnackbar(
-                  expList?.workExperienceId
-                    ? "Work Experience updated successfully"
-                    : "Work Experience created successfully"
-                );
-                loadExpInfo();
-                openModal();
-              }
-            });
-          }}
+          onSubmit={submitWorkExp}
         >
           {({
             values,

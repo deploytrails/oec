@@ -93,6 +93,7 @@ const Modal = ({ openModal, userData, loadProfileData }) => {
           }}
           validationSchema={bookCreateSchema}
           onSubmit={(values) => {
+            console.log("values",values);
             updateProfileDetails(values, state).then((data) => {
               if (data === true) {
                 openSnackbar("Profile updated successfully");
@@ -129,6 +130,7 @@ const Modal = ({ openModal, userData, loadProfileData }) => {
                       onChange={handleChange}
                       onBlur={handleBlur}
                       name="prefix"
+                      value={values.prefix}
                       css={css`
                         display: block;
                         width: 100%;
@@ -241,6 +243,7 @@ const Modal = ({ openModal, userData, loadProfileData }) => {
                       onChange={handleChange}
                       onBlur={handleBlur}
                       name="gender"
+                      value={values.gender}
                       css={css`
                         display: block;
                         width: 100%;
@@ -355,6 +358,7 @@ const Modal = ({ openModal, userData, loadProfileData }) => {
                       onChange={handleChange}
                       onBlur={handleBlur}
                       name="associationType"
+                      value={values.associationType}
                       css={css`
                         display: block;
                         width: 100%;

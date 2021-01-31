@@ -23,6 +23,27 @@ const BookPublicationModal = ({ openModal, bookList, loadBookPubInfo }) => {
   let state = "forBooksInsert";
   const listTypes = ["Choose your option", "National", "International"];
 
+  const submitBookPub = async (values) => {
+    console.log("values",values);
+    console.log("profileid",ProfileId);
+    saveBookPubDetails(values);
+  }
+
+  const saveBookPubDetails = async(values) => {
+    const cData = await updateBookPublicationsDetails(ProfileId,values,state);
+    console.log(cData);
+    if (cData) {
+      openSnackbar(
+        bookList?.bookPublicationID
+          ? "Book Publications updated successfully"
+          : "Book Publications created successfully"
+      );
+      loadBookPubInfo();
+      openModal();
+       }
+    }
+
+
   return (
     <STYLES.PopupMask>
       <STYLES.PopupWrapper>
@@ -38,21 +59,7 @@ const BookPublicationModal = ({ openModal, bookList, loadBookPubInfo }) => {
             bookyear: bookList?.bookPublicationYear,
           }}
           validationSchema={bookCreateSchema}
-          onSubmit={(values) => {
-            updateBookPublicationsDetails(ProfileId, values, state).then(
-              (data) => {
-                if (data === true) {
-                  openSnackbar(
-                    bookList?.bookPublicationID
-                      ? "Book Publications updated successfully"
-                      : "Book Publications created successfully"
-                  );
-                  loadBookPubInfo();
-                  openModal();
-                }
-              }
-            );
-          }}
+          onSubmit={submitBookPub}
         >
           {({
             values,

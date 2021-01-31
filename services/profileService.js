@@ -117,6 +117,9 @@ export const updateWorkExpDetails = async (
   },
   state
 ) => {
+  console.log("employee id",employeId);
+  dataObj.employeePrimaryId=employeId;
+  console.log("data Obj",dataObj);
   const enc = encodeURIComponent(JSON.stringify(dataObj));
   const testFile = "testFile.jpg";
   try {
@@ -625,7 +628,7 @@ export const updateContactDetails = async (
   const enc = encodeURIComponent(JSON.stringify(dataObj));
   try {
     const response = await fetch(
-      `${process.env.APIBaseUrl}faculty/updateRec?updateData=${enc}&state=${state}`,
+      `${process.env.APIBaseUrl}faculty/updateRec?updateData=${enc}&dept=${dataObj.dept}&dept1=${dataObj.dept1}&dept2=${dataObj.dept2}&dept3=${dataObj.dept3}&dept4=${dataObj.dept4}&dept5=${dataObj.dept5}&state=${state}`,
       {
         method: "GET",
         headers: {
@@ -689,7 +692,7 @@ export const updateProfileDetails = async (
   const enc = encodeURIComponent(JSON.stringify(dataObj));
   try {
     const response = await fetch(
-      `${process.env.APIBaseUrl}faculty/updateRec?updateData=${enc}&state=${state}`,
+      `${process.env.APIBaseUrl}faculty/updateRec?updateData=${enc}&dept=${dataObj.dept}&dept1=${dataObj.dept1}&dept2=${dataObj.dept2}&dept3=${dataObj.dept3}&dept4=${dataObj.dept4}&dept5=${dataObj.dept5}&state=${state}`,
       {
         method: "GET",
         headers: {

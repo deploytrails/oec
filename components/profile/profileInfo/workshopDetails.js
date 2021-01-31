@@ -88,7 +88,7 @@ const WorkshopDetails = ({ isWorkShopData, loadWorkshopInfo }) => {
             isWorkShopData.length &&
             isWorkShopData.map((wshpInfo) => (
               <TABLE.TableTRR key={wshpInfo.workShopID}>
-                <TABLE.TableTdd>{wshpInfo.workShopVenue}</TABLE.TableTdd>
+                <TABLE.TableTdd>{wshpInfo.workshop}</TABLE.TableTdd>
                 <TABLE.TableTdd>{wshpInfo.organizedby}</TABLE.TableTdd>
                 <TABLE.TableTdd>
                   {moment(wshpInfo.monthyear).format("DD/MM/YYYY")}
