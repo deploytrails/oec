@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import css from "@emotion/css";
 import { useRouter } from "next/router";
+import Link from "next/link";
 import Cookies from "js-cookie";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
@@ -8,10 +9,11 @@ import {
   faChevronDown,
   faSearch,
   faBars,
-  faCross,
-  faTimes,
   faSignOutAlt,
   faChevronLeft,
+  faHome,
+  faChevronRight,
+  faIdCard,
 } from "@fortawesome/free-solid-svg-icons";
 
 const TopHeader = () => {
@@ -20,6 +22,10 @@ const TopHeader = () => {
   const [isNavOpen, setIsNavOpen] = useState(true);
   const [isToggle, setIsToggle] = useState(false);
   const router = useRouter();
+  const pageName = Cookies.get("routeName");
+  const [roleMenu, setRoleMenu] = useState(false);
+
+  const roleArray = ["Admin", "Faculty", "HOD"];
 
   //close side nav
   const cloasenav = () => {
@@ -68,7 +74,10 @@ const TopHeader = () => {
   //const routeName = router.pathname.replace('/', '');
   const routeName = "/dashboard";
   const changeRole = (event) => {
-    const targetValue = event.target.value;
+    setRoleMenu(false);
+    //console.log(event);
+    //  const targetValue = event.target.value;
+    const targetValue = event;
 
     switch (targetValue) {
       case "Faculty":
@@ -120,7 +129,7 @@ const TopHeader = () => {
             )}
           </React.Fragment>
 
-          <div className="ml-4 inline-block">
+          {/* <div className="ml-4 inline-block">
             <label>
               <select
                 onChange={(e) => changeRole(e)}
@@ -133,12 +142,30 @@ const TopHeader = () => {
                 <option value="Student">Student</option>
               </select>
             </label>
+          </div> */}
+          <div className="text-gray-600 inline-block">
+            {pageName === "Dashboard" ? (
+              <span className="ml-2 capitalize">
+                <FontAwesomeIcon icon={faHome} className="mr-1" />
+                Dashboard
+              </span>
+            ) : (
+              <span className="ml-2 capitalize">
+                <Link href="/dashboard" key="Dashboard">
+                  <a class="hover:underline">
+                    <FontAwesomeIcon icon={faHome} className="mr-1" />
+                    Dashboard
+                  </a>
+                </Link>
+                &nbsp;/ {pageName}
+              </span>
+            )}
           </div>
         </div>
         <div className="float-right text-gray-600">
-          <span className="mr-20">
+          {/* <span className="mr-20">
             <FontAwesomeIcon icon={faSearch} />
-          </span>
+          </span> */}
           <button
             type="button"
             className=" relative focus:outline-none"
@@ -175,6 +202,7 @@ const TopHeader = () => {
                 className="shadow-2xl p-0 m-0 absolute bg-white w-full"
                 css={css`
                   top: 40px;
+                  z-index: 1;
                 `}
               >
                 <button
@@ -184,6 +212,53 @@ const TopHeader = () => {
                 >
                   <FontAwesomeIcon icon={faUser} /> Profile
                 </button>
+
+                <div
+                  className="w-full py-1 px-3 border-t border-gray-300 text-left "
+                  onMouseEnter={() => setRoleMenu(true)}
+                  onMouseLeave={() => setRoleMenu(false)}
+                >
+                  <FontAwesomeIcon icon={faIdCard} />
+                  &nbsp;Role ({Cookies.get("roleFinder")})
+                  <span className="float-right">
+                    <FontAwesomeIcon
+                      icon={faChevronRight}
+                      css={
+                        roleMenu
+                          ? css`
+                              transform: rotate(90deg);
+                              transition: all 0.1s ease-in-out;
+                            `
+                          : css`
+                              transform: rotate(0deg);
+                              transition: all 0.1s ease-in-out;
+                            `
+                      }
+                    />
+                  </span>
+                  {roleMenu && (
+                    <div>
+                      <ul
+                        className="ml-6 font-sans text-sm"
+                        css={css`
+                          & > li {
+                            padding: 4px 0px;
+                          }
+                        `}
+                      >
+                        {roleArray
+                          .filter((role) => role !== Cookies.get("roleFinder"))
+                          .map((filteredRole) => (
+                            <li>
+                              <a onClick={() => changeRole(filteredRole)}>
+                                {filteredRole}
+                              </a>
+                            </li>
+                          ))}
+                      </ul>
+                    </div>
+                  )}
+                </div>
                 <button
                   type="button"
                   onClick={logMeOut}

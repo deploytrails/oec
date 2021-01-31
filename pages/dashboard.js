@@ -40,11 +40,11 @@ const Dashboard = () => {
     Cookies.set("routeName", routeName);
   };
   const dashBoardLinks = [
-    {
-      name: "Dashboard",
-      url: "/dashboard",
-      icon: <img src="/dash-icon-1.png" width="100" />,
-    },
+    // {
+    //   name: "Dashboard",
+    //   url: "/dashboard",
+    //   icon: <img src="/dash-icon-1.png" width="100" />,
+    // },
     {
       name: "Imports",
       url: "/imports",
@@ -103,11 +103,11 @@ const Dashboard = () => {
   ];
 
   const hoddashBoardLinks = [
-    {
-      name: "Dashboard",
-      url: "/dashboard",
-      icon: <img src="/dash-icon-1.png" width="100" />,
-    },
+    // {
+    //   name: "Dashboard",
+    //   url: "/dashboard",
+    //   icon: <img src="/dash-icon-1.png" width="100" />,
+    // },
     {
       name: "Imports",
       url: "/hodPages/Imports",
@@ -187,11 +187,11 @@ const Dashboard = () => {
   ];
 
   const admindashBoardLinks = [
-    {
-      name: "Dashboard",
-      url: "/dashboard",
-      icon: <img src="/dash-icon-1.png" width="100" />,
-    },
+    // {
+    //   name: "Dashboard",
+    //   url: "/dashboard",
+    //   icon: <img src="/dash-icon-1.png" width="100" />,
+    // },
     {
       name: "Imports",
       url: "/adminPages/imports",

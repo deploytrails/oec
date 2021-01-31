@@ -65,6 +65,9 @@ const SideNavLinks = () => {
   const toggleReportsMenu = () => {
     setReportsMenu(!reportsMenu);
   };
+  const storeRouteName = (routeName) => {
+    Cookies.set("routeName", routeName);
+  };
   const roleCheck = Cookies.get("roleFinder");
   return (
     <React.Fragment>
@@ -103,7 +106,7 @@ const SideNavLinks = () => {
               }
             >
               <Link href="/dashboard">
-                <a>
+                <a onClick={() => storeRouteName("Dashboard")}>
                   <FontAwesomeIcon icon={faColumns} /> Dashboard
                 </a>
               </Link>
@@ -121,7 +124,7 @@ const SideNavLinks = () => {
               }
             >
               <Link href="/imports">
-                <a>
+                <a onClick={() => storeRouteName("Imports")}>
                   <FontAwesomeIcon icon={faFileImport} /> Imports
                 </a>
               </Link>
@@ -139,7 +142,7 @@ const SideNavLinks = () => {
               }
             >
               <Link href="/notifications">
-                <a>
+                <a onClick={() => storeRouteName("Notifications")}>
                   <FontAwesomeIcon icon={faBell} /> Notifications
                 </a>
               </Link>
@@ -157,7 +160,7 @@ const SideNavLinks = () => {
               }
             >
               <Link href="/profile">
-                <a>
+                <a onClick={() => storeRouteName("Profile")}>
                   <FontAwesomeIcon icon={faUser} /> Profile
                 </a>
               </Link>
@@ -217,7 +220,13 @@ const SideNavLinks = () => {
                     }
                   >
                     <Link href="/allocated-cources/allocatedCourses">
-                      <a>
+                      <a
+                        onClick={() =>
+                          storeRouteName(
+                            "Allocated Courses / Allocated Courses"
+                          )
+                        }
+                      >
                         <FontAwesomeIcon icon={faBook} /> Allocated Courses
                       </a>
                     </Link>
@@ -234,7 +243,11 @@ const SideNavLinks = () => {
                     }
                   >
                     <Link href="/allocated-cources/attendance">
-                      <a>
+                      <a
+                        onClick={() =>
+                          storeRouteName("Allocated Courses / Attendance")
+                        }
+                      >
                         <FontAwesomeIcon icon={faPeopleArrows} /> Attendance
                       </a>
                     </Link>
@@ -251,7 +264,11 @@ const SideNavLinks = () => {
                     }
                   >
                     <Link href="/allocated-cources/marksEntry">
-                      <a>
+                      <a
+                        onClick={() =>
+                          storeRouteName("Allocated Courses / Marks Entry")
+                        }
+                      >
                         <FontAwesomeIcon icon={faNewspaper} /> Mark Entry
                       </a>
                     </Link>
@@ -275,7 +292,7 @@ const SideNavLinks = () => {
               }
             >
               <Link href="/courseCoordinatorAllocation">
-                <a>
+                <a onClick={() => storeRouteName("Course Coordinator")}>
                   <FontAwesomeIcon icon={faIdBadge} /> Course Coordinator
                   Allocation
                 </a>
@@ -294,7 +311,7 @@ const SideNavLinks = () => {
               }
             >
               <Link href="/class-schedule">
-                <a>
+                <a onClick={() => storeRouteName("Class Schedule")}>
                   <FontAwesomeIcon icon={faCalendar} /> Class Schedule
                 </a>
               </Link>
@@ -351,7 +368,11 @@ const SideNavLinks = () => {
                     }
                   >
                     <Link href="/mentoring/assignedStudents">
-                      <a>
+                      <a
+                        onClick={() =>
+                          storeRouteName("Mentoring / Assigned Students")
+                        }
+                      >
                         <FontAwesomeIcon icon={faGraduationCap} /> Assigned
                         Students
                       </a>
@@ -369,6 +390,7 @@ const SideNavLinks = () => {
                     }
                   >
                     <Link href="/mentoring/discrepancy">
+                      onClick={() => storeRouteName("Mentoring / Discrepancy")}
                       <a>
                         <FontAwesomeIcon icon={faCompressArrowsAlt} />{" "}
                         Discrepancy
@@ -430,7 +452,11 @@ const SideNavLinks = () => {
                     }
                   >
                     <Link href="/examSchedule/examInvigilation">
-                      <a>
+                      <a
+                        onClick={() =>
+                          storeRouteName("Exam Schedule / Exam Invigilation")
+                        }
+                      >
                         <FontAwesomeIcon icon={faExchangeAlt} /> Exam
                         Invigilation
                       </a>
@@ -494,7 +520,11 @@ const SideNavLinks = () => {
                     }
                   >
                     <Link href="/reports/courseRegister">
-                      <a>
+                      <a
+                        onClick={() =>
+                          storeRouteName("Reports / Course Register")
+                        }
+                      >
                         <FontAwesomeIcon icon={faRegistered} /> Course Register
                       </a>
                     </Link>
@@ -511,7 +541,11 @@ const SideNavLinks = () => {
                     }
                   >
                     <Link href="/reports/courseWiseAttendance">
-                      <a>
+                      <a
+                        onClick={() =>
+                          storeRouteName("Reports / Course Wise Attendance")
+                        }
+                      >
                         <FontAwesomeIcon icon={faLayerGroup} /> Course Wise
                         Attendance
                       </a>
@@ -529,7 +563,11 @@ const SideNavLinks = () => {
                     }
                   >
                     <Link href="/reports/dayWiseAttendance">
-                      <a>
+                      <a
+                        onClick={() =>
+                          storeRouteName("Reports / Day Wise Attendance")
+                        }
+                      >
                         <FontAwesomeIcon icon={faAddressCard} /> Day Wise
                         Attendance
                       </a>
