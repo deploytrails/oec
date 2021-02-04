@@ -34,19 +34,20 @@ import {
   faObjectGroup,
   faLayerGroup,
   faAddressCard,
+  faCalendarAlt,
 } from "@fortawesome/free-solid-svg-icons";
 
 const AdminSideNavLinks = () => {
   const router = useRouter();
   const [dropMenu, setDropMenu] = useState(false);
-  const [poMenu, setPoMenu] = useState(false);
+  const [setupMenu, setSetupMenu] = useState(false);
   const [reportsMenu, setReportsMenu] = useState(false);
 
   const toggleAlloCourceMenu = () => {
     setDropMenu(!dropMenu);
   };
-  const togglePoMenu = () => {
-    setPoMenu(!poMenu);
+  const toggleSetup = () => {
+    setSetupMenu(!setupMenu);
   };
   const toggleReportsMenu = () => {
     setReportsMenu(!reportsMenu);
@@ -138,6 +139,274 @@ const AdminSideNavLinks = () => {
                 `
           }
         >
+          <a className="clearfix cursor-pointer" onClick={toggleSetup}>
+            <FontAwesomeIcon icon={faChartBar} /> Setup
+            <span className="float-right">
+              <FontAwesomeIcon
+                icon={faChevronRight}
+                css={
+                  setupMenu
+                    ? css`
+                        transform: rotate(90deg);
+                        transition: all 0.1s ease-in-out;
+                      `
+                    : css`
+                        transform: rotate(0deg);
+                        transition: all 0.1s ease-in-out;
+                      `
+                }
+              />
+            </span>
+          </a>
+          {setupMenu && (
+            <ul
+              className="ml-6 font-sans text-sm"
+              css={css`
+                & > li {
+                  padding: 4px 0px;
+                }
+              `}
+            >
+              <li
+                css={
+                  router.pathname === "/adminPages/setup/academicYear"
+                    ? css`
+                        color: ${COLORS.GREEN};
+                      `
+                    : css`
+                        color: ${COLORS.TEXTGRAY};
+                      `
+                }
+              >
+                <Link href="/adminPages/setup/academicYear">
+                  <a>
+                    <FontAwesomeIcon icon={faBook} /> Academic Year
+                  </a>
+                </Link>
+              </li>
+              <li
+                css={
+                  router.pathname === "/adminPages/setup/defineDegree"
+                    ? css`
+                        color: ${COLORS.GREEN};
+                      `
+                    : css`
+                        color: ${COLORS.TEXTGRAY};
+                      `
+                }
+              >
+                <Link href="/adminPages/setup/defineDegree">
+                  <a>
+                    <FontAwesomeIcon icon={faBook} /> Define Degree
+                  </a>
+                </Link>
+              </li>
+              <li
+                css={
+                  router.pathname === "/adminPages/setup/definePrograms"
+                    ? css`
+                        color: ${COLORS.GREEN};
+                      `
+                    : css`
+                        color: ${COLORS.TEXTGRAY};
+                      `
+                }
+              >
+                <Link href="/adminPages/setup/definePrograms">
+                  <a>
+                    <FontAwesomeIcon icon={faBook} /> Define Programs
+                  </a>
+                </Link>
+              </li>
+              <li
+                css={
+                  router.pathname === "/adminPages/setup/defineCourses"
+                    ? css`
+                        color: ${COLORS.GREEN};
+                      `
+                    : css`
+                        color: ${COLORS.TEXTGRAY};
+                      `
+                }
+              >
+                <Link href="/adminPages/setup/defineCourses">
+                  <a>
+                    <FontAwesomeIcon icon={faBook} /> Define Courses
+                  </a>
+                </Link>
+              </li>
+              <li
+                css={
+                  router.pathname === "/adminPages/setup/buildingOrBlocks"
+                    ? css`
+                        color: ${COLORS.GREEN};
+                      `
+                    : css`
+                        color: ${COLORS.TEXTGRAY};
+                      `
+                }
+              >
+                <Link href="/adminPages/setup/buildingOrBlocks">
+                  <a>
+                    <FontAwesomeIcon icon={faBook} /> Building/Blocks
+                  </a>
+                </Link>
+              </li>
+              <li
+                css={
+                  router.pathname === "/adminPages/setup/defineRooms"
+                    ? css`
+                        color: ${COLORS.GREEN};
+                      `
+                    : css`
+                        color: ${COLORS.TEXTGRAY};
+                      `
+                }
+              >
+                <Link href="/adminPages/setup/defineRooms">
+                  <a>
+                    <FontAwesomeIcon icon={faBook} /> Define Rooms
+                  </a>
+                </Link>
+              </li>
+              <li
+                css={
+                  router.pathname === "/adminPages/setup/createSemesters"
+                    ? css`
+                        color: ${COLORS.GREEN};
+                      `
+                    : css`
+                        color: ${COLORS.TEXTGRAY};
+                      `
+                }
+              >
+                <Link href="/adminPages/setup/createSemesters">
+                  <a>
+                    <FontAwesomeIcon icon={faBook} /> Create Semesters
+                  </a>
+                </Link>
+              </li>
+              <li
+                css={
+                  router.pathname === "/adminPages/setup/defineSemesterCourses"
+                    ? css`
+                        color: ${COLORS.GREEN};
+                      `
+                    : css`
+                        color: ${COLORS.TEXTGRAY};
+                      `
+                }
+              >
+                <Link href="/adminPages/setup/defineSemesterCourses">
+                  <a>
+                    <FontAwesomeIcon icon={faBook} /> Define Semester Courses
+                  </a>
+                </Link>
+              </li>
+            </ul>
+          )}
+        </li>
+
+        <li
+          css={
+            router.pathname === "/adminPages/students"
+              ? css`
+                  color: ${COLORS.GREEN};
+                `
+              : css`
+                  color: ${COLORS.TEXTGRAY};
+                `
+          }
+        >
+          <Link href="/adminPages/students">
+            <a>
+              <FontAwesomeIcon icon={faIdBadge} /> Students
+            </a>
+          </Link>
+        </li>
+
+        <li
+          css={
+            router.pathname === "/adminPages/faculty"
+              ? css`
+                  color: ${COLORS.GREEN};
+                `
+              : css`
+                  color: ${COLORS.TEXTGRAY};
+                `
+          }
+        >
+          <Link href="/adminPages/faculty">
+            <a>
+              <FontAwesomeIcon icon={faIdBadge} /> Faculty
+            </a>
+          </Link>
+        </li>
+
+        <li
+          css={
+            router.pathname === "/adminPages/timeTable"
+              ? css`
+                  color: ${COLORS.GREEN};
+                `
+              : css`
+                  color: ${COLORS.TEXTGRAY};
+                `
+          }
+        >
+          <Link href="/adminPages/timeTable">
+            <a>
+              <FontAwesomeIcon icon={faIdBadge} /> Time Table
+            </a>
+          </Link>
+        </li>
+
+        <li
+          css={
+            router.pathname === "/adminPages/semSections"
+              ? css`
+                  color: ${COLORS.GREEN};
+                `
+              : css`
+                  color: ${COLORS.TEXTGRAY};
+                `
+          }
+        >
+          <Link href="/adminPages/semSections">
+            <a>
+              <FontAwesomeIcon icon={faCalendar} /> Semester Sections
+            </a>
+          </Link>
+        </li>
+
+        <li
+          css={
+            router.pathname === "/adminPages/facSubExp"
+              ? css`
+                  color: ${COLORS.GREEN};
+                `
+              : css`
+                  color: ${COLORS.TEXTGRAY};
+                `
+          }
+        >
+          <Link href="/adminPages/facSubExp">
+            <a>
+              <FontAwesomeIcon icon={faPhone} /> Faculty Subject Experience
+            </a>
+          </Link>
+        </li>
+        <li
+          css={
+            router.pathname === "/adminPages/reports"
+              ? css`
+                  color: ${COLORS.GREEN};
+                `
+              : css`
+                  color: ${COLORS.TEXTGRAY};
+                `
+          }
+        >
           <a className="clearfix cursor-pointer" onClick={toggleReportsMenu}>
             <FontAwesomeIcon icon={faChartBar} /> Reports
             <span className="float-right">
@@ -168,7 +437,7 @@ const AdminSideNavLinks = () => {
             >
               <li
                 css={
-                  router.pathname === "/hodPages/reports/nonPostedData"
+                  router.pathname === "/adminPages/reports/nonPostedData"
                     ? css`
                         color: ${COLORS.GREEN};
                       `
@@ -177,15 +446,15 @@ const AdminSideNavLinks = () => {
                       `
                 }
               >
-                <Link href="/hodPages/reports/nonPostedData">
+                <Link href="/adminPages/reports/nonPostedData">
                   <a>
-                    <FontAwesomeIcon icon={faBook} /> NonPosted Data
+                    <FontAwesomeIcon icon={faBook} /> Non Posted Attendance List
                   </a>
                 </Link>
               </li>
               <li
                 css={
-                  router.pathname === "/hodPages/reports/facWiseCouReg"
+                  router.pathname === "/adminPages/reports/studentDetails"
                     ? css`
                         color: ${COLORS.GREEN};
                       `
@@ -194,16 +463,16 @@ const AdminSideNavLinks = () => {
                       `
                 }
               >
-                <Link href="/hodPages/reports/facWiseCouReg">
+                <Link href="/adminPages/reports/studentDetails">
                   <a>
-                    <FontAwesomeIcon icon={faBook} /> Faculty Wise Course
-                    Register
+                    <FontAwesomeIcon icon={faBook} /> Student Details
                   </a>
                 </Link>
               </li>
               <li
                 css={
-                  router.pathname === "/hodPages/reports/couWiseAtt"
+                  router.pathname ===
+                  "/adminPages/reports/subjectWiseAttendance"
                     ? css`
                         color: ${COLORS.GREEN};
                       `
@@ -212,15 +481,16 @@ const AdminSideNavLinks = () => {
                       `
                 }
               >
-                <Link href="/hodPages/reports/couWiseAtt">
+                <Link href="/adminPages/reports/subjectWiseAttendance">
                   <a>
-                    <FontAwesomeIcon icon={faBook} /> Course Wise Attendance
+                    <FontAwesomeIcon icon={faBook} /> Subject Wise Attendance
                   </a>
                 </Link>
               </li>
               <li
                 css={
-                  router.pathname === "/hodPages/reports/dayWiseAtt"
+                  router.pathname ===
+                  "/adminPages/reports/studentWiseAttendance"
                     ? css`
                         color: ${COLORS.GREEN};
                       `
@@ -229,15 +499,15 @@ const AdminSideNavLinks = () => {
                       `
                 }
               >
-                <Link href="/hodPages/reports/dayWiseAtt">
+                <Link href="/adminPages/reports/studentWiseAttendance">
                   <a>
-                    <FontAwesomeIcon icon={faBook} /> Day Wise Attendance
+                    <FontAwesomeIcon icon={faBook} /> Student Wise Attendance
                   </a>
                 </Link>
               </li>
               <li
                 css={
-                  router.pathname === "/hodPages/reports/facHandlingCourses"
+                  router.pathname === "/adminPages/reports/facultyAttendance"
                     ? css`
                         color: ${COLORS.GREEN};
                       `
@@ -246,15 +516,15 @@ const AdminSideNavLinks = () => {
                       `
                 }
               >
-                <Link href="/hodPages/reports/facHandlingCourses">
+                <Link href="/adminPages/reports/facultyAttendance">
                   <a>
-                    <FontAwesomeIcon icon={faBook} /> Faculty Handling Courses
+                    <FontAwesomeIcon icon={faBook} /> Faculty Attendance
                   </a>
                 </Link>
               </li>
               <li
                 css={
-                  router.pathname === "/hodPages/reports/coordHandlingCou"
+                  router.pathname === "/adminPages/reports/courseDetails"
                     ? css`
                         color: ${COLORS.GREEN};
                       `
@@ -263,62 +533,9 @@ const AdminSideNavLinks = () => {
                       `
                 }
               >
-                <Link href="/hodPages/reports/coordHandlingCou">
+                <Link href="/adminPages/reports/courseDetails">
                   <a>
-                    <FontAwesomeIcon icon={faBook} /> Coordinator Handling
-                    Courses
-                  </a>
-                </Link>
-              </li>
-              <li
-                css={
-                  router.pathname === "/hodPages/reports/tentLectSch"
-                    ? css`
-                        color: ${COLORS.GREEN};
-                      `
-                    : css`
-                        color: ${COLORS.TEXTGRAY};
-                      `
-                }
-              >
-                <Link href="/hodPages/reports/tentLectSch">
-                  <a>
-                    <FontAwesomeIcon icon={faBook} /> Tentative Lecture Schedule
-                  </a>
-                </Link>
-              </li>
-              <li
-                css={
-                  router.pathname === "/hodPages/reports/periodAdjNotif"
-                    ? css`
-                        color: ${COLORS.GREEN};
-                      `
-                    : css`
-                        color: ${COLORS.TEXTGRAY};
-                      `
-                }
-              >
-                <Link href="/hodPages/reports/periodAdjNotif">
-                  <a>
-                    <FontAwesomeIcon icon={faBook} /> Period Adjustment
-                    Notification
-                  </a>
-                </Link>
-              </li>
-              <li
-                css={
-                  router.pathname === "/hodPages/reports/facTimeTable"
-                    ? css`
-                        color: ${COLORS.GREEN};
-                      `
-                    : css`
-                        color: ${COLORS.TEXTGRAY};
-                      `
-                }
-              >
-                <Link href="/hodPages/reports/facTimeTable">
-                  <a>
-                    <FontAwesomeIcon icon={faBook} /> Faculty Time Table
+                    <FontAwesomeIcon icon={faBook} /> Course Details Courses
                   </a>
                 </Link>
               </li>
@@ -328,7 +545,7 @@ const AdminSideNavLinks = () => {
 
         <li
           css={
-            router.pathname === "/classSchedule"
+            router.pathname === "/adminPages/graphs"
               ? css`
                   color: ${COLORS.GREEN};
                 `
@@ -338,7 +555,7 @@ const AdminSideNavLinks = () => {
           }
         >
           <a className="clearfix cursor-pointer" onClick={toggleAlloCourceMenu}>
-            <FontAwesomeIcon icon={faList} /> Class Schedule
+            <FontAwesomeIcon icon={faCalendarAlt} /> Graphs
             <span className="float-right">
               <FontAwesomeIcon
                 icon={faChevronRight}
@@ -367,7 +584,7 @@ const AdminSideNavLinks = () => {
             >
               <li
                 css={
-                  router.pathname === "/hodPages/classSchedule/myClasSchedules"
+                  router.pathname === "/adminPages/graphs/intakeGraph"
                     ? css`
                         color: ${COLORS.GREEN};
                       `
@@ -376,15 +593,15 @@ const AdminSideNavLinks = () => {
                       `
                 }
               >
-                <Link href="/hodPages/classSchedule/myClasSchedules">
+                <Link href="/adminPages/graphs/intakeGraph">
                   <a>
-                    <FontAwesomeIcon icon={faBook} /> My Class Schedules
+                    <FontAwesomeIcon icon={faBook} /> Intake Graphs
                   </a>
                 </Link>
               </li>
               <li
                 css={
-                  router.pathname === "/hodPages/classSchedule/viewTimeTable"
+                  router.pathname === "/adminPages/graphs/enrollmentGraph"
                     ? css`
                         color: ${COLORS.GREEN};
                       `
@@ -393,234 +610,31 @@ const AdminSideNavLinks = () => {
                       `
                 }
               >
-                <Link href="/hodPages/classSchedule/viewTimeTable">
+                <Link href="/adminPages/graphs/enrollmentGraph">
                   <a>
-                    <FontAwesomeIcon icon={faPeopleArrows} /> View TimeTable
+                    <FontAwesomeIcon icon={faPeopleArrows} /> Enrollment Graph
+                  </a>
+                </Link>
+              </li>
+              <li
+                css={
+                  router.pathname === "/adminPages/graphs/marksGraph"
+                    ? css`
+                        color: ${COLORS.GREEN};
+                      `
+                    : css`
+                        color: ${COLORS.TEXTGRAY};
+                      `
+                }
+              >
+                <Link href="/adminPages/graphs/marksGraph">
+                  <a>
+                    <FontAwesomeIcon icon={faPeopleArrows} /> Marks Graph
                   </a>
                 </Link>
               </li>
             </ul>
           )}
-        </li>
-
-        <li
-          css={
-            router.pathname === "/poMapping"
-              ? css`
-                  color: ${COLORS.GREEN};
-                `
-              : css`
-                  color: ${COLORS.TEXTGRAY};
-                `
-          }
-        >
-          <a className="clearfix cursor-pointer" onClick={togglePoMenu}>
-            <FontAwesomeIcon icon={faKeyboard} /> PO Mapping
-            <span className="float-right">
-              <FontAwesomeIcon
-                icon={faChevronRight}
-                css={
-                  poMenu
-                    ? css`
-                        transform: rotate(90deg);
-                        transition: all 0.1s ease-in-out;
-                      `
-                    : css`
-                        transform: rotate(0deg);
-                        transition: all 0.1s ease-in-out;
-                      `
-                }
-              />
-            </span>
-          </a>
-          {poMenu && (
-            <ul
-              className="ml-6 font-sans text-sm"
-              css={css`
-                & > li {
-                  padding: 4px 0px;
-                }
-              `}
-            >
-              <li
-                css={
-                  router.pathname === "/hodPages/poMapping/visMisStatement"
-                    ? css`
-                        color: ${COLORS.GREEN};
-                      `
-                    : css`
-                        color: ${COLORS.TEXTGRAY};
-                      `
-                }
-              >
-                <Link href="/hodPages/poMapping/visMisStatement">
-                  <a>
-                    <FontAwesomeIcon icon={faGraduationCap} /> Vision/Mission
-                    Statement
-                  </a>
-                </Link>
-              </li>
-              <li
-                css={
-                  router.pathname === "/hodPages/poMapping/progEduObjectives"
-                    ? css`
-                        color: ${COLORS.GREEN};
-                      `
-                    : css`
-                        color: ${COLORS.TEXTGRAY};
-                      `
-                }
-              >
-                <Link href="/hodPages/poMapping/progEduObjectives">
-                  <a>
-                    <FontAwesomeIcon icon={faCompressArrowsAlt} /> Program
-                    Educational Objectives
-                  </a>
-                </Link>
-              </li>
-              <li
-                css={
-                  router.pathname === "/hodPages/poMapping/pOPSOs"
-                    ? css`
-                        color: ${COLORS.GREEN};
-                      `
-                    : css`
-                        color: ${COLORS.TEXTGRAY};
-                      `
-                }
-              >
-                <Link href="/hodPages/poMapping/pOPSOs">
-                  <a>
-                    <FontAwesomeIcon icon={faCompressArrowsAlt} /> PO & PSO's
-                  </a>
-                </Link>
-              </li>
-            </ul>
-          )}
-        </li>
-
-        <li
-          css={
-            router.pathname === "/hodPages/swapClass/swapWrapper"
-              ? css`
-                  color: ${COLORS.GREEN};
-                `
-              : css`
-                  color: ${COLORS.TEXTGRAY};
-                `
-          }
-        >
-          <Link href="/hodPages/swapClass/swapWrapper">
-            <a>
-              <FontAwesomeIcon icon={faIdBadge} /> Swap Classes
-            </a>
-          </Link>
-        </li>
-
-        <li
-          css={
-            router.pathname === "/hodPages/Mentors/mentor"
-              ? css`
-                  color: ${COLORS.GREEN};
-                `
-              : css`
-                  color: ${COLORS.TEXTGRAY};
-                `
-          }
-        >
-          <Link href="/hodPages/Mentors/mentor">
-            <a>
-              <FontAwesomeIcon icon={faCalendar} /> Mentor
-            </a>
-          </Link>
-        </li>
-
-        <li
-          css={
-            router.pathname === "/hodPages/feedbackDetails/feedbackDetails"
-              ? css`
-                  color: ${COLORS.GREEN};
-                `
-              : css`
-                  color: ${COLORS.TEXTGRAY};
-                `
-          }
-        >
-          <Link href="/hodPages/feedbackDetails/feedbackDetails">
-            <a>
-              <FontAwesomeIcon icon={faPhone} /> Feedback Details
-            </a>
-          </Link>
-        </li>
-
-        <li
-          css={
-            router.pathname === "/hodPages/assignGroup"
-              ? css`
-                  color: ${COLORS.GREEN};
-                `
-              : css`
-                  color: ${COLORS.TEXTGRAY};
-                `
-          }
-        >
-          <Link href="/hodPages/assignGroup">
-            <a>
-              <FontAwesomeIcon icon={faTint} /> Assign Group
-            </a>
-          </Link>
-        </li>
-        <li
-          css={
-            router.pathname === "/hodPages/facultyCoursesList"
-              ? css`
-                  color: ${COLORS.GREEN};
-                `
-              : css`
-                  color: ${COLORS.TEXTGRAY};
-                `
-          }
-        >
-          <Link href="/hodPages/facultyCoursesList">
-            <a>
-              <FontAwesomeIcon icon={faTint} />
-              List of Faculty Courses
-            </a>
-          </Link>
-        </li>
-        <li
-          css={
-            router.pathname === "/hodPages/facultyDataDownload"
-              ? css`
-                  color: ${COLORS.GREEN};
-                `
-              : css`
-                  color: ${COLORS.TEXTGRAY};
-                `
-          }
-        >
-          <Link href="/hodPages/facultyDataDownload">
-            <a>
-              <FontAwesomeIcon icon={faTint} /> Faculty Data Download
-            </a>
-          </Link>
-        </li>
-        <li
-          css={
-            router.pathname === "/hodPages/assignElectives"
-              ? css`
-                  color: ${COLORS.GREEN};
-                `
-              : css`
-                  color: ${COLORS.TEXTGRAY};
-                `
-          }
-        >
-          <Link href="/hodPages/assignElectives">
-            <a>
-              <FontAwesomeIcon icon={faTint} /> Assign Electives
-            </a>
-          </Link>
         </li>
       </ul>
     </React.Fragment>

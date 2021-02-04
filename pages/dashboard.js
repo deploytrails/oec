@@ -215,7 +215,7 @@ const Dashboard = () => {
     },
     {
       name: "Faculty",
-      url: "/adminPages/Faculty",
+      url: "/adminPages/faculty",
       icon: <img src="/dash-icon-9.png" width="100" />,
     },
     {
@@ -230,7 +230,7 @@ const Dashboard = () => {
     },
     {
       name: "Faculty Subject Experience",
-      url: "/adminPages/FacSubExp",
+      url: "/adminPages/facSubExp",
       icon: <img src="/dash-icon-1.png" width="100" />,
     },
     {
