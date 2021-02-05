@@ -444,7 +444,7 @@ const Modal = ({ openModal, userData, loadProfileData }) => {
 
                 <div className="w-4/12 float-left">
                   <FormInput
-                    label="Date Of Leaving"
+                    label="Leaving Date"
                     type="date"
                     name="dateOfLeaving"
                     id="dateOfLeaving"
