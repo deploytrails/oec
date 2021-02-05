@@ -100,7 +100,6 @@ const AssignGroup = () => {
         allocation: targetCheck,
       }))
     );
-    console.log("Singdara: "+isStudentData);
   }
 
   return (

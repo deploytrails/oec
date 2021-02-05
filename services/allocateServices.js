@@ -462,3 +462,53 @@ export const insertAdjustPeriodtData = async (
     console.log(error);
   }
 };
+
+export const getAllocatedPeriods = async (
+  semesterId,
+  date,
+  courseId,
+  FacultyID,
+  section
+) => {
+  try {
+    const response = await fetch(
+      `${process.env.APIBaseUrl}faculty/getPeriods?semesterId=${semesterId}&date=${date}&courseId=${courseId}&FacultyID=${FacultyID}&section=${section}`,
+
+      {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+      }
+    );
+    const data = await response.json();
+    return data;
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+export const saveExtraClasses = async (
+  roomId,
+  facultyID,
+  period,
+  selectedDate
+) => {
+  try {
+    const encPeriods = encodeURIComponent(JSON.stringify(period));
+    const response = await fetch(
+      `${process.env.APIBaseUrl}faculty/saveExtraClass?roomId=${roomId}&period=${encPeriods}&selectedDate=${selectedDate}&facultyID=${facultyID}`,
+
+      {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+      }
+    );
+    const data = await response.json();
+    return data;
+  } catch (error) {
+    console.log(error);
+  }
+};
