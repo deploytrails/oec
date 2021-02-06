@@ -28,8 +28,8 @@ const ExtraClassModelData = ({ activeTabData, FacultyId }) => {
     console.log("Selected Classes: " + filterIDs);
   }
 
-  const saveExtraClassesData = async (extraSemesterId, extraCourseId, sectionId, roomId, period, selectedDate, courseType, facultyID) => {
-    const data = await saveExtraClasses(extraSemesterId, extraCourseId, sectionId, roomId, period, selectedDate, courseType, facultyID);
+  const saveExtraClassesData = async (roomId, facultyID,period, selectedDate) => {
+    const data = await saveExtraClasses(roomId, facultyID,period, selectedDate);
    
   };
 
@@ -39,13 +39,11 @@ const ExtraClassModelData = ({ activeTabData, FacultyId }) => {
     });
     console.log("Final object: " + result[0].periodId)
     
-    saveExtraClassesData(result[0].semId,
-      result[0].courseId,
-      result[0].sectionId,
+    saveExtraClassesData(
       "201961253159478881162",
+      "64D4589B8B6B11E98B09F5D4FE0AE507",
       result,
-      "2021-02-03",
-      result[0].classType,"64D4589B8B6B11E98B09F5D4FE0AE507");
+      "2021-02-03");
   }
 
   const selectCheck = (selectedVal) => {
