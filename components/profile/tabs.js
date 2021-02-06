@@ -24,6 +24,7 @@ const TabsWrap = ({
   isGrantsData,
   isConfData,
   isPhData,
+  isJourData,
   loadPhInfo, //update phd
   loadConfInfo,
   loadGrantsInfo,
@@ -32,7 +33,8 @@ const TabsWrap = ({
   loadBookPubInfo,
   loadQualificationInfo,
   loadExpInfo,
-  loadProfileData
+  loadProfileData,
+  loadJournalPaperInfo
 }) => {
   const [active, setActive] = useState(0);
   const [isMoreTabs, setIsMoreTabs] = useState(false);
@@ -169,8 +171,8 @@ const TabsWrap = ({
         </Content>
         <Content active={active === 5}>
           <JournalPublications
-            isBookPubInfo={isBookPubInfo}
-            loadBookPubInfo={loadBookPubInfo}
+            isJourData={isJourData}
+            loadJournalPaperInfo={loadJournalPaperInfo}
           />
         </Content>
         <Content active={active === 6}>

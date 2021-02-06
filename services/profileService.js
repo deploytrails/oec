@@ -707,3 +707,74 @@ export const updateProfileDetails = async (
     console.log(error);
   }
 };
+export const getJournPaperDetails = async employeId => {
+  try {
+    const response = await fetch(
+      `${process.env.APIBaseUrl}faculty/getPaperPublications?employeeID=${employeId}`,
+      {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json"
+        }
+      }
+    );
+    const data = await response.json();
+    return data;
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+export const updatePaperPublicationsDetails = async (
+  employeId,
+  dataObj = {
+    paperID: paperID,
+    typeOfAuthor: typeOfAuthor,
+    titlePublication: titlePublication,
+    journalName: journalName,
+    typeOfPublication: typeOfPublication,
+    pageNos: pageNos,
+    issnNo: issnNo,
+    monYear: monYear,
+    typeOfissue: typeOfissue,
+    issueNo: issueNo,
+    impactFactor: impactFactor,
+    volumeNo: volumeNo,
+    Hindex: Hindex
+  }
+) => {
+  const enc = encodeURIComponent(JSON.stringify(dataObj));
+  try {
+    const response = await fetch(
+      `${process.env.APIBaseUrl}faculty/insertPaperPublications?employeeID=${employeId}&insertData=${enc}`,
+      {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json"
+        }
+      }
+    );
+    const data = await response.json();
+    return data;
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+export const deletePaperDetails = async (paperID) => {
+  try {
+    const response = await fetch(
+      `${process.env.APIBaseUrl}faculty/deletePaperPublication?paperID=${paperID}`,
+      {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json"
+        }
+      }
+    );
+    const data = await response.json();
+    return data;
+  } catch (error) {
+    console.log(error);
+  }
+};
