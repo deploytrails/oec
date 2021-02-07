@@ -13,6 +13,7 @@ const TextBooksTabData = ({ forBookTable, loadReferenceData }) => {
   const [openSnackbar, closeSnackbar] = useSnackbar();
   const [showEditModal, setShowEditModal] = useState(false);
   const [activeTabData, setActiveTabData] = useState({});
+  const [isDeleteId, setIsDeleteId] = useState("");
 
   const toggleEditModal = async (data) => {
     setActiveTabData(data);
@@ -63,13 +64,15 @@ const TextBooksTabData = ({ forBookTable, loadReferenceData }) => {
                     <span className="cursor-pointer text-red-400">
                       <FontAwesomeIcon
                         icon={faTrashAlt}
-                        onClick={openAlertModal}
+                        onClick={() => {
+                          setIsDeleteId(book.courseBookId), openAlertModal();
+                        }}
                       />
                     </span>
                     {isAlert && (
                       <ConfirmationModal
                         deleteMessage="Book Details"
-                        deleteRecord={() => deleteTextBook(book.courseBookId)}
+                        deleteRecord={() => deleteTextBook(isDeleteId)}
                         openAlertModal={openAlertModal}
                       />
                     )}
