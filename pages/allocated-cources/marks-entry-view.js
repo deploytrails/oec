@@ -42,7 +42,7 @@ const ViewMarksEntry = ({
             <React.Fragment>
               <TABLE.TableTR>
                 <TABLE.TableTh>S.No</TABLE.TableTh>
-                <TABLE.TableTh>Roll No</TABLE.TableTh>
+                <TABLE.TableTh>Roll No.</TABLE.TableTh>
                 <TABLE.TableTh>Student Name</TABLE.TableTh>
                 {questions &&
                   questions.map((item, i) => (

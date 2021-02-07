@@ -169,10 +169,10 @@ const Attendance = () => {
                         >
                           <tr className="block">
                             <th className="w-2/12 px-1 py-2 text-left">
-                              Coure Code
+                              Course Code
                             </th>
                             <th className="w-2/12 px-1 py-2 text-left">
-                              Coure Name
+                              Course Name
                             </th>
                             <th className="w-2/12 px-1 py-2 text-left">
                               Start Time
