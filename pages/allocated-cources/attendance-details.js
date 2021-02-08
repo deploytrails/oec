@@ -181,7 +181,7 @@ const AttendanceDetails = ({
           <React.Fragment>
             <TABLE.TableTR>
               <TABLE.TableTh>S.No</TABLE.TableTh>
-              <TABLE.TableTh>Roll No</TABLE.TableTh>
+              <TABLE.TableTh>Roll No.</TABLE.TableTh>
               <TABLE.TableTh>Name</TABLE.TableTh>
               <TABLE.TableTh>Attendance</TABLE.TableTh>
               <TABLE.TableTh>Remarks</TABLE.TableTh>

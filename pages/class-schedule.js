@@ -38,8 +38,8 @@ const ClassSchedule = () => {
           <ul>
             <li>{timedat[0][4]}</li>
             <li>{timedat[0][9]}</li>
-            <li>{timedat[0][2]}</li>
-            <li>{timedat[0][8]}</li>
+            {/* <li>{timedat[0][2]}</li>
+            <li>{timedat[0][8]}</li> */}
             <li>{timedat[0][20]}</li>
             <li>{timedat[0][7]}</li>
           </ul>
@@ -130,30 +130,17 @@ const ClassSchedule = () => {
         </div>
         <div className="clearfix px-2 pb-2"></div>
         <div className="clearfix pb-6">
-        {classScheduleData &&
-                classScheduleData?.facTimeTableDetails?.totalperiods.length > 0 ? (               
-
-          <table
-          css={css`
-          width: 100%;
-          table-layout: fixed;
-          `}
-          >
-            <thead>
-            <tr>
-           
-            <th
-                  css={css`
-                    border: 1px solid #ccc;
-                    text-align: center;
-                    background: lightblue;
-                    border-color: #e5e7eb;
-                  `}
-                >Day</th>
-               {classScheduleData &&
-                classScheduleData?.facTimeTableDetails?.totalperiods.map(
-                  (period, index) => (
-                    <th
+          {classScheduleData &&
+          classScheduleData?.facTimeTableDetails?.totalperiods.length > 0 ? (
+            <table
+              css={css`
+                width: 100%;
+                table-layout: fixed;
+              `}
+            >
+              <thead>
+                <tr>
+                  <th
                     css={css`
                       border: 1px solid #ccc;
                       text-align: center;
@@ -161,46 +148,65 @@ const ClassSchedule = () => {
                       border-color: #e5e7eb;
                     `}
                   >
-                      <ul>
-                        <li>{period[3]}</li>
-                        <li>{timeconvert(period[1])}{' '}{timeconvert(period[2])}</li>
-                      </ul>
-                    </th>
+                    Day
+                  </th>
+                  {classScheduleData &&
+                    classScheduleData?.facTimeTableDetails?.totalperiods.map(
+                      (period, index) => (
+                        <th
+                          css={css`
+                            border: 1px solid #ccc;
+                            text-align: center;
+                            background: lightblue;
+                            border-color: #e5e7eb;
+                          `}
+                        >
+                          <ul>
+                            <li>{period[3]}</li>
+                            <li>{timeconvert(period[1])}</li>
+                            <li>{timeconvert(period[2])}</li>
+                          </ul>
+                        </th>
+                      )
+                    )}
+                </tr>
+              </thead>
+              <tbody>
+                {classScheduleData?.facTimeTableDetails?.dayDate.map(
+                  (classday, index) => (
+                    <tr key={index}>
+                      <td
+                        css={css`
+                          border: 1px solid #ccc;
+                          text-align: left;
+                          background: lightblue;
+                          border-color: #e5e7eb;
+                        `}
+                      >
+                        {classday}
+                      </td>
+                      {classScheduleData?.facTimeTableDetails?.totalperiods.map(
+                        (period, index) => (
+                          <td
+                            css={css`
+                              border: 1px solid #ccc;
+                              text-align: center;
+                              border-color: #e5e7eb;
+                            `}
+                            key={index}
+                          >
+                            {periodList(period[3], classday)}
+                          </td>
+                        )
+                      )}
+                    </tr>
                   )
                 )}
-            </tr>
-          </thead>
-          <tbody>
-                     
-            {classScheduleData?.facTimeTableDetails?.dayDate.map(
-              (classday, index) => (
-                <tr key={index}>
-                  <td
-                   css={css`
-                   border: 1px solid #ccc;
-                   text-align: left;
-                   background: lightblue;
-                   border-color: #e5e7eb;
-                 `}
-                  >{classday}</td>
-                  {classScheduleData?.facTimeTableDetails?.totalperiods.map(
-                    (period, index) => (
-                      <td 
-                      css={css`
-                      border: 1px solid #ccc;
-                      text-align: center;
-                      border-color: #e5e7eb;
-                    `}
-                      key={index}>
-                        {periodList(period[3], classday)}
-                      </td>
-                    )
-                  )}
-                </tr>
-              )
-            )}
-            </tbody>
-          </table> ):("No Schedule Available")}
+              </tbody>
+            </table>
+          ) : (
+            "No Schedule Available"
+          )}
         </div>
       </Layout>
     </React.Fragment>

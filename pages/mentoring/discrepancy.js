@@ -94,9 +94,7 @@ const DiscrepancyIssue = () => {
               </option>
               {semSecList &&
                 semSecList.map((section) => (
-                  <option value={section[1]}>
-                    {section[0].semesterCode}
-                  </option>
+                  <option value={section[1]}>{section[0].semesterCode}</option>
                 ))}
             </select>
           </label>
@@ -108,7 +106,7 @@ const DiscrepancyIssue = () => {
         ) : (
           <TABLE.TableWrapper>
             <TABLE.TableTR>
-              <TABLE.TableTh>Roll No</TABLE.TableTh>
+              <TABLE.TableTh>Roll No.</TABLE.TableTh>
               <TABLE.TableTh>Name </TABLE.TableTh>
               <TABLE.TableTh>Mentor </TABLE.TableTh>
               <TABLE.TableTh>Contact No.</TABLE.TableTh>
