@@ -6,13 +6,27 @@ import * as TABLE from "../../components/dashboards/styles/table.styles";
 
 import { faTimes } from "@fortawesome/free-solid-svg-icons";
 
-const ViewMarksEntry = ({
+const ViewMarksEntry = (
+  {
   closeMarksView,
   studentMarks,
   questions,
   courseCode,
-  courseName,
-}) => {
+  courseName
+}
+
+) => {
+
+const findMarks = (question,item) => {
+//console.log(question,"   ",item);
+const value = item.newMarks.filter((element) => {
+  return element.questionNumber === question
+   }
+);
+return value[0].marks;
+}
+
+
   return (
     <STYLES.PopupMask>
       <STYLES.PopupWrapper
@@ -59,6 +73,13 @@ const ViewMarksEntry = ({
                     <TABLE.TableTdd>{i + 1}</TABLE.TableTdd>
                     <TABLE.TableTdd>{item?.roll}</TABLE.TableTdd>
                     <TABLE.TableTdd>{item?.firstName}</TABLE.TableTdd>
+                    {questions &&
+                  questions.map((itemquesiton, i) => (
+                    <TABLE.TableTdd>
+                      {findMarks(itemquesiton?.questionNumber+itemquesiton?.questionName,item)}
+                    </TABLE.TableTdd>
+                  ))}
+                    
                   </TABLE.TableTRR>
                 ))}
             </React.Fragment>
