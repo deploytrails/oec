@@ -49,11 +49,11 @@
   /* Basic Input Fields*/
 
   .basicInput {
-    @apply border border-transparent w-auto py-2 px-4 bg-white text-gray-700 shadow-md rounded-lg;
+    @apply border border-gray-500 w-auto py-2 px-4 bg-white text-gray-700 shadow-md rounded-lg;
   }
 
   .basicSelect {
-    @apply border border-transparent w-auto py-2 px-4 bg-white text-gray-700 shadow-md rounded-lg;
+    @apply border border-gray-500 w-auto py-2 px-4 bg-white text-gray-700 shadow-md rounded-lg;
   }
   .basicSelect:focus,
   input[type="text"]:focus {

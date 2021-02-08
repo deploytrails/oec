@@ -3,17 +3,46 @@ import * as TABLE from "../../components/dashboards/styles/table.styles";
 import css from "@emotion/css";
 
 const TableTd = ({ tdValue, property, tdIndex }) => {
+  const renderTd = () => {
+    switch (property?.type) {
+      case "checkbox":
+        return (
+          <TABLE.TableTdd key={property.valueProperty}>
+            <input
+              className="checkbox"
+              name={tdIndex}
+              id={tdIndex}
+              type="checkbox"
+              checked={tdValue[property.valueProperty]}
+              onChange={(e) => property.onChangefunction(tdIndex, e)}
+            />
+          </TABLE.TableTdd>
+        );
+      case "credOps":
+        return (
+          <TABLE.TableTdd key="Cred">
+            <div className="float-right">{property.returnFunction()}</div>
+          </TABLE.TableTdd>
+        );
+      case null:
+        return <TABLE.TableTdd key={tdValue}>{tdValue}</TABLE.TableTdd>;
+      default:
+        return (
+          <TABLE.TableTdd key={tdValue[property.valueProperty]}>
+            {tdValue[property.valueProperty]}
+          </TABLE.TableTdd>
+        );
+    }
+  };
+
+  useEffect(() => {
+    console.log(property);
+  }, []);
+
   return (
     <React.Fragment>
-      {property === null && (
-        <TABLE.TableTdd key={tdValue}>{tdValue}</TABLE.TableTdd>
-      )}
-      {property && property?.type === undefined && (
-        <TABLE.TableTdd key={tdValue[property.valueProperty]}>
-          {tdValue[property.valueProperty]}
-        </TABLE.TableTdd>
-      )}
-      {property?.type === "button" && (
+      {renderTd()}
+      {/* {property?.type === "button" && (
         <TABLE.TableTdd key={property.valueProperty}>
           <button
             type="button"
@@ -23,19 +52,7 @@ const TableTd = ({ tdValue, property, tdIndex }) => {
             {property.valueProperty}
           </button>
         </TABLE.TableTdd>
-      )}
-      {property?.type === "checkbox" && (
-        <TABLE.TableTdd key={property.valueProperty}>
-          <input
-            className="checkbox"
-            name={tdIndex}
-            id={tdIndex}
-            type="checkbox"
-            checked={tdValue[property.valueProperty]}
-            onChange={(e) => property.onChangefunction(tdIndex, e)}
-          />
-        </TABLE.TableTdd>
-      )}
+      )} */}
     </React.Fragment>
   );
 };

@@ -12,7 +12,7 @@ const TableTr = ({ tdValues, data, pageNumber }) => {
           <TABLE.TableTRR key={i}>
             <TableTd
               tdValue={(pageNumber - 1) * 10 + (i + 1)}
-              property={null}
+              property={{ type: null }}
               tdIndex={i}
             />
             {tdValues &&

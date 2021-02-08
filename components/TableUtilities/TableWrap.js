@@ -5,7 +5,7 @@ import TableTr from "./TableTr";
 import TableTh from "./TableTh";
 import Pagination from "./pagination";
 
-const TableWrap = ({ thValues, tdValues, data }) => {
+const TableWrap = ({ thValues, tdValues, data, toolBar }) => {
   const [countPerPage] = useState(15);
   const [currentPage, setCurrentPage] = useState(1);
   const paginate = (pageNumber) => setCurrentPage(pageNumber);
@@ -51,6 +51,7 @@ const TableWrap = ({ thValues, tdValues, data }) => {
           />
         </label>
       </div>
+      {toolBar && <div className="float-right">{toolBar()}</div>}
       <TABLE.TableWrapper
         css={css`
           margin-top: 20px;
