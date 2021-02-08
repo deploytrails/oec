@@ -60,12 +60,13 @@ const ExtraClassModelData = ({ activeTabData, FacultyId }) => {
   };
 
   const renderSelectItem = (period) => {
-
+    
     return (
       <React.Fragment>
         <input type="checkbox"
           name="extraClsIds"
           className="extraClsIds"
+          disabled={period?.semId !== ""} 
           id={period.periodId}
           value={period.periodId}
           onChange={(e) => selectedPeriod(e)} />
