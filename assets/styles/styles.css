@@ -3,3 +3,61 @@
 @tailwind components;
 /* purgecss end ignore */
 @tailwind utilities;
+
+@layer base {
+  /* Basic Button Styles */
+  .buttonGreen {
+    @apply py-2 px-4 bg-green-700 text-white font-semibold rounded-lg shadow-md;
+    outline: none !important;
+  }
+  .buttonGreen:active {
+    @apply bg-green-500;
+    outline: none;
+  }
+  .buttonRed {
+    @apply py-2 px-4 bg-red-700 text-white font-semibold rounded-lg shadow-md;
+    outline: none !important;
+  }
+  .buttonRed:active {
+    @apply bg-red-500;
+    outline: none;
+  }
+  .buttonYellow {
+    @apply py-2 px-4 bg-yellow-700 text-white font-semibold rounded-lg shadow-md;
+    outline: none !important;
+  }
+  .buttonYellow:active {
+    @apply bg-yellow-500;
+    outline: none;
+  }
+  .buttonBlue {
+    @apply py-2 px-4 bg-blue-700 text-white font-semibold rounded-lg shadow-md;
+    outline: none !important;
+  }
+  .buttonBlue:active {
+    @apply bg-blue-500;
+    outline: none;
+  }
+  .buttonGreen:disabled,
+  .buttonRed:disabled,
+  .buttonYellow:disabled,
+  .buttonBlue:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+  }
+
+  /* Basic Input Fields*/
+
+  .basicInput {
+    @apply border border-transparent w-auto py-2 px-4 bg-white text-gray-700 shadow-md rounded-lg;
+  }
+
+  .basicSelect {
+    @apply border border-transparent w-auto py-2 px-4 bg-white text-gray-700 shadow-md rounded-lg;
+  }
+  .basicSelect:focus,
+  input[type="text"]:focus {
+    outline: none;
+    box-shadow: 0 0 0 2px rgba(21, 156, 228, 0.4);
+  }
+}

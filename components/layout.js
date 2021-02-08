@@ -48,7 +48,7 @@ const Layout = (props) => {
               padding: 20px 25px;
               display: flex;
               flex-direction: column;
-              min-height: 100vh;
+              min-height: 87vh;
             `}
           >
             {props.children}
