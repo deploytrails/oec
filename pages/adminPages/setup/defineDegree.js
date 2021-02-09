@@ -59,23 +59,23 @@ const DefineDegree = () => {
   return (
     <React.Fragment>
       <Layout>
-        <div className="clearfix px-6 pb-6">
-          {/* <button
+        {isDegreeData && isDegreeData.length > 0 && (
+          <TableWrap
+            thValues={thValues}
+            tdValues={tdValues}
+            data={isDegreeData}
+            toolBar={toolBarFunction}
+          />
+        )}
+        {/* <div className="clearfix px-6 pb-6"> */}
+        {/* <button
             type="button"
             className="py-2 px-4 rounded float-right bg-blue-400 text-center text-white mb-4 hover:bg-blue-500 focus:outline-none"
           >
             ADD DEGREE{" "}
           </button> */}
-          {isDegreeData && isDegreeData.length > 0 && (
-            <TableWrap
-              thValues={thValues}
-              tdValues={tdValues}
-              data={isDegreeData}
-              toolBar={toolBarFunction}
-            />
-          )}
 
-          {/* <TABLE.TableWrapper
+        {/* <TABLE.TableWrapper
             css={css`
               margin-top: 10px;
             `}
@@ -103,7 +103,7 @@ const DefineDegree = () => {
               ))}
           </TABLE.TableWrapper>
  */}
-        </div>
+        {/* </div> */}
       </Layout>
     </React.Fragment>
   );

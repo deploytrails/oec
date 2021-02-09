@@ -75,8 +75,104 @@ const Attendance = () => {
                 <button class="buttonBlue">Open Modal</button>
               </>
             }
+            size={"80%"}
           >
-            Single button div with fixed height
+            <table class="content-table">
+              <thead>
+                <tr>
+                  <th>Title</th>
+                  <th>Author</th>
+                  <th>Views</th>
+                  <th>Views2</th>
+                  <th>Views3</th>
+                  <th>Title</th>
+                  <th>Author</th>
+                  <th>Views</th>
+                  <th>Views2</th>
+                  <th>Views3</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>Intro to CSS</td>
+                  <td>Adam</td>
+                  <td>858</td>
+                  <td>Intro to CSS</td>
+                  <td>Intro to CSS</td>
+                  <td>Intro to CSS</td>
+                  <td>Adam</td>
+                  <td>858</td>
+                  <td>Intro to CSS</td>
+                  <td>Intro to CSS</td>
+                </tr>
+                <tr>
+                  <td>
+                    A Long and Winding Tour of the History of UI Frameworks and
+                    Tools and the Impact on Design
+                  </td>
+                  <td>Adam</td>
+                  <td>112</td>
+                  <td>Intro to CSS</td>
+                  <td>Intro to CSS</td>
+                  <td>Intro to CSS</td>
+                  <td>Adam</td>
+                  <td>858</td>
+                  <td>Intro to CSS</td>
+                  <td>Intro to CSS</td>
+                </tr>
+                <tr>
+                  <td>Intro to JavaScript</td>
+                  <td>Chris</td>
+                  <td>1,280</td>
+                  <td>Intro to CSS</td>
+                  <td>Intro to CSS</td>
+                  <td>Adam</td>
+                  <td>858</td>
+                  <td>Intro to CSS</td>
+                  <td>Intro to CSS</td>
+                  <td>Intro to CSS</td>
+                </tr>
+                <tr>
+                  <td>Intro to CSS</td>
+                  <td>Adam</td>
+                  <td>858</td>
+                  <td>Intro to CSS</td>
+                  <td>Intro to CSS</td>
+                  <td>Intro to CSS</td>
+                  <td>Adam</td>
+                  <td>858</td>
+                  <td>Intro to CSS</td>
+                  <td>Intro to CSS</td>
+                </tr>
+                <tr>
+                  <td>
+                    A Long and Winding Tour of the History of UI Frameworks and
+                    Tools and the Impact on Design
+                  </td>
+                  <td>Adam</td>
+                  <td>112</td>
+                  <td>Intro to CSS</td>
+                  <td>Intro to CSS</td>
+                  <td>Intro to CSS</td>
+                  <td>Adam</td>
+                  <td>858</td>
+                  <td>Intro to CSS</td>
+                  <td>Intro to CSS</td>
+                </tr>
+                <tr>
+                  <td>Intro to JavaScript</td>
+                  <td>Chris</td>
+                  <td>1,280</td>
+                  <td>Intro to CSS</td>
+                  <td>Intro to CSS</td>
+                  <td>Intro to CSS</td>
+                  <td>Adam</td>
+                  <td>858</td>
+                  <td>Intro to CSS</td>
+                  <td>Intro to CSS</td>
+                </tr>
+              </tbody>
+            </table>
           </StyleModal>
         )}
         {showModal2 && (
@@ -90,18 +186,20 @@ const Attendance = () => {
               </>
             }
           >
-            Hello this is a test modal to render
+            Test Content
           </StyleModal>
         )}
         <div>
           <h1>Basic Table</h1>
 
-          <table class="table-auto">
+          <table class="content-table">
             <thead>
               <tr>
                 <th>Title</th>
                 <th>Author</th>
                 <th>Views</th>
+                <th>Views2</th>
+                <th>Views3</th>
               </tr>
             </thead>
             <tbody>
@@ -109,19 +207,49 @@ const Attendance = () => {
                 <td>Intro to CSS</td>
                 <td>Adam</td>
                 <td>858</td>
+                <td>Intro to CSS</td>
+                <td>Intro to CSS</td>
               </tr>
-              <tr class="bg-emerald-200">
+              <tr>
                 <td>
                   A Long and Winding Tour of the History of UI Frameworks and
                   Tools and the Impact on Design
                 </td>
                 <td>Adam</td>
                 <td>112</td>
+                <td>Intro to CSS</td>
+                <td>Intro to CSS</td>
               </tr>
               <tr>
                 <td>Intro to JavaScript</td>
                 <td>Chris</td>
                 <td>1,280</td>
+                <td>Intro to CSS</td>
+                <td>Intro to CSS</td>
+              </tr>
+              <tr>
+                <td>Intro to CSS</td>
+                <td>Adam</td>
+                <td>858</td>
+                <td>Intro to CSS</td>
+                <td>Intro to CSS</td>
+              </tr>
+              <tr>
+                <td>
+                  A Long and Winding Tour of the History of UI Frameworks and
+                  Tools and the Impact on Design
+                </td>
+                <td>Adam</td>
+                <td>112</td>
+                <td>Intro to CSS</td>
+                <td>Intro to CSS</td>
+              </tr>
+              <tr>
+                <td>Intro to JavaScript</td>
+                <td>Chris</td>
+                <td>1,280</td>
+                <td>Intro to CSS</td>
+                <td>Intro to CSS</td>
               </tr>
             </tbody>
           </table>

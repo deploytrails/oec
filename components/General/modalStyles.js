@@ -18,13 +18,13 @@ export const PopupWrapper = styled.div`
   margin: auto;
   padding: 20px;
   border: 1px solid #888;
-  width: 80%;
+
   border-radius: 0.5rem;
-  width: 720px;
 `;
 
 export const PopupBody = styled.div`
   min-height: 100px;
+  overflow: auto;
 `;
 
 export const PopupTitle = styled.div`

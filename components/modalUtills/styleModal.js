@@ -4,10 +4,15 @@ import css from "@emotion/css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faTimes } from "@fortawesome/free-solid-svg-icons";
 
-const StyleModal = ({ headder, handleClose, children, buttons }) => {
+const StyleModal = ({ headder, handleClose, children, buttons, size }) => {
+  const defaultWidth = "50%";
   return (
     <STYLES.PopupMask>
-      <STYLES.PopupWrapper>
+      <STYLES.PopupWrapper
+        css={css`
+          width: ${size ? size : defaultWidth};
+        `}
+      >
         <STYLES.PopupTitle>
           {headder}
           <div

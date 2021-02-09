@@ -33,55 +33,53 @@ const TableWrap = ({ thValues, tdValues, data, toolBar }) => {
   }, [data]);
   return (
     <React.Fragment>
-      <div
-        className="float-left"
-        css={css`
-          margin-bottom: 5px;
-          margin-top: 5px;
-        `}
-      >
-        <label htmlFor="search">
-          <input
-            type="search"
-            name="search"
-            id="search"
-            placeholder="Search"
-            className="block appearance-none w-full bg-white border border-gray-400 hover:border-gray-500 px-4 py-2 pr-8 rounded shadow leading-tight focus:outline-none "
-            onChange={(e) => searchFilterFunction(e.target.value)}
-          />
-        </label>
-      </div>
-      {toolBar && (
+      <div>
         <div
-          className="float-right"
+          className="float-left"
           css={css`
             margin-bottom: 5px;
             margin-top: 5px;
           `}
         >
-          {toolBar()}
+          <label htmlFor="search">
+            <input
+              type="search"
+              name="search"
+              id="search"
+              placeholder="Search"
+              className="block appearance-none w-full bg-white border border-gray-400 hover:border-gray-500 px-4 py-2 pr-8 rounded shadow leading-tight focus:outline-none "
+              onChange={(e) => searchFilterFunction(e.target.value)}
+            />
+          </label>
         </div>
-      )}
-      <TABLE.TableWrapper
-        css={css`
-          margin-top: 20px;
-        `}
-      >
-        <TableTh thValues={thValues} />
-        <TABLE.TableTbody>
-          <TableTr
-            tdValues={tdValues}
-            data={currentPosts}
-            pageNumber={currentPage}
-          />
-        </TABLE.TableTbody>
-      </TABLE.TableWrapper>
-      <Pagination
-        countPerPage={countPerPage}
-        totalRecs={filteredData?.length}
-        paginate={paginate}
-        currentPage={currentPage}
-      />
+        {toolBar && (
+          <div
+            className="float-right"
+            css={css`
+              margin-bottom: 5px;
+              margin-top: 5px;
+            `}
+          >
+            {toolBar()}
+          </div>
+        )}
+        <TABLE.TableWrapper>
+          <TableTh thValues={thValues} />
+          <TABLE.TableTbody>
+            <TableTr
+              tdValues={tdValues}
+              data={currentPosts}
+              pageNumber={currentPage}
+            />
+          </TABLE.TableTbody>
+        </TABLE.TableWrapper>
+        <Pagination
+          countPerPage={countPerPage}
+          totalRecs={filteredData?.length}
+          paginate={paginate}
+          currentPage={currentPage}
+        />
+      </div>
     </React.Fragment>
   );
 };
