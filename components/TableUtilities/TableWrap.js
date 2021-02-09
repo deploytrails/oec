@@ -10,11 +10,11 @@ const TableWrap = ({ thValues, tdValues, data, toolBar }) => {
   const [currentPage, setCurrentPage] = useState(1);
   const paginate = (pageNumber) => setCurrentPage(pageNumber);
   const [filteredData, setFilteredData] = useState([]);
-
   const indexOfLastPost = currentPage * countPerPage;
   const indexOfFirstPost = indexOfLastPost - countPerPage;
   const currentPosts = filteredData?.slice(indexOfFirstPost, indexOfLastPost);
 
+  //Search Filter Logic Implementation
   const searchFilterFunction = (value) => {
     const lowercasedValue = value.toLowerCase().trim();
     if (lowercasedValue === "") setFilteredData(data);
@@ -37,7 +37,7 @@ const TableWrap = ({ thValues, tdValues, data, toolBar }) => {
         className="float-left"
         css={css`
           margin-bottom: 5px;
-          margin-top: 10px;
+          margin-top: 5px;
         `}
       >
         <label htmlFor="search">
@@ -51,7 +51,17 @@ const TableWrap = ({ thValues, tdValues, data, toolBar }) => {
           />
         </label>
       </div>
-      {toolBar && <div className="float-right">{toolBar()}</div>}
+      {toolBar && (
+        <div
+          className="float-right"
+          css={css`
+            margin-bottom: 5px;
+            margin-top: 5px;
+          `}
+        >
+          {toolBar()}
+        </div>
+      )}
       <TABLE.TableWrapper
         css={css`
           margin-top: 20px;

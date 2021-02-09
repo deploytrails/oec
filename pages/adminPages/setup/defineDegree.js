@@ -25,20 +25,19 @@ const DefineDegree = () => {
   };
   const toolBarFunction = () => {
     return (
-      <button class="buttonBlue">
-        <FontAwesomeIcon icon={faPlusCircle} onClick={() => alert("Working")} />
-        Test Button
+      <button class="buttonWhite" onClick={() => alert("Add Button Working")}>
+        <FontAwesomeIcon icon={faPlusCircle} />
+        &nbsp;Test Button
       </button>
     );
   };
-  const curdOpsFunction = () => {
-    return (
-      <button class="buttonBlue">
-        <FontAwesomeIcon icon={faPlusCircle} onClick={() => alert("Working")} />
-        Test Button
-      </button>
-    );
+  const parentDeleteFun = () => {
+    alert("In Prent Delete Function");
   };
+  const parentEditFun = () => {
+    alert("In Parent Edit Function");
+  };
+
   const thValues = ["Degree Code", "Degree Name", "Degree Type", "Operation"];
 
   const tdValues = [
@@ -46,9 +45,14 @@ const DefineDegree = () => {
     { valueProperty: "degreeName" },
     { valueProperty: "degreeType" },
     {
-      type: "curdOps",
-      returnFunction: () => {
-        curdOpsFunction();
+      type: "modify",
+      delete: "Degree Details",
+      deleteFun: (e, e1) => {
+        parentDeleteFun(e, e1);
+      },
+      edit: "Degree Details",
+      editFun: (e, e1) => {
+        parentEditFun(e, e1);
       },
     },
   ];

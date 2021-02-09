@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from "react";
 import * as TABLE from "../../components/dashboards/styles/table.styles";
 import css from "@emotion/css";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faEdit, faTrashAlt } from "@fortawesome/free-solid-svg-icons";
 
 const TableTd = ({ tdValue, property, tdIndex }) => {
   const renderTd = () => {
@@ -18,10 +20,28 @@ const TableTd = ({ tdValue, property, tdIndex }) => {
             />
           </TABLE.TableTdd>
         );
-      case "credOps":
+      case "modify":
         return (
-          <TABLE.TableTdd key="Cred">
-            <div className="float-right">{property.returnFunction()}</div>
+          <TABLE.TableTdd key={"modify" + tdIndex}>
+            {property.edit && (
+              <button
+                class="buttonYellow"
+                onClick={(e) => property.editFun(tdIndex, e)}
+              >
+                <FontAwesomeIcon icon={faEdit} />
+                &nbsp; Edit
+              </button>
+            )}
+            &nbsp;
+            {property.delete && (
+              <button
+                class="buttonRed"
+                onClick={(e) => property.deleteFun(tdIndex, e)}
+              >
+                <FontAwesomeIcon icon={faTrashAlt} />
+                &nbsp; Delete
+              </button>
+            )}
           </TABLE.TableTdd>
         );
       case null:

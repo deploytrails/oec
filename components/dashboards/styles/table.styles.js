@@ -20,6 +20,7 @@ export const TableWrapper = styled.table`
   max-width: 100%;
   border-collapse: collapse;
   border-spacing: 0;
+  border-radius: 0.5rem;
 `;
 export const TableTheader = styled.thead`
   padding: 0px;
