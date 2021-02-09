@@ -437,7 +437,7 @@ export const insertAdjustPeriodtData = async (
   rquestClassDatePrimaryID
 ) => {
   try {
-    const enc = encodeURIComponent(JSON.stringify(adjustFromObject));
+     const enc = encodeURIComponent(JSON.stringify(adjustFromObject));
     const response = await fetch(
       `${process.env.APIBaseUrl}faculty/AttendanceServletforAdjustRequest`,
 

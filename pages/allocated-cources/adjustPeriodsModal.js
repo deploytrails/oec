@@ -9,6 +9,10 @@ import {
   insertAdjustPeriodtData,
 } from "../../services/allocateServices";
 import Cookies from "js-cookie";
+import { useSnackbar } from "react-simple-snackbar";
+
+
+
 const AdjustPeriodsModal = ({ openAdjustPeriods, periodAdjust }) => {
   const ProfileId = Cookies.get("employeeID");
   const [swapfaculties, setSwapfaculties] = useState([]);
@@ -17,6 +21,7 @@ const AdjustPeriodsModal = ({ openAdjustPeriods, periodAdjust }) => {
   const [selectedFaculty, setSelectedFaculty] = useState("");
   const [courses, setCourses] = useState([]);
   const [selectedCourse, setSelectedCourse] = useState("");
+  const [openSnackbar, closeSnackbar] = useSnackbar();
   useEffect(() => {
     loadFacultyData();
   }, []);
@@ -63,6 +68,7 @@ const AdjustPeriodsModal = ({ openAdjustPeriods, periodAdjust }) => {
     return facultyarray;
   };
   const insertAdjustPeriod = async () => {
+    console.log( "classroster",periodAdjust.classRoster);
     const cData = await insertAdjustPeriodtData(
       periodAdjust.classRoster,
       selectedFaculty,
@@ -72,6 +78,11 @@ const AdjustPeriodsModal = ({ openAdjustPeriods, periodAdjust }) => {
       periodAdjust.currclassdateid
     );
     console.log(cData);
+    if(cData){
+    openSnackbar(cData.statusMessage);
+    openAdjustPeriods();
+    }
+    
   };
 
   return (

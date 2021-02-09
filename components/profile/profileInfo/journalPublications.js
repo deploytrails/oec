@@ -23,6 +23,7 @@ const JournalPublications =  ({
   const [journalList, setJournalList] = useState({});
   const [isAlert, setIsAlert] = useState(false);
   const [openSnackbar, closeSnackbar] = useSnackbar();
+  
   const openModal = (data) => {
     setShow(!show);
     setJournalList(data);
@@ -30,11 +31,33 @@ const JournalPublications =  ({
       setJournalList({});
     }
   };
-  const openAlertModal = () => {
+  
+  const openAlertModal = (id) => {
     setIsAlert(!isAlert);
+   // setJournPaperid(id);
+    openConfirmation(id)
   };
-  const deleteJournalPubRecord = async (id) => {
-    const qualificationData = await deletePaperDetails(id);
+
+  const openConfirmation =(id)=>{
+    setIsAlert(!isAlert);
+    console.log(isAlert)
+    if(isAlert){
+
+    
+    return (
+        <ConfirmationModal
+          deleteMessage="Journal Publication Details"
+          deleteRecord={() =>
+            deleteJournalPubRecord(id)
+          }
+          openAlertModal={openAlertModal}
+        />
+    )
+        }
+  }
+  const deleteJournalPubRecord = async () => {
+    console.log("journalid",journPaperid);
+    //const qualificationData = await deletePaperDetails(id);
     loadJournalPaperInfo();
     openSnackbar("Successfully deleted Journal Publication record");
     setIsAlert(!isAlert);
@@ -51,6 +74,7 @@ const JournalPublications =  ({
         </button>
         <TABLE.TableWrapper>
           <TABLE.TableTR>
+          <TABLE.TableTh>Paper ID</TABLE.TableTh>
             <TABLE.TableTh>Paper Title</TABLE.TableTh>
             <TABLE.TableTh>Journal Title </TABLE.TableTh>
             <TABLE.TableTh>National / International</TABLE.TableTh>
@@ -63,7 +87,8 @@ const JournalPublications =  ({
           {isJourData &&
             isJourData.length &&
             isJourData.map((jourInfo) => (
-              <TABLE.TableTRR key={jourInfo.journalName}>
+              <TABLE.TableTRR key={jourInfo.paperPublicationID}>
+                <TABLE.TableTdd>{jourInfo.paperPublicationID}</TABLE.TableTdd>
                 <TABLE.TableTdd>{jourInfo.publicationTitle}</TABLE.TableTdd>
                 <TABLE.TableTdd>{jourInfo.journalName}</TABLE.TableTdd>
                 <TABLE.TableTdd>{jourInfo.publicationType}</TABLE.TableTdd>
@@ -78,18 +103,11 @@ const JournalPublications =  ({
                   <span className="cursor-pointer text-red-400">
                     <FontAwesomeIcon
                       icon={faTrashAlt}
-                      onClick={openAlertModal}
+                      onClick={()=>
+                        openConfirmation(jourInfo.paperPublicationID)}
                     />
                   </span>
-                  {isAlert && (
-                    <ConfirmationModal
-                      deleteMessage="Journal Publication Details"
-                      deleteRecord={() =>
-                        deleteJournalPubRecord(jourInfo.paperPublicationID)
-                      }
-                      openAlertModal={openAlertModal}
-                    />
-                  )}
+                 
                 </TABLE.TableTdd>
               </TABLE.TableTRR>
             ))}
