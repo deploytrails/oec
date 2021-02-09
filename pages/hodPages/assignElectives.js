@@ -264,7 +264,7 @@ const AssignElectives = () => {
 
         <button
           onClick={() =>
-            allocateElectivesData('AssignElectives')
+            allocateElectivesData('Assign Electives')
           }
           type="button"
           className="bg-yellow-400 block  mx-auto px-2 py-1 rounded"
