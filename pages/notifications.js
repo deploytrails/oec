@@ -1,16 +1,18 @@
 import React, { useState, useEffect } from "react";
 import Layout from "../components/layout";
 import Cookies from "js-cookie";
-import { Formik } from "formik";
-import css from "@emotion/css";
-import { COLORS } from "../constants";
-import * as TABLE from "../components/dashboards/styles/table.styles";
 import { getNotificationData } from "../services/notificationService";
-import ToggleBox from "../components/General/toggleBox";
+import TableWrap from "../components/TableUtilities/TableWrap";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import {
+  faArrowCircleUp,
+  faArrowCircleDown,
+} from "@fortawesome/free-solid-svg-icons";
 
 const Notifications = () => {
   const [notificationData, setNotificationData] = useState([]);
   const facultyId = Cookies.get("employeeID");
+  const [reqButton, setReqButton] = useState(true);
 
   const getNotification = async () => {
     const data = await getNotificationData(facultyId);
@@ -21,86 +23,72 @@ const Notifications = () => {
     getNotification();
   }, []);
 
+  const toolBarFunction = () => {
+    if (reqButton) {
+      return (
+        <button class="buttonWhite" onClick={() => setReqButton(!reqButton)}>
+          View Incoming Requests&nbsp;
+          <FontAwesomeIcon icon={faArrowCircleDown} />
+        </button>
+      );
+    } else {
+      return (
+        <button class="buttonWhite" onClick={() => setReqButton(!reqButton)}>
+          View Outgoing Requests&nbsp;
+          <FontAwesomeIcon icon={faArrowCircleUp} />
+        </button>
+      );
+    }
+  };
+
+  const thValues = [
+    "Sender & Receiver Date",
+    "Sender & Receiver Start Time",
+    "Sender & Receiver End Time",
+    "Sender Name",
+    "Sender Course",
+    "Sender Semester",
+    "Receiver Name",
+    "Receiver Course",
+    "Receiver Semester",
+  ];
+
+  const tdValues = [
+    { valueProperty: "0" },
+    { valueProperty: "1" },
+    { valueProperty: "2" },
+    { valueProperty: "3" },
+    { valueProperty: "5" },
+    { valueProperty: "7" },
+    { valueProperty: "4" },
+    { valueProperty: "6" },
+    { valueProperty: "8" },
+  ];
   //console.log(notificationData);
 
   return (
     <React.Fragment>
       <Layout>
-        {/* <div className="clearfix px-2 pb-2">
-          <ToggleBox />
-        </div> */}
-        <div className="clearfix px-6 pb-6" id="senderArray">
-          <TABLE.TableWrapper>
-            <TABLE.TableTR>
-              <TABLE.TableTh>Sender & Receiver Date</TABLE.TableTh>
-              <TABLE.TableTh>Sender & Receiver Start Time </TABLE.TableTh>
-              <TABLE.TableTh>Sender & Receiver End Time </TABLE.TableTh>
-              <TABLE.TableTh>Sender Name </TABLE.TableTh>
-              <TABLE.TableTh>Sender Course </TABLE.TableTh>
-              <TABLE.TableTh>Sender Semester </TABLE.TableTh>
-              <TABLE.TableTh>Receiver Name </TABLE.TableTh>
-              <TABLE.TableTh>Receiver Course </TABLE.TableTh>
-              <TABLE.TableTh>Receiver Semester </TABLE.TableTh>
-            </TABLE.TableTR>
-
-            {notificationData?.senderArray?.map((notifi, index) => (
-              <TABLE.TableTRR key={index}>
-                <TABLE.TableTdd>{notifi[0]}</TABLE.TableTdd>
-                <TABLE.TableTdd>{notifi[1]}</TABLE.TableTdd>
-                <TABLE.TableTdd>{notifi[2]}</TABLE.TableTdd>
-                <TABLE.TableTdd>{notifi[3]}</TABLE.TableTdd>
-                <TABLE.TableTdd>{notifi[5]}</TABLE.TableTdd>
-                <TABLE.TableTdd>{notifi[7]}</TABLE.TableTdd>
-                <TABLE.TableTdd>{notifi[4]}</TABLE.TableTdd>
-                <TABLE.TableTdd>{notifi[6]}</TABLE.TableTdd>
-                <TABLE.TableTdd>{notifi[8]}</TABLE.TableTdd>
-              </TABLE.TableTRR>
-            ))}
-            {notificationData?.receiverArray?.map((notifi, index) => (
-              <TABLE.TableTRR key={index}>
-                <TABLE.TableTdd>{notifi[0]}</TABLE.TableTdd>
-                <TABLE.TableTdd>{notifi[1]}</TABLE.TableTdd>
-                <TABLE.TableTdd>{notifi[2]}</TABLE.TableTdd>
-                <TABLE.TableTdd>{notifi[3]}</TABLE.TableTdd>
-                <TABLE.TableTdd>{notifi[5]}</TABLE.TableTdd>
-                <TABLE.TableTdd>{notifi[7]}</TABLE.TableTdd>
-                <TABLE.TableTdd>{notifi[4]}</TABLE.TableTdd>
-                <TABLE.TableTdd>{notifi[6]}</TABLE.TableTdd>
-                <TABLE.TableTdd>{notifi[8]}</TABLE.TableTdd>
-              </TABLE.TableTRR>
-            ))}
-          </TABLE.TableWrapper>
-        </div>
-
-        {/* <div className="clearfix px-6 pb-6" id="receiverArray">
-          <TABLE.TableWrapper>
-            <TABLE.TableTR>
-              <TABLE.TableTh>Sender & Receiver Date</TABLE.TableTh>
-              <TABLE.TableTh>Sender & Receiver Start Time </TABLE.TableTh>
-              <TABLE.TableTh>Sender & Receiver End Time </TABLE.TableTh>
-              <TABLE.TableTh>Sender Name </TABLE.TableTh>
-              <TABLE.TableTh>Sender Course </TABLE.TableTh>
-              <TABLE.TableTh>Sender Semester </TABLE.TableTh>
-              <TABLE.TableTh>Receiver Name </TABLE.TableTh>
-              <TABLE.TableTh>Receiver Course </TABLE.TableTh>
-              <TABLE.TableTh>Receiver Semester </TABLE.TableTh>
-            </TABLE.TableTR>
-
-            {notificationData?.receiverArray?.map((notifi, index) => (
-              <TABLE.TableTRR key={index}>
-                <TABLE.TableTdd>{notifi[0]}</TABLE.TableTdd>
-                <TABLE.TableTdd>{notifi[1]}</TABLE.TableTdd>
-                <TABLE.TableTdd>{notifi[2]}</TABLE.TableTdd>
-                <TABLE.TableTdd>{notifi[3]}</TABLE.TableTdd>
-                <TABLE.TableTdd>{notifi[5]}</TABLE.TableTdd>
-                <TABLE.TableTdd>{notifi[7]}</TABLE.TableTdd>
-                <TABLE.TableTdd>{notifi[4]}</TABLE.TableTdd>
-                <TABLE.TableTdd>{notifi[6]}</TABLE.TableTdd>
-                <TABLE.TableTdd>{notifi[8]}</TABLE.TableTdd>
-              </TABLE.TableTRR>
-            ))}
-          </TABLE.TableWrapper>
-        </div> */}
+        {notificationData?.senderArray &&
+          !reqButton &&
+          notificationData?.senderArray?.length > 0 && (
+            <TableWrap
+              thValues={thValues}
+              tdValues={tdValues}
+              data={notificationData?.senderArray}
+              toolBar={toolBarFunction}
+            />
+          )}
+        {notificationData?.receiverArray &&
+          reqButton &&
+          notificationData?.receiverArray?.length > 0 && (
+            <TableWrap
+              thValues={thValues}
+              tdValues={tdValues}
+              data={notificationData?.receiverArray}
+              toolBar={toolBarFunction}
+            />
+          )}
       </Layout>
     </React.Fragment>
   );

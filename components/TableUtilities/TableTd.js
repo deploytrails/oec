@@ -1,6 +1,4 @@
-import React, { useState, useEffect } from "react";
-import * as TABLE from "../../components/dashboards/styles/table.styles";
-import css from "@emotion/css";
+import React, { useEffect } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faEdit, faTrashAlt } from "@fortawesome/free-solid-svg-icons";
 
@@ -9,7 +7,7 @@ const TableTd = ({ tdValue, property, tdIndex }) => {
     switch (property?.type) {
       case "checkbox":
         return (
-          <TABLE.TableTdd key={property.valueProperty}>
+          <td key={property.valueProperty}>
             <input
               className="checkbox"
               name={tdIndex}
@@ -18,39 +16,41 @@ const TableTd = ({ tdValue, property, tdIndex }) => {
               checked={tdValue[property.valueProperty]}
               onChange={(e) => property.onChangefunction(tdIndex, e)}
             />
-          </TABLE.TableTdd>
+          </td>
         );
       case "modify":
         return (
-          <TABLE.TableTdd key={"modify" + tdIndex}>
+          <td key={"modify" + tdIndex}>
             {property.edit && (
-              <button
-                class="buttonYellow"
-                onClick={(e) => property.editFun(tdIndex, e)}
-              >
-                <FontAwesomeIcon icon={faEdit} />
-                &nbsp; Edit
-              </button>
+              <span className="cursor-pointer mr-4 text-blue-700">
+                <FontAwesomeIcon
+                  icon={faEdit}
+                  onClick={(e) => property.editFun(tdIndex, e)}
+                >
+                  &nbsp; Edit
+                </FontAwesomeIcon>
+              </span>
             )}
             &nbsp;
             {property.delete && (
-              <button
-                class="buttonRed"
-                onClick={(e) => property.deleteFun(tdIndex, e)}
-              >
-                <FontAwesomeIcon icon={faTrashAlt} />
-                &nbsp; Delete
-              </button>
+              <span className="cursor-pointer mr-4 text-red-700">
+                <FontAwesomeIcon
+                  icon={faTrashAlt}
+                  onClick={(e) => property.deleteFun(tdIndex, e)}
+                >
+                  &nbsp; Delete
+                </FontAwesomeIcon>
+              </span>
             )}
-          </TABLE.TableTdd>
+          </td>
         );
       case null:
-        return <TABLE.TableTdd key={tdValue}>{tdValue}</TABLE.TableTdd>;
+        return <td key={tdValue}>{tdValue}</td>;
       default:
         return (
-          <TABLE.TableTdd key={tdValue[property.valueProperty]}>
+          <td key={tdValue[property.valueProperty]}>
             {tdValue[property.valueProperty]}
-          </TABLE.TableTdd>
+          </td>
         );
     }
   };
@@ -63,7 +63,7 @@ const TableTd = ({ tdValue, property, tdIndex }) => {
     <React.Fragment>
       {renderTd()}
       {/* {property?.type === "button" && (
-        <TABLE.TableTdd key={property.valueProperty}>
+        <td key={property.valueProperty}>
           <button
             type="button"
             className="bg-yellow-400 block  mx-auto px-2 py-1 rounded"
@@ -71,7 +71,7 @@ const TableTd = ({ tdValue, property, tdIndex }) => {
           >
             {property.valueProperty}
           </button>
-        </TABLE.TableTdd>
+        </td>
       )} */}
     </React.Fragment>
   );

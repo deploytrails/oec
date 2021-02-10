@@ -69,14 +69,10 @@
     box-shadow: 0 0 0 2px rgba(21, 156, 228, 0.4);
   }
 
-  * {
-    font-family: sans-serif; /* Change your font family */
-  }
-
   .content-table {
     border-collapse: collapse;
     margin: 25px 0;
-    font-size: 0.9em;
+    font-size: 14px;
     min-width: 400px;
     border-radius: 5px 5px 0 0;
     overflow: hidden;
@@ -89,16 +85,22 @@
     background-color: #3aafa9;
     color: #ffffff;
     text-align: left;
-    font-weight: bold;
+    text-align: center;
   }
 
-  .content-table th,
+  .content-table th {
+    font-weight: 500;
+    padding: 15px;
+  }
+
   .content-table td {
-    padding: 12px 15px;
+    font-weight: 400;
+    padding: 12px 5px;
   }
 
   .content-table tbody tr {
     border-bottom: 1px solid #dddddd;
+    text-align: center;
   }
 
   .content-table tbody tr:nth-of-type(odd) {

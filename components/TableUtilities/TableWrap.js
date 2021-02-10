@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from "react";
-import * as TABLE from "../../components/dashboards/styles/table.styles";
 import css from "@emotion/css";
 import TableTr from "./TableTr";
 import TableTh from "./TableTh";
@@ -43,11 +42,10 @@ const TableWrap = ({ thValues, tdValues, data, toolBar }) => {
         >
           <label htmlFor="search">
             <input
-              type="search"
-              name="search"
+              type="text"
               id="search"
               placeholder="Search"
-              className="block appearance-none w-full bg-white border border-gray-400 hover:border-gray-500 px-4 py-2 pr-8 rounded shadow leading-tight focus:outline-none "
+              className="basicInput"
               onChange={(e) => searchFilterFunction(e.target.value)}
             />
           </label>
@@ -63,16 +61,16 @@ const TableWrap = ({ thValues, tdValues, data, toolBar }) => {
             {toolBar()}
           </div>
         )}
-        <TABLE.TableWrapper>
+        <table class="content-table">
           <TableTh thValues={thValues} />
-          <TABLE.TableTbody>
+          <tbody>
             <TableTr
               tdValues={tdValues}
               data={currentPosts}
               pageNumber={currentPage}
             />
-          </TABLE.TableTbody>
-        </TABLE.TableWrapper>
+          </tbody>
+        </table>
         <Pagination
           countPerPage={countPerPage}
           totalRecs={filteredData?.length}

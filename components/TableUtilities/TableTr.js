@@ -1,6 +1,4 @@
-import React, { useState, useEffect } from "react";
-import * as TABLE from "../../components/dashboards/styles/table.styles";
-import css from "@emotion/css";
+import React from "react";
 import TableTd from "./TableTd";
 
 const TableTr = ({ tdValues, data, pageNumber }) => {
@@ -9,7 +7,7 @@ const TableTr = ({ tdValues, data, pageNumber }) => {
       {data &&
         data.length > 0 &&
         data.map((value, i) => (
-          <TABLE.TableTRR key={i}>
+          <tr key={i}>
             <TableTd
               tdValue={(pageNumber - 1) * 10 + (i + 1)}
               property={{ type: null }}
@@ -20,7 +18,7 @@ const TableTr = ({ tdValues, data, pageNumber }) => {
               tdValues.map((property) => (
                 <TableTd tdValue={value} property={property} tdIndex={i} />
               ))}
-          </TABLE.TableTRR>
+          </tr>
         ))}
     </React.Fragment>
   );
