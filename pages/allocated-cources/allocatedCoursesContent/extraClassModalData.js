@@ -14,33 +14,29 @@ const ExtraClassModelData = ({ activeTabData, FacultyId }) => {
   const sectionName=activeTabData[2]?.sectionName;
   const roomId =activeTabData[3]?.room?.roomPrimaryId;
   const classType=activeTabData[1]?.courseType;
+  const [updatedDate, setUpdatedDate] =useState('');
+  
 
   const getAllocatedPeriodsData = async (semesterId, date, courseId, FacultyID, section) => {
     const data = await getAllocatedPeriods(semesterId, date, courseId, FacultyID, section);
     setPeriodsList(data?.PeriodsList);
   };
 
-  useEffect(() => {
-    getAllocatedPeriodsData(semId, '2021-02-03', courseId,FacultyId,sectionName);
-  }, []);
-
   const selectedPeriod = (e,period) => {
-
-    console.log("Active data: ",activeTabData);
     const targetCheck = e.target.checked;
-
-    console.log("Period is: ",period);
-
     if (!targetCheck) {
       selectCheck(e.target.value);
     } else {
       deSelectCheck(e.target.value);
     }
-    console.log("Selected Classes: " , filterIDs);
+  }
+
+  const dateSelected = (e) => {   
+    setUpdatedDate(e.target.value);
+    getAllocatedPeriodsData(semId, updatedDate, courseId,FacultyId,sectionName);
   }
 
   const saveExtraClassesData = async (roomId, facultyID,selectedDate) => {
-
     let periodsTBPersisted = [];
     filterIDs.map(time => {
       periodsTBPersisted.push({
@@ -61,7 +57,7 @@ const ExtraClassModelData = ({ activeTabData, FacultyId }) => {
       return filterIDs.indexOf(item.periodId) !== -1;
     });
       
-    saveExtraClassesData(roomId,FacultyId,"2021-02-03");
+    saveExtraClassesData(roomId,FacultyId,updatedDate);
   }
 
   const selectCheck = (selectedVal) => {
@@ -112,7 +108,7 @@ const ExtraClassModelData = ({ activeTabData, FacultyId }) => {
           <input
             type="date"
             placeholder="Enter Date"
-            
+            onChange={(e) => dateSelected(e)}
           />
         </div>
         <br></br>
