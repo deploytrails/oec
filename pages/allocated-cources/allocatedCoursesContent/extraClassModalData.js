@@ -8,28 +8,51 @@ const ExtraClassModelData = ({ activeTabData, FacultyId }) => {
   const [filterIDs, setFilterIds] = useState([]);
   const [filteredPeriods, setFilteredPeriods] = useState([]);
 
+  const courseId =activeTabData[1]?.coursePrimaryId;
+  const semId =activeTabData[3]?.semesterDetails?.semesterID;
+  const sectionId =activeTabData[3]?.semesterSections?.sectionPrimaryId;
+  const sectionName=activeTabData[2]?.sectionName;
+  const roomId =activeTabData[3]?.room?.roomPrimaryId;
+  const classType=activeTabData[1]?.courseType;
+
   const getAllocatedPeriodsData = async (semesterId, date, courseId, FacultyID, section) => {
     const data = await getAllocatedPeriods(semesterId, date, courseId, FacultyID, section);
     setPeriodsList(data?.PeriodsList);
   };
 
   useEffect(() => {
-    getAllocatedPeriodsData("20196101014224570834265", '2021-02-03', '201961010181720351491670', '64D4589B8B6B11E98B09F5D4FE0AE507', 'A');
+    getAllocatedPeriodsData(semId, '2021-02-03', courseId,FacultyId,sectionName);
   }, []);
 
-  const selectedPeriod = (e) => {
+  const selectedPeriod = (e,period) => {
+
+    console.log("Active data: ",activeTabData);
     const targetCheck = e.target.checked;
+
+    console.log("Period is: ",period);
 
     if (!targetCheck) {
       selectCheck(e.target.value);
     } else {
       deSelectCheck(e.target.value);
     }
-    console.log("Selected Classes: " + filterIDs);
+    console.log("Selected Classes: " , filterIDs);
   }
 
-  const saveExtraClassesData = async (roomId, facultyID,period, selectedDate) => {
-    const data = await saveExtraClasses(roomId, facultyID,period, selectedDate);
+  const saveExtraClassesData = async (roomId, facultyID,selectedDate) => {
+
+    let periodsTBPersisted = [];
+    filterIDs.map(time => {
+      periodsTBPersisted.push({
+      semId:semId,
+      sectionId:sectionId,
+      startTime:time.split("-")[0],
+      endTime:time.split("-")[1],
+      courseId:courseId,
+      classType:classType
+      })
+    })    
+    const data = await saveExtraClasses(roomId, facultyID,periodsTBPersisted, selectedDate);
    
   };
 
@@ -37,13 +60,8 @@ const ExtraClassModelData = ({ activeTabData, FacultyId }) => {
     var result = periodsList.filter(function (item) {
       return filterIDs.indexOf(item.periodId) !== -1;
     });
-    console.log("Final object: " + result[0].periodId)
-    
-    saveExtraClassesData(
-      "201961253159478881162",
-      "64D4589B8B6B11E98B09F5D4FE0AE507",
-      result,
-      "2021-02-03");
+      
+    saveExtraClassesData(roomId,FacultyId,"2021-02-03");
   }
 
   const selectCheck = (selectedVal) => {
@@ -68,8 +86,8 @@ const ExtraClassModelData = ({ activeTabData, FacultyId }) => {
           className="extraClsIds"
           disabled={period?.semId !== ""} 
           id={period.periodId}
-          value={period.periodId}
-          onChange={(e) => selectedPeriod(e)} />
+          value={period.startTime+"-"+period.endTime}
+          onChange={(e) => selectedPeriod(e,period)} />
         {period.startTime} - {period.endTime}  &nbsp;&nbsp;
       </React.Fragment>
     );
@@ -94,6 +112,7 @@ const ExtraClassModelData = ({ activeTabData, FacultyId }) => {
           <input
             type="date"
             placeholder="Enter Date"
+            
           />
         </div>
         <br></br>
