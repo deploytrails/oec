@@ -1,5 +1,5 @@
 import styled from "@emotion/styled";
-import { BREAKPOINTS, COLORS, FONT_FAMILY } from "../../../constants";
+import { COLORS } from "../../../constants";
 
 export const TableTypeSection = styled.div`
   display: block;
