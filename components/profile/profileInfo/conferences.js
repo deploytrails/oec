@@ -76,9 +76,9 @@ const Conferences = ({ isConfData, loadConfInfo }) => {
 
         <TABLE.TableWrapper>
           <TABLE.TableTR>
-            <TABLE.TableTh>Name of The Faculty</TABLE.TableTh>
+            <TABLE.TableTh>Faculty Name</TABLE.TableTh>
             <TABLE.TableTh>Conference / Seminar</TABLE.TableTh>
-            <TABLE.TableTh>Title Of The Conference</TABLE.TableTh>
+            <TABLE.TableTh>Conference Title</TABLE.TableTh>
             <TABLE.TableTh>National / International</TABLE.TableTh>
             <TABLE.TableTh>Month & Year</TABLE.TableTh>
             <TABLE.TableTh>Action</TABLE.TableTh>
@@ -90,7 +90,7 @@ const Conferences = ({ isConfData, loadConfInfo }) => {
             isConfData.length &&
             isConfData.map((confInfo) => (
               <TABLE.TableTRR key={confInfo.conferenceID}>
-                <TABLE.TableTdd>{confInfo.employeeID.firstName}</TABLE.TableTdd>
+                <TABLE.TableTdd>{confInfo.hrEmployee.lastName}</TABLE.TableTdd>
                 <TABLE.TableTdd>{confInfo.typeOfconferencename}</TABLE.TableTdd>
                 <TABLE.TableTdd>{confInfo.titleConference}</TABLE.TableTdd>
                 <TABLE.TableTdd>

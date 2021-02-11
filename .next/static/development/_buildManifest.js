@@ -1,1 +1,1 @@
-self.__BUILD_MANIFEST = {};self.__BUILD_MANIFEST_CB && self.__BUILD_MANIFEST_CB()
+self.__BUILD_MANIFEST = {__rewrites:[],"/_error":["static\u002Fchunks\u002Fpages\u002F_error.js"],"/reports/courseWiseAttendance":["static\u002Fchunks\u002Fpages\u002Freports\u002FcourseWiseAttendance.js"],"/reports/dayWiseAttendance":["static\u002Fchunks\u002Fpages\u002Freports\u002FdayWiseAttendance.js"],sortedPages:["\u002F_app","\u002F_error","\u002Freports\u002FcourseWiseAttendance","\u002Freports\u002FdayWiseAttendance"]};self.__BUILD_MANIFEST_CB && self.__BUILD_MANIFEST_CB()

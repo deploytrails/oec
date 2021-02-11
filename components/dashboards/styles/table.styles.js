@@ -1,5 +1,5 @@
 import styled from "@emotion/styled";
-import { BREAKPOINTS, COLORS, FONT_FAMILY } from "../../../constants";
+import { COLORS } from "../../../constants";
 
 export const TableTypeSection = styled.div`
   display: block;
@@ -20,6 +20,7 @@ export const TableWrapper = styled.table`
   max-width: 100%;
   border-collapse: collapse;
   border-spacing: 0;
+  border-radius: 0.5rem;
 `;
 export const TableTheader = styled.thead`
   padding: 0px;
@@ -47,7 +48,7 @@ export const TableTd = styled.td`
   color: #fff;
   font-weight: 400;
   font-size: 14px;
-  text-align: center;
+  text-align: left;
   color: ${COLORS.BLACK};
   border-right: 1px solid ${COLORS.WHITE};
 

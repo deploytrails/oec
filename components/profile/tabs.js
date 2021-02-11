@@ -24,14 +24,21 @@ const TabsWrap = ({
   isGrantsData,
   isConfData,
   isPhData,
+  isJourData,
   loadPhInfo, //update phd
   loadConfInfo,
   loadGrantsInfo,
   loadWorkshopInfo,
+  loadResearchGuidInfo,
+  loadBookPubInfo,
+  loadQualificationInfo,
+  loadExpInfo,
+  loadProfileData,
+  loadJournalPaperInfo
 }) => {
   const [active, setActive] = useState(0);
   const [isMoreTabs, setIsMoreTabs] = useState(false);
-  const handleClick = (e) => {
+  const handleClick = e => {
     const index = parseInt(e.target.id, 0);
     if (index !== active) {
       setActive(index);
@@ -135,25 +142,44 @@ const TabsWrap = ({
         </Tabs>
 
         <Content active={active === 0}>
-          <ProfileInfo isProfileData={isProfileData} />
+          <ProfileInfo
+            isProfileData={isProfileData}
+            loadProfileData={loadProfileData}
+          />
         </Content>
         <Content active={active === 1}>
-          <ContactInfo isProfileData={isProfileData} />
+          <ContactInfo
+            isProfileData={isProfileData}
+            loadProfileData={loadProfileData}
+          />
         </Content>
         <Content active={active === 2}>
-          <QualificationInfo isQualificData={isQualificData} />
+          <QualificationInfo
+            isQualificData={isQualificData}
+            loadQualificationInfo={loadQualificationInfo}
+            isProfileData={isProfileData}
+          />
         </Content>
         <Content active={active === 3}>
-          <WorkExp isExpeInfo={isExpeInfo} />
+          <WorkExp isExpeInfo={isExpeInfo} loadExpInfo={loadExpInfo} />
         </Content>
         <Content active={active === 4}>
-          <BookPublications isBookPubInfo={isBookPubInfo} />
+          <BookPublications
+            isBookPubInfo={isBookPubInfo}
+            loadBookPubInfo={loadBookPubInfo}
+          />
         </Content>
         <Content active={active === 5}>
-          <JournalPublications isBookPubInfo={isBookPubInfo} />
+          <JournalPublications
+            isJourData={isJourData}
+            loadJournalPaperInfo={loadJournalPaperInfo}
+          />
         </Content>
         <Content active={active === 6}>
-          <ResearchGuidlines isResearchGuidData={isResearchGuidData} />
+          <ResearchGuidlines
+            isResearchGuidData={isResearchGuidData}
+            loadResearchGuidInfo={loadResearchGuidInfo}
+          />
         </Content>
         <Content active={active === 7}>
           <WorkshopDetails

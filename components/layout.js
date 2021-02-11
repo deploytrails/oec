@@ -10,7 +10,7 @@ import Footer from "./footer";
 import { COLORS } from "../constants";
 
 const Layout = (props) => {
-  const title = props.description || "Page Description";
+  const title = props.description || "Page Description ";
 
   return (
     <App>
@@ -46,6 +46,9 @@ const Layout = (props) => {
           <div
             css={css`
               padding: 20px 25px;
+              display: flex;
+              flex-direction: column;
+              min-height: 87vh;
             `}
           >
             {props.children}

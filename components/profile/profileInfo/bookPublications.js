@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import Cookies from "js-cookie";
 import * as TABLE from "../../dashboards/styles/table.styles";
 import PulseLoader from "react-spinners/PulseLoader";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -10,12 +11,35 @@ import {
   faPlus,
   faFileImport,
 } from "@fortawesome/free-solid-svg-icons";
+import ConfirmationModal from "../../General/confirmation-modal";
+import { useSnackbar } from "react-simple-snackbar";
+import { deleteBookDetails } from "../../../services/profileService";
 
-const BookPublications = ({ isBookPubInfo }) => {
+const BookPublications = ({ isBookPubInfo, loadBookPubInfo }) => {
   const [show, setShow] = useState(false);
-  const openModal = () => {
+  const [openSnackbar, closeSnackbar] = useSnackbar();
+  const ProfileId = Cookies.get("employeeID");
+  const [bookList, setBookList] = useState({});
+  const [isAlert, setIsAlert] = useState(false);
+  const openModal = (data) => {
     setShow(!show);
+    setBookList(data);
+    if (!data || data === {} || data === null || data === undefined) {
+      setBookList({});
+    }
+    console.log("bookList", data);
   };
+
+  const openAlertModal = () => {
+    setIsAlert(!isAlert);
+  };
+  const deleteBooksRecord = async (id) => {
+    const bookData = await deleteBookDetails(id);
+    loadBookPubInfo();
+    openSnackbar("Successfully deleted Book Publications record");
+    setIsAlert(!isAlert);
+  };
+
   return (
     <React.Fragment>
       <div className="clearfix px-6 pb-6">
@@ -48,8 +72,8 @@ const BookPublications = ({ isBookPubInfo }) => {
 
         <TABLE.TableWrapper>
           <TABLE.TableTR>
-            <TABLE.TableTh>Title of the book</TABLE.TableTh>
-            <TABLE.TableTh>Name of the Publishers</TABLE.TableTh>
+            <TABLE.TableTh>Book Title</TABLE.TableTh>
+            <TABLE.TableTh>Publisher Name</TABLE.TableTh>
             <TABLE.TableTh>National / International</TABLE.TableTh>
             <TABLE.TableTh>ISBN</TABLE.TableTh>
             <TABLE.TableTh>Year</TABLE.TableTh>
@@ -69,17 +93,38 @@ const BookPublications = ({ isBookPubInfo }) => {
                 <TABLE.TableTdd>{bookInfo.bookPublicationYear}</TABLE.TableTdd>
                 <TABLE.TableTdd>
                   <span className="cursor-pointer mr-4 text-blue-400">
-                    <FontAwesomeIcon icon={faEdit} />
+                    <FontAwesomeIcon
+                      icon={faEdit}
+                      onClick={() => openModal(bookInfo)}
+                    />
                   </span>
                   <span className="cursor-pointer text-red-400">
-                    <FontAwesomeIcon icon={faTrashAlt} />
+                    <FontAwesomeIcon
+                      icon={faTrashAlt}
+                      onClick={openAlertModal}
+                    />
                   </span>
+                  {isAlert && (
+                    <ConfirmationModal
+                      deleteMessage="Book Publication Details"
+                      deleteRecord={() =>
+                        deleteBooksRecord(bookInfo.bookPublicationID)
+                      }
+                      openAlertModal={openAlertModal}
+                    />
+                  )}
                 </TABLE.TableTdd>
               </TABLE.TableTRR>
             ))}
         </TABLE.TableWrapper>
       </div>
-      {show && <BookPublicationModal openModal={openModal} />}
+      {show && (
+        <BookPublicationModal
+          openModal={openModal}
+          bookList={bookList}
+          loadBookPubInfo={loadBookPubInfo}
+        />
+      )}
     </React.Fragment>
   );
 };

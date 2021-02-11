@@ -1,1 +1,7 @@
-{"/_app":"static/development/pages/_app.js","/_document":"static/development/pages/_document.js","/_error":"static/development/pages/_error.js","/dashboard":"static/development/pages/dashboard.js","/profile":"static/development/pages/profile.js"}
+{
+  "/_app": "pages/_app.js",
+  "/_error": "pages/_error.js",
+  "/_document": "pages/_document.js",
+  "/reports/courseWiseAttendance": "pages/reports/courseWiseAttendance.js",
+  "/reports/dayWiseAttendance": "pages/reports/dayWiseAttendance.js"
+}

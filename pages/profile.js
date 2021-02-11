@@ -12,6 +12,7 @@ import {
   getgrantsDetails,
   getConferenceDetails,
   getPhdDetails,
+  getJournPaperDetails
 } from "../services/profileService";
 
 const Profile = () => {
@@ -24,6 +25,7 @@ const Profile = () => {
   const [isGrantsData, setGrantsData] = useState({});
   const [isConfData, setIsConfData] = useState({});
   const [isPhData, setIsPhData] = useState({});
+  const [isJournalData, setIsJournalData] = useState({});
 
   const ProfileId = Cookies.get("employeeID");
   //fetching profile Details
@@ -71,6 +73,10 @@ const Profile = () => {
     const phData = await getPhdDetails(ProfileId);
     setIsPhData(phData);
   };
+  const loadJournalPaperInfo = async () => {
+    const phData = await getJournPaperDetails(ProfileId);
+    setIsJournalData(phData);
+  };
 
   useEffect(() => {
     loadProfileData();
@@ -86,6 +92,10 @@ const Profile = () => {
 
   useEffect(() => {
     loadBookPubInfo();
+  }, []);
+
+  useEffect(() => {
+    loadExpInfo();
   }, []);
 
   useEffect(() => {
@@ -107,6 +117,10 @@ const Profile = () => {
   useEffect(() => {
     loadPhInfo();
   }, []);
+
+  useEffect(() => {
+    loadJournalPaperInfo();
+  }, []);
   //update details phd
 
   return (
@@ -123,10 +137,17 @@ const Profile = () => {
             isGrantsData={isGrantsData?.profile}
             isConfData={isConfData?.profile}
             isPhData={isPhData?.profile}
+            isJourData={isJournalData?.profile}
             loadPhInfo={loadPhInfo}
             loadConfInfo={loadConfInfo}
             loadGrantsInfo={loadGrantsInfo}
             loadWorkshopInfo={loadWorkshopInfo}
+            loadResearchGuidInfo={loadResearchGuidInfo}
+            loadBookPubInfo={loadBookPubInfo}
+            loadQualificationInfo={loadQualificationInfo}
+            loadExpInfo={loadExpInfo}
+            loadProfileData={loadProfileData}
+            loadJournalPaperInfo={loadJournalPaperInfo}
           />
         </div>
       </Layout>

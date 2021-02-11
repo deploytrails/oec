@@ -3,3 +3,119 @@
 @tailwind components;
 /* purgecss end ignore */
 @tailwind utilities;
+
+@layer base {
+  /* Basic Button Styles */
+  .buttonWhite {
+    @apply py-2 px-4 bg-white text-gray-600 font-semibold rounded-lg shadow-md;
+    outline: none !important;
+  }
+  .buttonWhite:active {
+    @apply bg-gray-100;
+    outline: none;
+  }
+  .buttonGreen {
+    @apply py-2 px-4 bg-green-700 text-white font-semibold rounded-lg shadow-md;
+    outline: none !important;
+  }
+  .buttonGreen:active {
+    @apply bg-green-500;
+    outline: none;
+  }
+  .buttonRed {
+    @apply py-2 px-4 bg-red-700 text-white font-semibold rounded-lg shadow-md;
+    outline: none !important;
+  }
+  .buttonRed:active {
+    @apply bg-red-500;
+    outline: none;
+  }
+  .buttonYellow {
+    @apply py-2 px-4 bg-yellow-700 text-white font-semibold rounded-lg shadow-md;
+    outline: none !important;
+  }
+  .buttonYellow:active {
+    @apply bg-yellow-500;
+    outline: none;
+  }
+  .buttonBlue {
+    @apply py-2 px-4 bg-blue-700 text-white font-semibold rounded-lg shadow-md;
+    outline: none !important;
+  }
+  .buttonBlue:active {
+    @apply bg-blue-500;
+    outline: none;
+  }
+  .buttonGreen:disabled,
+  .buttonRed:disabled,
+  .buttonYellow:disabled,
+  .buttonBlue:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+  }
+
+  /* Basic Input Fields*/
+
+  .basicInput {
+    @apply border border-gray-500 w-auto py-2 px-4 bg-white text-gray-700 shadow-md rounded-lg;
+  }
+
+  .basicSelect {
+    @apply border border-gray-500 w-auto py-2 px-4 bg-white text-gray-700 shadow-md rounded-lg;
+  }
+  .basicSelect:focus,
+  input[type="text"]:focus {
+    outline: none;
+    box-shadow: 0 0 0 2px rgba(21, 156, 228, 0.4);
+  }
+
+  .content-table {
+    border-collapse: collapse;
+    margin: 25px 0;
+    font-size: 14px;
+    min-width: 400px;
+    border-radius: 5px 5px 0 0;
+    overflow: hidden;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.15);
+    width: 100%;
+    max-width: 100%;
+  }
+
+  .content-table thead tr {
+    background-color: #3aafa9;
+    color: #ffffff;
+    text-align: left;
+    text-align: center;
+  }
+
+  .content-table th {
+    font-weight: 500;
+    padding: 15px;
+  }
+
+  .content-table td {
+    font-weight: 400;
+    padding: 12px 5px;
+  }
+
+  .content-table tbody tr {
+    border-bottom: 1px solid #dddddd;
+    text-align: center;
+  }
+
+  .content-table tbody tr:nth-of-type(odd) {
+    background-color: #f3f3f3;
+  }
+  .content-table tbody tr:nth-of-type(even) {
+    @apply bg-gray-300;
+  }
+
+  .content-table tbody tr:last-of-type {
+    border-bottom: 2px solid #3aafa9;
+  }
+
+  .content-table tbody tr.active-row {
+    font-weight: bold;
+    color: #009879;
+  }
+}

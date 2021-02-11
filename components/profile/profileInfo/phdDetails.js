@@ -53,7 +53,7 @@ const PhdDetails = ({ isPhData, loadPhInfo }) => {
         </button>
         <TABLE.TableWrapper>
           <TABLE.TableTR>
-            <TABLE.TableTh>Title of the Research</TABLE.TableTh>
+            <TABLE.TableTh>Research Title</TABLE.TableTh>
             <TABLE.TableTh>University</TABLE.TableTh>
             <TABLE.TableTh>Registered Year</TABLE.TableTh>
             <TABLE.TableTh>Status</TABLE.TableTh>

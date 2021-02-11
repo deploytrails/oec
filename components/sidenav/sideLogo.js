@@ -10,7 +10,7 @@ const SideLogo = () => {
           border-bottom: 1px solid ${COLORS.DARKBORDER};
         `}
       >
-        <h1>OEC</h1>
+        <h1>OpeneCampus</h1>
       </section>
     </React.Fragment>
   );

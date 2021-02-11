@@ -11,7 +11,7 @@ import ChangePassword from "../components/modals/changePassword";
 import ForgotPassword from "../components/modals/forgotPassword";
 
 const Home = () => {
-  const logoImage = "http://15.206.245.247:8081/faculty/images/png.png";
+  const logoImage = `${process.env.APIBaseUrl}faculty/images/png.png`;
   const router = useRouter();
   const [isLoginData, setIsLoginData] = useState();
   const [isLoader, setIsLoader] = useState(false);
@@ -34,7 +34,8 @@ const Home = () => {
       Cookies.set("loggedUserStatus", data?.departmentId);
       Cookies.set("userName", data?.employeeName);
       Cookies.set("employeeID", data?.employeeID);
-      Cookies.set("departId", data.departmentId);
+      Cookies.set("departId", data?.departmentId);
+      Cookies.set("userRole", data?.role);
     }
     if (data?.status === "loggedin") {
       router.push("/dashboard");

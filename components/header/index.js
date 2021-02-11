@@ -8,7 +8,7 @@ const Header = () => {
     <React.Fragment>
       <div className="block">
         <TopHeader />
-        <PageTitle />
+        {/* <PageTitle /> */}
       </div>
     </React.Fragment>
   );

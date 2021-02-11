@@ -3,6 +3,9 @@ import * as TABLE from "../../dashboards/styles/table.styles";
 import PulseLoader from "react-spinners/PulseLoader";
 import QualificationModal from "../../profile/profile-modals/qualificationModal";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import ConfirmationModal from "../../General/confirmation-modal";
+import { useSnackbar } from "react-simple-snackbar";
+import { deleteQualificationDetails } from "../../../services/profileService";
 import {
   faSearch,
   faEdit,
@@ -10,10 +13,30 @@ import {
   faPlus,
 } from "@fortawesome/free-solid-svg-icons";
 
-const QualificationInfo = ({ isQualificData }) => {
+const QualificationInfo = ({
+  isQualificData,
+  loadQualificationInfo,
+  isProfileData,
+}) => {
   const [show, setShow] = useState(false);
-  const openModal = () => {
+  const [qualificationList, setQualificationList] = useState({});
+  const [isAlert, setIsAlert] = useState(false);
+  const [openSnackbar, closeSnackbar] = useSnackbar();
+  const openModal = (data) => {
     setShow(!show);
+    setQualificationList(data);
+    if (!data || data === {} || data === null || data === undefined) {
+      setQualificationList({});
+    }
+  };
+  const openAlertModal = () => {
+    setIsAlert(!isAlert);
+  };
+  const deleteQualificationRecord = async (id) => {
+    const qualificationData = await deleteQualificationDetails(id);
+    loadQualificationInfo();
+    openSnackbar("Successfully deleted Qualification record");
+    setIsAlert(!isAlert);
   };
   return (
     <React.Fragment>
@@ -28,9 +51,9 @@ const QualificationInfo = ({ isQualificData }) => {
         <TABLE.TableWrapper>
           <TABLE.TableTR>
             <TABLE.TableTh>Qualification Type</TABLE.TableTh>
-            <TABLE.TableTh>Name of the College</TABLE.TableTh>
+            <TABLE.TableTh>College Name</TABLE.TableTh>
             <TABLE.TableTh>Branch</TABLE.TableTh>
-            <TABLE.TableTh>Year of Completion</TABLE.TableTh>
+            <TABLE.TableTh>Completion Year</TABLE.TableTh>
             <TABLE.TableTh>Action</TABLE.TableTh>
           </TABLE.TableTR>
 
@@ -46,17 +69,39 @@ const QualificationInfo = ({ isQualificData }) => {
                 <TABLE.TableTdd>{qualInfo.yearOfPass}</TABLE.TableTdd>
                 <TABLE.TableTdd>
                   <span className="cursor-pointer mr-4 text-blue-400">
-                    <FontAwesomeIcon icon={faEdit} />
+                    <FontAwesomeIcon
+                      icon={faEdit}
+                      onClick={() => openModal(qualInfo)}
+                    />
                   </span>
                   <span className="cursor-pointer text-red-400">
-                    <FontAwesomeIcon icon={faTrashAlt} />
+                    <FontAwesomeIcon
+                      icon={faTrashAlt}
+                      onClick={openAlertModal}
+                    />
                   </span>
+                  {isAlert && (
+                    <ConfirmationModal
+                      deleteMessage="Qualification Details"
+                      deleteRecord={() =>
+                        deleteQualificationRecord(qualInfo.qualificationID)
+                      }
+                      openAlertModal={openAlertModal}
+                    />
+                  )}
                 </TABLE.TableTdd>
               </TABLE.TableTRR>
             ))}
         </TABLE.TableWrapper>
-        {show && <QualificationModal openModal={openModal} />}
       </div>
+      {show && (
+        <QualificationModal
+          openModal={openModal}
+          qualificationList={qualificationList}
+          loadQualificationInfo={loadQualificationInfo}
+          isProfileData={isProfileData}
+        />
+      )}
     </React.Fragment>
   );
 };

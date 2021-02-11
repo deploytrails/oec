@@ -1,9 +1,9 @@
 import fetch from "cross-fetch";
-const APIBaseUrl = "http://15.206.245.247:8081/";
+
 export const getNonPostedAttendance = async (facultyID) => {
   try {
     const response = await fetch(
-      `${APIBaseUrl}faculty/DashBoardServlet?FacultyID=${facultyID}`,
+      `${process.env.APIBaseUrl}faculty/DashBoardServlet?FacultyID=${facultyID}`,
       {
         method: "GET",
         headers: {

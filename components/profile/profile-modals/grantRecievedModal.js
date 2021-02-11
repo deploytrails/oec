@@ -93,13 +93,13 @@ const GrantRecievedModal = ({
                 </div>
                 <div className="w-6/12 float-left">
                   <FormInput
-                    label="Amount sanctioned"
+                    label="Amount Sanctioned"
                     type="text"
                     name="amtsan"
                     onChange={handleChange}
                     onBlur={handleBlur}
                     value={values.amtsan}
-                    placeholder="Amount sanctioned"
+                    placeholder="Amount Sanctioned"
                     css={
                       errors.amtsan &&
                       touched.amtsan &&
@@ -115,13 +115,13 @@ const GrantRecievedModal = ({
               <div className="clearfix mb-3">
                 <div className="w-6/12 float-left pr-2">
                   <FormInput
-                    label="Sanctioned letter No"
+                    label="Sanctioned Letter No."
                     type="text"
                     name="sanlettr"
                     onChange={handleChange}
                     onBlur={handleBlur}
                     value={values.sanlettr}
-                    placeholder="Sanctioned letter No"
+                    placeholder="Sanctioned Letter No."
                     css={
                       errors.sanlettr &&
                       touched.sanlettr &&
@@ -134,13 +134,13 @@ const GrantRecievedModal = ({
                 </div>
                 <div className="w-6/12 float-left">
                   <FormInput
-                    label="Utilisation position as on today"
+                    label="Current Utilisation Position"
                     type="text"
                     name="utipostoday"
                     onChange={handleChange}
                     onBlur={handleBlur}
                     value={values.utipostoday}
-                    placeholder="Utilisation position as on today"
+                    placeholder="Current Utilisation Position"
                     css={
                       errors.utipostoday &&
                       touched.utipostoday &&
@@ -156,13 +156,13 @@ const GrantRecievedModal = ({
               <div className="clearfix mb-3">
                 <div className="w-6/12 float-left pr-2">
                   <FormInput
-                    label="Utilisation Certificate details"
+                    label="Utilisation Certificate Details"
                     type="text"
                     name="uticerdet"
                     onChange={handleChange}
                     onBlur={handleBlur}
                     value={values.uticerdet}
-                    placeholder="Utilisation Certificate details"
+                    placeholder="Utilisation Certificate Details"
                     css={
                       errors.uticerdet &&
                       touched.uticerdet &&

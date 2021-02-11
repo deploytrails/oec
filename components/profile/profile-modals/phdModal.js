@@ -70,13 +70,13 @@ const PhdModal = ({ closeModal, isPHDdata, loadPhInfo }) => {
               <div className="clearfix mb-3">
                 <div className="w-6/12 float-left pr-2">
                   <FormInput
-                    label="Title of the Research"
+                    label="Research Title"
                     type="text"
                     name="researchTitle"
                     onChange={handleChange}
                     onBlur={handleBlur}
                     value={values.researchTitle}
-                    placeholder="Title of the Research"
+                    placeholder="Research Title"
                     css={
                       errors.researchTitle &&
                       touched.researchTitle &&
@@ -111,9 +111,9 @@ const PhdModal = ({ closeModal, isPHDdata, loadPhInfo }) => {
               <div className="clearfix mb-3">
                 <div className="w-6/12 float-left pr-2">
                   <FormInput
-                    label="RegisteredcYear"
+                    label="Registered Year"
                     name="registeredYear"
-                    placeholder="registeredYear"
+                    placeholder="Registered Year"
                     onChange={handleChange}
                     onBlur={handleBlur}
                     value={values.registeredYear}
@@ -220,7 +220,7 @@ const PhdModal = ({ closeModal, isPHDdata, loadPhInfo }) => {
                     onChange={handleChange}
                     onBlur={handleBlur}
                     value={values.supervisorName}
-                    placeholder="supervisorName"
+                    placeholder="Supervisor Name"
                     className="border border-2 border-solid p-2 rounded w-full focus:outline-none "
                     css={
                       errors.supervisorName &&
@@ -235,13 +235,13 @@ const PhdModal = ({ closeModal, isPHDdata, loadPhInfo }) => {
 
                 <div className="w-4/12 float-left ">
                   <FormInput
-                    label="Supervisior's Affiliation"
+                    label="Supervisor Affiliation"
                     type="text"
                     name="supervisionAff"
                     onChange={handleChange}
                     onBlur={handleBlur}
                     value={values.supervisionAff}
-                    placeholder="Supervisior's Affiliation"
+                    placeholder="Supervisor Affiliation"
                     className="border border-2 border-solid p-2 rounded w-full focus:outline-none "
                     css={
                       errors.supervisionAff &&

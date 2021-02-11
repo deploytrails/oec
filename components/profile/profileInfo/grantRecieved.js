@@ -71,8 +71,8 @@ const GrantRecieved = ({ isGrantsData, loadGrantsInfo }) => {
         <TABLE.TableWrapper>
           <TABLE.TableTR>
             <TABLE.TableTh>Scheme</TABLE.TableTh>
-            <TABLE.TableTh>Amount sanctioned</TABLE.TableTh>
-            <TABLE.TableTh>Sanctioned letter no</TABLE.TableTh>
+            <TABLE.TableTh>Amount Sanctioned</TABLE.TableTh>
+            <TABLE.TableTh>Sanctioned Letter No.</TABLE.TableTh>
             <TABLE.TableTh>Year</TABLE.TableTh>
             <TABLE.TableTh>Action</TABLE.TableTh>
           </TABLE.TableTR>

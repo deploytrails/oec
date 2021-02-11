@@ -1,14 +1,14 @@
 import fetch from "cross-fetch";
-const APIBaseUrl = "http://15.206.245.247:8081/";
-export const getProfileData = async (employeId) => {
+export const getProfileData = async employeId => {
   try {
     const response = await fetch(
-      `${APIBaseUrl}faculty/ProfileServlet?employeeID=${employeId}`,
+      `${process.env.APIBaseUrl}faculty/ProfileServlet?employeeID=${employeId}`,
       {
+        mode: "no-cors",
         method: "POST",
         headers: {
-          "Content-Type": "application/json",
-        },
+          "Content-Type": "application/json"
+        }
       }
     );
     const data = await response.json();
@@ -18,15 +18,15 @@ export const getProfileData = async (employeId) => {
   }
 };
 
-export const getQualificationDetails = async (employeId) => {
+export const getQualificationDetails = async employeId => {
   try {
     const response = await fetch(
-      `${APIBaseUrl}faculty/getDynamicQualification?employeeID=${employeId}`,
+      `${process.env.APIBaseUrl}faculty/getDynamicQualification?employeeID=${employeId}`,
       {
         method: "GET",
         headers: {
-          "Content-Type": "application/json",
-        },
+          "Content-Type": "application/json"
+        }
       }
     );
     const data = await response.json();
@@ -36,15 +36,15 @@ export const getQualificationDetails = async (employeId) => {
   }
 };
 
-export const getWorkExpDetails = async (employeId) => {
+export const deleteQualificationDetails = async qualificationID => {
   try {
     const response = await fetch(
-      `${APIBaseUrl}faculty/getWorkExperience?employeeID=${employeId}`,
+      `${process.env.APIBaseUrl}faculty/deleteQualificationData?qualificationId=${qualificationID}`,
       {
         method: "GET",
         headers: {
-          "Content-Type": "application/json",
-        },
+          "Content-Type": "application/json"
+        }
       }
     );
     const data = await response.json();
@@ -54,15 +54,28 @@ export const getWorkExpDetails = async (employeId) => {
   }
 };
 
-export const getBookPubDetails = async (employeId) => {
+export const updateQualificationDetails = async (
+  employeeID,
+  dataObj = {
+    qualificationID: qualificationID,
+    collegeName: collegeName,
+    branchName: branchName,
+    qualificationType: qualificationType,
+    yearOfPass: yearOfPass
+  }
+) => {
+  const state = "saveDynamicQualification";
+  const fileName = "test.jpg";
+
+  const enc = encodeURIComponent(JSON.stringify(dataObj));
   try {
     const response = await fetch(
-      `${APIBaseUrl}faculty/getBookPublications?employeeID=${employeId}`,
+      `${process.env.APIBaseUrl}faculty/saveDynamicQualification?&qualJsonData=${enc}&filename=${fileName}&state=${state}`,
       {
         method: "GET",
         headers: {
-          "Content-Type": "application/json",
-        },
+          "Content-Type": "application/json"
+        }
       }
     );
     const data = await response.json();
@@ -72,15 +85,15 @@ export const getBookPubDetails = async (employeId) => {
   }
 };
 
-export const getResearchGuidlines = async (employeId) => {
+export const getWorkExpDetails = async employeId => {
   try {
     const response = await fetch(
-      `${APIBaseUrl}faculty/getResearchGuidance?employeeID=${employeId}`,
+      `${process.env.APIBaseUrl}faculty/getWorkExperience?employeeID=${employeId}`,
       {
         method: "GET",
         headers: {
-          "Content-Type": "application/json",
-        },
+          "Content-Type": "application/json"
+        }
       }
     );
     const data = await response.json();
@@ -90,15 +103,33 @@ export const getResearchGuidlines = async (employeId) => {
   }
 };
 
-export const getWorkshopDetails = async (employeId) => {
+//update work exp details
+export const updateWorkExpDetails = async (
+  employeId,
+  dataObj = {
+    workExperienceId: workExperienceId,
+    employee: { employeePrimaryId: employeId },
+    collegename: collegename,
+    designation: designation,
+    responsibilites: responsibilites,
+    expFrom: expFrom,
+    expTo: expTo
+  },
+  state
+) => {
+  console.log("employee id",employeId);
+  dataObj.employeePrimaryId=employeId;
+  console.log("data Obj",dataObj);
+  const enc = encodeURIComponent(JSON.stringify(dataObj));
+  const testFile = "testFile.jpg";
   try {
     const response = await fetch(
-      `${APIBaseUrl}faculty/getWorkShops?employeeID=${employeId}`,
+      `${process.env.APIBaseUrl}faculty/saveWorkExperience?workJsonData=${enc}&filename=${testFile}&state=${state}`,
       {
         method: "GET",
         headers: {
-          "Content-Type": "application/json",
-        },
+          "Content-Type": "application/json"
+        }
       }
     );
     const data = await response.json();
@@ -108,15 +139,17 @@ export const getWorkshopDetails = async (employeId) => {
   }
 };
 
-export const getgrantsDetails = async (employeId) => {
+//delete work Exp details
+export const deleteWorkExpDetails = async workID => {
   try {
+    console.log(workID);
     const response = await fetch(
-      `${APIBaseUrl}faculty/getGrantReceived?employeeID=${employeId}`,
+      `${process.env.APIBaseUrl}faculty/deleteWorkExperience?workExpID=${workID}`,
       {
         method: "GET",
         headers: {
-          "Content-Type": "application/json",
-        },
+          "Content-Type": "application/json"
+        }
       }
     );
     const data = await response.json();
@@ -126,15 +159,15 @@ export const getgrantsDetails = async (employeId) => {
   }
 };
 
-export const getConferenceDetails = async (employeId) => {
+export const getBookPubDetails = async employeId => {
   try {
     const response = await fetch(
-      `${APIBaseUrl}faculty/getConferenceDetails?employeeID=${employeId}`,
+      `${process.env.APIBaseUrl}faculty/getBookPublications?employeeID=${employeId}`,
       {
         method: "GET",
         headers: {
-          "Content-Type": "application/json",
-        },
+          "Content-Type": "application/json"
+        }
       }
     );
     const data = await response.json();
@@ -144,15 +177,87 @@ export const getConferenceDetails = async (employeId) => {
   }
 };
 
-export const getPhdDetails = async (employeId) => {
+export const getResearchGuidlines = async employeId => {
   try {
     const response = await fetch(
-      `${APIBaseUrl}faculty/getPhdDetails?employeeID=${employeId}`,
+      `${process.env.APIBaseUrl}faculty/getResearchGuidance?employeeID=${employeId}`,
       {
         method: "GET",
         headers: {
-          "Content-Type": "application/json",
-        },
+          "Content-Type": "application/json"
+        }
+      }
+    );
+    const data = await response.json();
+    return data;
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+export const getWorkshopDetails = async employeId => {
+  try {
+    const response = await fetch(
+      `${process.env.APIBaseUrl}faculty/getWorkShops?employeeID=${employeId}`,
+      {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json"
+        }
+      }
+    );
+    const data = await response.json();
+    return data;
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+export const getgrantsDetails = async employeId => {
+  try {
+    const response = await fetch(
+      `${process.env.APIBaseUrl}faculty/getGrantReceived?employeeID=${employeId}`,
+      {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json"
+        }
+      }
+    );
+    const data = await response.json();
+    return data;
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+export const getConferenceDetails = async employeId => {
+  try {
+    const response = await fetch(
+      `${process.env.APIBaseUrl}faculty/getConferenceDetails?employeeID=${employeId}`,
+      {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json"
+        }
+      }
+    );
+    const data = await response.json();
+    return data;
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+export const getPhdDetails = async employeId => {
+  try {
+    const response = await fetch(
+      `${process.env.APIBaseUrl}faculty/getPhdDetails?employeeID=${employeId}`,
+      {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json"
+        }
       }
     );
     const data = await response.json();
@@ -174,18 +279,18 @@ export const updatePhdDetails = async (
     supervisorName: supervisorName,
     supervisionAff: supervisionAff,
     deptId: deptId,
-    phdDetailsId: phdDetailsId,
+    phdDetailsId: phdDetailsId
   }
 ) => {
   const enc = encodeURIComponent(JSON.stringify(dataObj));
   try {
     const response = await fetch(
-      `${APIBaseUrl}faculty/insertPhdDetails?employeeID=${employeId}&insertData=${enc}`,
+      `${process.env.APIBaseUrl}faculty/insertPhdDetails?employeeID=${employeId}&insertData=${enc}`,
       {
         method: "GET",
         headers: {
-          "Content-Type": "application/json",
-        },
+          "Content-Type": "application/json"
+        }
       }
     );
     const data = await response.json();
@@ -195,15 +300,15 @@ export const updatePhdDetails = async (
   }
 };
 //delete phd Details
-export const deletePhdDetails = async (phdDetailsId) => {
+export const deletePhdDetails = async phdDetailsId => {
   try {
     const response = await fetch(
-      `${APIBaseUrl}faculty/deletePhdDetails?phdDetailsID=${phdDetailsId}`,
+      `${process.env.APIBaseUrl}faculty/deletePhdDetails?phdDetailsID=${phdDetailsId}`,
       {
         method: "GET",
         headers: {
-          "Content-Type": "application/json",
-        },
+          "Content-Type": "application/json"
+        }
       }
     );
     const data = await response.json();
@@ -227,7 +332,7 @@ export const updateConfDetails = async (
     typeOfissue: typeOfissue,
     issueNo: issueNo,
     depart: depart,
-    conferenceID: conferenceID,
+    conferenceID: conferenceID
   },
   deptId,
   state
@@ -235,12 +340,12 @@ export const updateConfDetails = async (
   const enc = encodeURIComponent(JSON.stringify(dataObj));
   try {
     const response = await fetch(
-      `${APIBaseUrl}faculty/insertConferenceDetails?employeeID=${employeId}&insertData=${enc}&deptId=${deptId}&state=${state}`,
+      `${process.env.APIBaseUrl}faculty/insertConferenceDetails?employeeID=${employeId}&insertData=${enc}&deptId=${deptId}&state=${state}`,
       {
         method: "GET",
         headers: {
-          "Content-Type": "application/json",
-        },
+          "Content-Type": "application/json"
+        }
       }
     );
     const data = await response.json();
@@ -250,15 +355,15 @@ export const updateConfDetails = async (
   }
 };
 //delete conference details
-export const deleteConferenceDetails = async (conferenceID) => {
+export const deleteConferenceDetails = async conferenceID => {
   try {
     const response = await fetch(
-      `${APIBaseUrl}faculty/deleteConference?conferenceID=${conferenceID}`,
+      `${process.env.APIBaseUrl}faculty/deleteConference?conferenceID=${conferenceID}`,
       {
         method: "GET",
         headers: {
-          "Content-Type": "application/json",
-        },
+          "Content-Type": "application/json"
+        }
       }
     );
     const data = await response.json();
@@ -280,19 +385,19 @@ export const updateGrantDetails = async (
     sanlettr: sanlettr,
     utipostoday: utipostoday,
     uticerdet: uticerdet,
-    yeargrant: yeargrant,
+    yeargrant: yeargrant
   },
   state
 ) => {
   const enc = encodeURIComponent(JSON.stringify(dataObj));
   try {
     const response = await fetch(
-      `${APIBaseUrl}faculty/addGrantReceived?employeeID=${employeId}&insertData=${enc}&state=${state}`,
+      `${process.env.APIBaseUrl}faculty/addGrantReceived?employeeID=${employeId}&insertData=${enc}&state=${state}`,
       {
         method: "GET",
         headers: {
-          "Content-Type": "application/json",
-        },
+          "Content-Type": "application/json"
+        }
       }
     );
     const data = await response.json();
@@ -303,15 +408,15 @@ export const updateGrantDetails = async (
 };
 
 //delete Grant details
-export const deleteGrantDetails = async (grantrcvdID) => {
+export const deleteGrantDetails = async grantrcvdID => {
   try {
     const response = await fetch(
-      `${APIBaseUrl}faculty/deleteGrantReceived?grantrcvdID=${grantrcvdID}`,
+      `${process.env.APIBaseUrl}faculty/deleteGrantReceived?grantrcvdID=${grantrcvdID}`,
       {
         method: "GET",
         headers: {
-          "Content-Type": "application/json",
-        },
+          "Content-Type": "application/json"
+        }
       }
     );
     const data = await response.json();
@@ -332,19 +437,19 @@ export const updateWorkshopDetails = async (
     duration: duration,
     monYear: monYear,
     place: place,
-    typeOfworkshop: typeOfworkshop,
+    typeOfworkshop: typeOfworkshop
   },
   state
 ) => {
   const enc = encodeURIComponent(JSON.stringify(dataObj));
   try {
     const response = await fetch(
-      `${APIBaseUrl}faculty/insertWorkShops?employeeID=${employeId}&insertData=${enc}&state=${state}`,
+      `${process.env.APIBaseUrl}faculty/insertWorkShops?employeeID=${employeId}&insertData=${enc}&state=${state}`,
       {
         method: "GET",
         headers: {
-          "Content-Type": "application/json",
-        },
+          "Content-Type": "application/json"
+        }
       }
     );
     const data = await response.json();
@@ -358,12 +463,313 @@ export const updateWorkshopDetails = async (
 export const deleteWorkshopDetails = async (workID, employeeID, state) => {
   try {
     const response = await fetch(
-      `${APIBaseUrl}faculty/deleteWorkShops?workID=${workID}&employeeID=${employeeID}&state=${state}`,
+      `${process.env.APIBaseUrl}faculty/deleteWorkShops?workID=${workID}&employeeID=${employeeID}&state=${state}`,
       {
         method: "GET",
         headers: {
-          "Content-Type": "application/json",
-        },
+          "Content-Type": "application/json"
+        }
+      }
+    );
+    const data = await response.json();
+    return data;
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+//update Guidlience
+export const updateResearchGuidlinesDetails = async (
+  employeId,
+  dataObj = {
+    ResearchGuidanceID: ResearchGuidanceID,
+    scholarName: scholarName,
+    yearOfAdmission: yearOfAdmission,
+    typeofAcademic: typeofAcademic,
+    topic: topic,
+    universityName: universityName,
+    status: status
+  },
+  state
+) => {
+  const enc = encodeURIComponent(JSON.stringify(dataObj));
+  try {
+    const response = await fetch(
+      `${process.env.APIBaseUrl}faculty/insertResearchGuidance?employeeID=${employeId}&insertData=${enc}&state=${state}`,
+      {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json"
+        }
+      }
+    );
+    const data = await response.json();
+    return data;
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+//delete Workshop details
+export const deleteGuidlinesDetails = async (resrhGuidanceID, state) => {
+  try {
+    const response = await fetch(
+      `${process.env.APIBaseUrl}faculty/deleteResearchGuidance?resrhGuidanceID=${resrhGuidanceID}&state=${state}`,
+      {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json"
+        }
+      }
+    );
+    const data = await response.json();
+    return data;
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+//update Guidlience
+export const updateBookPublicationsDetails = async (
+  employeId,
+  dataObj = {
+    bookID: bookID,
+    bookTitlePublication: bookTitlePublication,
+    bookPublisherName: bookPublisherName,
+    bookPublicationType: bookPublicationType,
+    isbn: isbn,
+    bookyear: bookyear,
+    status: status
+  },
+  state
+) => {
+  const enc = encodeURIComponent(JSON.stringify(dataObj));
+  try {
+    const response = await fetch(
+      `${process.env.APIBaseUrl}faculty/insertBookPublications?employeeID=${employeId}&insertData=${enc}&state=${state}`,
+      {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json"
+        }
+      }
+    );
+    const data = await response.json();
+    return data;
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+//delete Workshop details
+export const deleteBookDetails = async (bookID, state) => {
+  try {
+    const response = await fetch(
+      `${process.env.APIBaseUrl}faculty/deleteBookPublications?bookID=${bookID}&state=${state}`,
+      {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json"
+        }
+      }
+    );
+    const data = await response.json();
+    return data;
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+//update Guidlience
+export const updateContactDetails = async (
+  dataObj = {
+    mobileNumber: mobileNumber,
+    alternateMobile: alternateMobile,
+    email: email,
+    alternateEmail: alternateEmail,
+    address: address,
+    lastName: lastName,
+    fatherName: fatherName,
+    achievements: achievements,
+    surName: surName,
+    gender: gender,
+    prefix: prefix,
+    quinaryprogram: quinaryprogram,
+    password: password,
+    researchActivities: researchActivities,
+    department: department,
+    employeePrimaryId: employeePrimaryId,
+    quaternaryprogram: quaternaryprogram,
+    associationType: associationType,
+    dateOfBirth: dateOfBirth,
+    aadharNo: aadharNo,
+    tertiaryprogram: tertiaryprogram,
+    firstName: firstName,
+    secondaryprogram: secondaryprogram,
+    dateOfJoining: dateOfJoining,
+    employeeType: employeeType,
+    aicteId: aicteId,
+    senaryprogram: senaryprogram,
+    designation: designation,
+    jntuhID: jntuhID,
+    panCardNo: panCardNo,
+    username: username,
+    status: status,
+    septenaryprogram: septenaryprogram,
+    dept: dept,
+    dept1: dept1,
+    dept2: dept2,
+    dept3: dept3,
+    dept4: dept4,
+    dept5: dept5
+  },
+  state
+) => {
+  const enc = encodeURIComponent(JSON.stringify(dataObj));
+  try {
+    const response = await fetch(
+      `${process.env.APIBaseUrl}faculty/updateRec?updateData=${enc}&dept=${dataObj.dept}&dept1=${dataObj.dept1}&dept2=${dataObj.dept2}&dept3=${dataObj.dept3}&dept4=${dataObj.dept4}&dept5=${dataObj.dept5}&state=${state}`,
+      {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json"
+        }
+      }
+    );
+    const data = await response.json();
+    return data;
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+//update Profile
+export const updateProfileDetails = async (
+  dataObj = {
+    prefix: prefix,
+    firstName: firstName,
+    lastName: lastName,
+    surName: surName,
+    gender: gender,
+    dateOfBirth: dateOfBirth,
+    fatherName: fatherName,
+    employeeType: employeeType,
+    associationType: associationType,
+    dateOfJoining: dateOfJoining,
+    dateOfLeaving: dateOfLeaving,
+    aadharNo: aadharNo,
+    panCardNo: panCardNo,
+    jntuhID: jntuhID,
+    aicteId: aicteId,
+    achievements: achievements,
+    researchActivities: researchActivities,
+    mobileNumber: mobileNumber,
+    quinaryprogram: quinaryprogram,
+    password: password,
+    department: department,
+    email: email,
+    employeePrimaryId: employeePrimaryId,
+    alternateEmail: alternateEmail,
+    quaternaryprogram: quaternaryprogram,
+    address: address,
+    tertiaryprogram: tertiaryprogram,
+    secondaryprogram: secondaryprogram,
+    alternateMobile: alternateMobile,
+    senaryprogram: senaryprogram,
+    designation: designation,
+    username: username,
+    status: status,
+    septenaryprogram: septenaryprogram,
+    dept: dept,
+    dept1: dept1,
+    dept2: dept2,
+    dept3: dept3,
+    dept4: dept4,
+    dept5: dept5
+  },
+  state
+) => {
+  console.log("dataObj",dataObj);
+  const enc = encodeURIComponent(JSON.stringify(dataObj));
+  try {
+    const response = await fetch(
+      `${process.env.APIBaseUrl}faculty/updateRec?updateData=${enc}&dept=${dataObj.dept}&dept1=${dataObj.dept1}&dept2=${dataObj.dept2}&dept3=${dataObj.dept3}&dept4=${dataObj.dept4}&dept5=${dataObj.dept5}&state=${state}`,
+      {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json"
+        }
+      }
+    );
+    const data = await response.json();
+    return data;
+  } catch (error) {
+    console.log(error);
+  }
+};
+export const getJournPaperDetails = async employeId => {
+  try {
+    const response = await fetch(
+      `${process.env.APIBaseUrl}faculty/getPaperPublications?employeeID=${employeId}`,
+      {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json"
+        }
+      }
+    );
+    const data = await response.json();
+    return data;
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+export const updatePaperPublicationsDetails = async (
+  employeId,
+  dataObj = {
+    paperID: paperID,
+    typeOfAuthor: typeOfAuthor,
+    titlePublication: titlePublication,
+    journalName: journalName,
+    typeOfPublication: typeOfPublication,
+    pageNos: pageNos,
+    issnNo: issnNo,
+    monYear: monYear,
+    typeOfissue: typeOfissue,
+    issueNo: issueNo,
+    impactFactor: impactFactor,
+    volumeNo: volumeNo,
+    Hindex: Hindex
+  }
+) => {
+  const enc = encodeURIComponent(JSON.stringify(dataObj));
+  try {
+    const response = await fetch(
+      `${process.env.APIBaseUrl}faculty/insertPaperPublications?employeeID=${employeId}&insertData=${enc}`,
+      {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json"
+        }
+      }
+    );
+    const data = await response.json();
+    return data;
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+export const deletePaperDetails = async (paperID) => {
+  try {
+    const response = await fetch(
+      `${process.env.APIBaseUrl}faculty/deletePaperPublication?paperID=${paperID}`,
+      {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json"
+        }
       }
     );
     const data = await response.json();
